@@ -11,3 +11,26 @@ generator client {
 model User {
     id          Int         @id @default(autoincrement())
 }
+
+model Customer {
+    id              Int                 @id @default(autoincrement())
+    name            String
+    register_date   String
+    cnpj            String
+    city            String
+    state           String
+    email           String
+    phone           String
+
+    certificateId   Int                 @unique
+    certificate     DigitalCertificate  @relation(fields: [certificateId], references: [id])
+    
+}
+
+model DigitalCertificate {
+    id              Int         @id @default(autoincrement())
+    expiry          String
+    certificate     String      @db.Text
+
+    customer        Customer?
+}
