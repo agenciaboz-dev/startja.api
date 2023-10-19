@@ -1,18 +1,31 @@
 import { PrismaClient } from "@prisma/client";
 import { Socket } from "socket.io";
 
-const prisma = new PrismaClient()
+const prisma = new PrismaClient();
 
 const login = async (socket: Socket, data: LoginForm) => {
+  // toda a lógica de login
 
-    // toda a lógica de login
-    const user = await prisma.user.findFirst({ where: { id: 1 } }) // arrumar
-    
+  try {
+    const user = await prisma.admin.findFirst({
+      where: { email: data.login, password: data.password },
+    });
     if (user) {
-        socket.emit('user:login:success', user)
+      socket.emit("login:admin", user);
     } else {
-        socket.emit('user:login:failed')
+      const customer = await prisma.customer.findFirst({
+        where: { email: data.login, password: data.password },
+      });
+      if (customer) {
+        socket.emit("login:customer", customer);
+      } else {
+        socket.emit("login:error", { error: "Nenhum User" });
+      }
     }
-}
+  } catch (error) {
+    console.log(error);
+    socket.emit("login:error", error);
+  }
+};
 
-export default {login}
+export default { login };
