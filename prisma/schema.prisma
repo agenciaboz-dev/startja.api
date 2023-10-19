@@ -1,36 +1,62 @@
 generator client {
-        provider = "prisma-client-js"
-        previewFeatures = ["fullTextSearch", "fullTextIndex"]
-    }
+    provider        = "prisma-client-js"
+    previewFeatures = ["fullTextSearch", "fullTextIndex"]
+}
 
-    datasource db {
-        provider = "mysql"
-        url      = env("DATABASE_URL")
-    }
+datasource db {
+    provider = "mysql"
+    url      = env("DATABASE_URL")
+}
 
-model User {
-    id          Int         @id @default(autoincrement())
+model Admin {
+    id              Int                 @id @default(autoincrement())
+    name            String
+    email           String              @unique
+    password        String
 }
 
 model Customer {
     id              Int                 @id @default(autoincrement())
     name            String
     register_date   String
-    cnpj            String
+    cpf             String
     city            String
     state           String
     email           String
     phone           String
-
+    password        String
+    
+    companies       Company[]
     certificateId   Int                 @unique
     certificate     DigitalCertificate  @relation(fields: [certificateId], references: [id])
-    
+}
+
+model Access {
+    id              Int                 @id @default(autoincrement())
 }
 
 model DigitalCertificate {
-    id              Int         @id @default(autoincrement())
+    id              Int                 @id @default(autoincrement())
     expiry          String
-    certificate     String      @db.Text
-
+    certificate     String              @db.Text
+    
     customer        Customer?
 }
+
+model Product {
+    id              Int                 @id @default(autoincrement())
+    name            String
+    ncm             String
+}
+
+model Company {
+    id              Int                 @id @default(autoincrement())
+    name            String
+    cnpj            String
+    city            String
+    state           String
+    
+    customerId      Int
+    customer        Customer            @relation(fields: [customerId], references: [id])
+}
+
