@@ -13,8 +13,8 @@ const findAllUsers = async () => {
     const customers = await prisma.customer.findMany();
     const admins = await prisma.admin.findMany();
     console.log("All Users:");
-    // console.log(customers);
-    // console.log(admins);
+    console.log(customers)
+    console.log(admins)
   } catch (error) {
     console.error("Error while fetching users:", error);
   } finally {
@@ -23,9 +23,3 @@ const findAllUsers = async () => {
 };
 
 findAllUsers()
-  .catch((error) => {
-    console.error("Error in findAllUsers:", error);
-  })
-  .finally(() => {
-    process.exit(0); // Exit the script
-  });
