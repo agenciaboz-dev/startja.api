@@ -16,7 +16,7 @@ router.get('/outro', async (request:Request, response:Response) => {
 router.post('/', async (request:Request, response:Response) => {    
     const data = request.body
 
-    
+    response.json({ postedValues: data })
 
 })
 
