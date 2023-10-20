@@ -27,10 +27,13 @@ const createAdmin = async () => {
         password: prompt('Digite a senha: ')
     }
 
-    const admin = await prisma.admin.create({data: {name: input.name,
-        email: input.email,
-        password: input.password,
-    }})
+    const admin = await prisma.admin.create({data:
+        {
+            name: input.name,
+            email: input.email,
+            password: input.password,
+        }
+    })
 
     console.log(admin)
 }
