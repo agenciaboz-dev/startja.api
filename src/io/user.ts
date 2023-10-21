@@ -5,7 +5,7 @@ const prisma = new PrismaClient();
 
 const login = async (socket: Socket, data: LoginForm) => {
   // toda a lógica de login
-    console.log(data)
+  console.log(data);
 
   try {
     const user = await prisma.admin.findFirst({
