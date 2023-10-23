@@ -20,7 +20,7 @@ const login = async (socket: Socket, data: LoginForm) => {
       if (customer) {
         socket.emit("login:customer", customer);
       } else {
-        socket.emit("login:error", { error: "Nenhum User" });
+        socket.emit("login:error", { error: "Usuário ou senha incorretos" });
       }
     }
   } catch (error) {
