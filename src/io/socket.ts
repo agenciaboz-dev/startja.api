@@ -30,4 +30,12 @@ export const handleSocket = (socket: Socket) => {
   });
 
   socket.on("user:login", (data) => user.login(socket, data));
+  socket.on("user:list", (data) => user.list(socket));
+
 };
+
+
+// "user:list" enviando esse objeto {admins: Admin[], customers: Customer[]}
+
+// Fernando Burgos, sex. 11:47
+// Admin[] é a lista de usuários admins e Customer[] é a lista de usuários clientes

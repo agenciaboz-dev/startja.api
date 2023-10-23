@@ -3,6 +3,12 @@ import { Socket } from "socket.io";
 
 const prisma = new PrismaClient();
 
+const list = async (socket: Socket) => {
+  const customers = await prisma.customer.findMany();
+  const admins = await prisma.admin.findMany();
+  socket.emit("user:list", { admins: admins, customers: customers });
+};
+
 const login = async (socket: Socket, data: LoginForm) => {
   // toda a lógica de login
   console.log(data);
@@ -29,4 +35,4 @@ const login = async (socket: Socket, data: LoginForm) => {
   }
 };
 
-export default { login };
+export default { login, list };
