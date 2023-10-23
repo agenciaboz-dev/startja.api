@@ -7,21 +7,22 @@ import {
 import promptObj from "prompt-sync";
 
 const prisma = new PrismaClient();
+const prompt = promptObj();
 
 // CHOOSE WHAT YOU WANT TO SEARCH WITHIN THE DATABASE
 const chooseCategory = () => {
   const functionType = prompt(
-    "Para gerar lista de usuários digite (users) / Para gerar lista de produtos digite (products) "
+    "Para gerar lista de usuários digite (users) / Para gerar lista de produtos digite (products): "
   );
   if (functionType == "users") {
-    console.log("Gerando lista de usuários: ;");
+    console.log("Gerando lista de usuários: ");
     findAllUsers();
   } else if (functionType == "products") {
-    console.log("Gerando lista de produtos: ;");
+    console.log("Gerando lista de produtos: ");
     findAllProducts();
   } else {
     console.log(
-      'Resposta inválida. Os tipos válidos são "create" ou "delete".'
+      'Resposta inválida. Os tipos válidos são "users" ou "products".'
     );
     chooseCategory();
   }
