@@ -1,4 +1,4 @@
-import { PrismaClient, Customer } from "@prisma/client";
+import { PrismaClient, Customer, Product } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
@@ -27,5 +27,12 @@ export const fetch = {
           phone: data.phone?.replace(/\D/g, ""),
         },
       }),
+  },
+
+  products: {
+    id: (id: string | number, callback: (products: Product | null) => void) =>
+      prisma.product
+        .findUnique({ where: { id: Number(id) } })
+        .then((result) => callback(result)),
   },
 };
