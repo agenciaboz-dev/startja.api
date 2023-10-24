@@ -11,10 +11,10 @@ const list = async (socket: Socket) => {
 };
 
 // LISTA APENAS OS CLIENTES
-const customerList = async (socket: Socket) => {
-  const customers = await prisma.customer.findMany();
-  socket.emit("customer:list", { customers: customers });
-};
+// const customerList = async (socket: Socket) => {
+//   const customers = await prisma.customer.findMany();
+//   socket.emit("customer:list", { customers: customers });
+// };
 
 // TODA A LOGICA DE LOGIN
 const login = async (socket: Socket, data: LoginForm) => {
@@ -42,4 +42,4 @@ const login = async (socket: Socket, data: LoginForm) => {
   }
 };
 
-export default { login, list, customerList };
+export default { login, list };
