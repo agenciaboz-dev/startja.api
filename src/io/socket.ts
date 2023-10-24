@@ -4,6 +4,7 @@ import { Server as HttpServer } from "http";
 import { Server as HttpsServer } from "https";
 import user from "./user";
 import product from "./product";
+import customer from "./customer";
 
 let io: SocketIoServer | null = null;
 
@@ -33,4 +34,5 @@ export const handleSocket = (socket: Socket) => {
   socket.on("user:login", (data) => user.login(socket, data));
   socket.on("user:list", (data) => user.list(socket));
   socket.on("product:list", (data) => product.list(socket));
+  socket.on("customer:list", (data) => user.customerList(socket));
 };

@@ -3,14 +3,21 @@ import { Socket } from "socket.io";
 
 const prisma = new PrismaClient();
 
+// LISTA TODOS OS USURARIOS (ADMINS E CLIENTES)
 const list = async (socket: Socket) => {
   const customers = await prisma.customer.findMany();
   const admins = await prisma.admin.findMany();
   socket.emit("user:list", { admins: admins, customers: customers });
 };
 
+// LISTA APENAS OS CLIENTES
+const customerList = async (socket: Socket) => {
+  const customers = await prisma.customer.findMany();
+  socket.emit("customer:list", { customers: customers });
+};
+
+// TODA A LOGICA DE LOGIN
 const login = async (socket: Socket, data: LoginForm) => {
-  // toda a lógica de login
   console.log(data);
 
   try {
@@ -35,4 +42,4 @@ const login = async (socket: Socket, data: LoginForm) => {
   }
 };
 
-export default { login, list };
+export default { login, list, customerList };
