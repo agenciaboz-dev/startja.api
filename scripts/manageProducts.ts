@@ -41,30 +41,24 @@ const createProduct = async () => {
   console.log(product);
 };
 
-createProduct();
-
 // DELETAR PRODUTO
 
 // Função para excluir um PRODUTO
 const deleteProduct = async () => {
   // Peça ao usuário o ID do admin a ser excluído
-  const id = parseInt(prompt("Qual é a ID do PRODUTO para DELEÇÃO?:"));
+  const id = Number(prompt("Qual é a ID do PRODUTO para DELEÇÃO?:"));
 
   // Verifique se o ID analisado é um número válido
   if (id) {
-    // Encontre o PRODUTO com o ID especificado
-    const productToDelete = await prisma.product.findUnique({ where: { id } });
-
     // Verifique se o PRODUTO existe
-    if (productToDelete) {
+    try {
       // Exclua o PRODUTO com o ID especificado
       const deletedProduct = await prisma.product.delete({
         where: { id: id },
       });
-
       // Exiba uma mensagem de sucesso
       console.log("PRODUTO deletado:", deletedProduct);
-    } else {
+    } catch {
       // Exiba uma mensagem de erro para um ID de PRODUTO inválido
       console.log(
         "ID Inválido. O PRODUTO com essa ID não existe. Tente novamente!"

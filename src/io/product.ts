@@ -1,17 +1,11 @@
-// import { Product, PrismaClient } from "@prisma/client";
-// import { io as ioSocket } from "socket.io-client";
-// import { include } from "..prisma";
+import { PrismaClient } from "@prisma/client";
+import { Socket } from "socket.io";
 
-// const prisma = new PrismaClient();
-// // const io = ioSocket("wss://app.agenciaboz.com.br:4104");
+const prisma = new PrismaClient();
 
-// export const product = {
-//   new: (product: Product, callback: Function) => {
-//     prisma.product.create({
-//       data: {
-//         name: product.name,
-//       },
-//       include: include.products,
-//     });
-//   },
-// };
+const list = async (socket: Socket) => {
+  const products = await prisma.product.findMany();
+  socket.emit("product:list", products);
+};
+
+export default { list };
