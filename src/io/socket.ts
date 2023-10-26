@@ -7,6 +7,7 @@ import product from "./product";
 import customer from "./customer";
 import signup from "./signup";
 import { Customer } from "@prisma/client";
+import company from "./company";
 
 let io: SocketIoServer | null = null;
 
@@ -41,4 +42,6 @@ export const handleSocket = (socket: Socket) => {
   socket.on("customer:signup", (data) => {
     signup.handleSignup(socket, data);
   });
+  socket.on("company:list", (data) => company.list(socket));
+  socket.on("company:register", (data) => company.register(socket, data));
 };

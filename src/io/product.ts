@@ -3,11 +3,13 @@ import { Socket } from "socket.io";
 
 const prisma = new PrismaClient();
 
+// FUNÇÃO PARA LISTAR PRODUTOS EXISTENTES
 const list = async (socket: Socket) => {
   const products = await prisma.product.findMany();
   socket.emit("product:list", products);
 };
 
+// FUNÇÃO DE CRIAÇÃO DE NOVOS PRODUTOS
 export const createProduct = async (socket: Socket, data: Product) => {
   try {
     const user = await prisma.product.create({
