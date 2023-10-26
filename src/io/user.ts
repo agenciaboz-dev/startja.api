@@ -10,12 +10,6 @@ const list = async (socket: Socket) => {
   socket.emit("user:list", { admins: admins, customers: customers });
 };
 
-// LISTA APENAS OS CLIENTES
-// const customerList = async (socket: Socket) => {
-//   const customers = await prisma.customer.findMany();
-//   socket.emit("customer:list", { customers: customers });
-// };
-
 // TODA A LOGICA DE LOGIN
 const login = async (socket: Socket, data: LoginForm) => {
   console.log(data);

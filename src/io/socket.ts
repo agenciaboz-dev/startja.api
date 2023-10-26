@@ -5,6 +5,8 @@ import { Server as HttpsServer } from "https";
 import user from "./user";
 import product from "./product";
 import customer from "./customer";
+import signup from "./signup";
+import { Customer } from "@prisma/client";
 
 let io: SocketIoServer | null = null;
 
@@ -35,4 +37,7 @@ export const handleSocket = (socket: Socket) => {
   socket.on("user:list", (data) => user.list(socket));
   socket.on("product:list", (data) => product.list(socket));
   socket.on("customer:list", (data) => customer.list(socket));
+  socket.on("customer:signup", (data) => {
+    signup.handleSignup(socket, data);
+  });
 };
