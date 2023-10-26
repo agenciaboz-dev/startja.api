@@ -1,0 +1,42 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "StartJa.api",
+    "description": "Sistema da StartJa",
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "servers": [
+    {
+      "url": "/",
+      "description": "Local Dev, or from Heroku"
+    },
+    {
+      "url": "/api/",
+      "description": "With docker-compose and nginx proxy"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Documentação da API",
+      "description": "API do sistema"
+    }
+  ],
+  "paths": {
+    "/": {
+      "get": {
+        "tags": ["USUARIOS"],
+        "summary": "Retornauma lista de todos os usuarios cadastrados",
+
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    }
+  }
+}

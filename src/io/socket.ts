@@ -36,6 +36,7 @@ export const handleSocket = (socket: Socket) => {
   socket.on("user:login", (data) => user.login(socket, data));
   socket.on("user:list", (data) => user.list(socket));
   socket.on("product:list", (data) => product.list(socket));
+  socket.on("product:create", (data) => product.createProduct(socket, data));
   socket.on("customer:list", (data) => customer.list(socket));
   socket.on("customer:signup", (data) => {
     signup.handleSignup(socket, data);
