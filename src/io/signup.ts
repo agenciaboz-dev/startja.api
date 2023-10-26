@@ -36,15 +36,13 @@ export const handleSignup = async (socket: Socket, data: Customer) => {
       include: { certificate: true, companies: true },
     });
 
-    console.log(handleSignup);
     if (user) {
-      socket.emit("signup:success");
+      socket.emit("signup:success", user);
     } else {
-      socket.emit("signup:error");
+      socket.emit("signup:error", "Input valid user data");
     }
   } catch (error) {
-    console.log(error);
-    socket.emit("login:error", error);
+    socket.emit("signup:error", error);
   }
 };
 
