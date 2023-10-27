@@ -16,13 +16,13 @@ const login = async (socket: Socket, data: LoginForm) => {
 
   try {
     const user = await prisma.admin.findFirst({
-      where: { email: data.login, password: data.password },
+      where: { email: data.email, password: data.password },
     });
     if (user) {
       socket.emit("login:admin", user);
     } else {
       const customer = await prisma.customer.findFirst({
-        where: { email: data.login, password: data.password },
+        where: { email: data.email, password: data.password },
       });
       if (customer) {
         socket.emit("login:customer", customer);

@@ -45,8 +45,8 @@ model DigitalCertificate {
 
 model Product {
     id              Int                 @id @default(autoincrement())
-    name            String
-    ncm             String
+    name            String              
+    ncm             String              
 }
 
 model Company {

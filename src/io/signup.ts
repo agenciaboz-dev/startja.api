@@ -39,7 +39,7 @@ export const handleSignup = async (socket: Socket, data: Customer) => {
     if (user) {
       socket.emit("signup:success", user);
     } else {
-      socket.emit("signup:error", "Input valid user data");
+      socket.emit("signup:invalid", "Input valid user data");
     }
   } catch (error) {
     socket.emit("signup:error", error);

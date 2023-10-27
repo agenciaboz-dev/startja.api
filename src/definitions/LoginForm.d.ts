@@ -1,4 +1,4 @@
 declare interface LoginForm {
-    login: string
-    password: string
+  email: string;
+  password: string;
 }

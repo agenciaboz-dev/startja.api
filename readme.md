@@ -1,60 +1,530 @@
-# DOCUMENTAÇÃO
+# Introdução
 
-## on events
+Esta é a documentação da API para a versão mais recente (v1)
+
+A Start Já é uma empresa focada no desenvolvimento de Sistemas para o Agronegócio trazendo tecnologia, integração e crescimento para o empreendedor do campo. A Start Já busca trazer de forma facilitada e ágil a Emissão de notas fiscais integrada a uma administração eficiente baseada em números e redução da carga tributária.
+
+A API da Start Já permite que você emita ou consulte documentos fiscais a partir do seu sistema. Através desta documentação será possivel fazer a integração com a API da Start Já.
+
+## "on" Events:
+
+Lista de todos os "on" events presentes nesta API
+
+```
 user:login
 user:list
+
 product:list
 product:create
+
 customer:list
 customer:signup
 
-# user
-### on 
-user:login
-### message
-{
-    "email": "teste@teste.teste",
-    "password": "teste"
-}
+company:register
+company:list
+```
 
-## triggers
+_Abaixo, temos uma explicação mais detalhada de cada evento_
+
+### Event Name: [user:login]
+
+**Description:** [Este evento é acionado quando um usuário tenta fazer login. Ele faz a autenticação do usuário checkando o email, e senha fornecidos]
+
+#### Parametros:
+
+```
+{Object} data:
+`{string} email` // (required): The login of the user.
+`{string} password` // (required): The password of the user.
+```
+
+#### Message:
+
+Exemplo da mensagem esperada pelo evento:
+
+```
+{
+    "email": "teste@teste.teste",
+    "password": "teste"
+}
+```
+
+#### Triggers
+
+Lista de todos os emits no evento [user:login]
+
+```
 login:admin
 login:customer
 login:error
+```
 
-### emit
-login:admin
-### message
+##### Trigger #1 - [login:admin]
+
+Se o usuário fizer login com conta de Admin com sucesso:
+
+```
 {
-    "id": 1,
-    "name": "teste",
-    "email": "teste@teste.teste",
-    "password": "teste"
+    "id": 1,
+    "name": "teste",
+    "email": "teste@teste.teste",
+    "password": "teste"
 }
+```
 
-### emit
-login:customer
-### message
+##### Trigger #2 - [login:customer]
+
+Se o usuário fizer login com conta de Cliente com sucesso:
+
+```
 {
-    "id": 5,
-    "name": "b",
-    "email": "b",
-    "password": "b",
-    "register_date": "1697811716038",
-    "phone": "b",
-    "cpf": "b",
-    "city": "b",
-    "state": "b",
-    "certificateId": 5
-}
+    "id": 1,
+    "name": "John Teste",
+    "email": "john@teste.com",
+    "password": "123456789",
+    "register_date": "1697811716038",
+    "phone": "41999999999",
+    "cpf": "00000000000",
+    "city": "Curitiba",
+    "state": "Parana",
+    "certificateId": 1
 
-### emit
-login:error
-### message
+}
+```
+
+##### Trigger #3 - [login:error]
+
+```
 {
-    "error": "Usuário ou senha incorretos"
+    "error": "Usuário ou senha incorretos"
 }
+```
 
-# product
+### Event Name: [user:list]
 
-# customer
+**Description:** [Este evento é acionado quando um cliente requisita uma lista de TODOS os USUARIOS. Ele retorna uma lista de todos os Admins e Clientes presentes no banco de dados para o cliente]
+
+#### Parametros:
+
+```
+`{Socket} socket`: O socket do Socket.IO socket repreentando o client que acionou o evento.
+```
+
+#### Triggers
+
+Lista de todos os emits no evento [user:list]
+
+```
+user:list
+```
+
+##### Trigger #1 - [user:list]
+
+Formato da lista de usuarios:
+
+```
+{
+    "admins": [
+        {
+            "id": 1,
+            "name": "teste",
+            "email": "teste@teste.teste",
+            "password": "teste"
+        }
+    ],
+    "customers": [
+        {
+            "id": 1,
+            "name": "teste",
+            "email": "teste@clienteteste.com",
+            "password": "teste",
+            "register_date": "1697725469382",
+            "phone": "41988888888",
+            "cpf": "12345678901",
+            "city": "curitiba",
+            "state": "pr",
+            "certificateId": 1
+        },
+    ]
+}
+```
+
+### Event Name: [product:create]
+
+**Description:** [Este evento é acionado quando um usuário deseja criar um novo produto no banco de dados]
+
+#### Parametros:
+
+```
+{Object} data:
+`{Socket} socket`: O socket representando o client iniciando a criação do produto.
+
+`{Product} data`: Um objeto contendo as informações do produto a serem adcionadas ao banco de dados.
+```
+
+#### Message:
+
+Este evento espera as seguintes propriedades na mensagem:
+
+```
+{
+    "name": "Produto Da Empresa", // (string): O nome do produto
+    "ncm": "12345678" // (string): O código NCM de 8 números (Nomenclatura Comum do Mercosul) do produto.
+}
+```
+
+#### Triggers
+
+Lista de todos os emits no evento [product:create]
+
+```
+product:success
+product:failure
+product:error
+```
+
+##### Trigger #1 - [product:success]
+
+Se a criação do produto for um sucesso:
+
+```
+{
+    "id": 11,
+    "name": "Produto de Teste",
+    "ncm": "9999.99.99"
+}
+```
+
+##### Trigger #2 - [product:NCMfailure]
+
+Se o NCM inserido pelo cliente não for numerico, exceder, ou tiver menos do que 8 números:
+
+```
+"NCM Inválido"
+```
+
+##### Trigger #3 - [product:error]
+
+Para demais erros:
+
+```
+{
+    "name": "PrismaClientValidationError",
+    "clientVersion": "X.X.X"
+}
+```
+
+### Event Name: [product:list]
+
+**Description:** [Este evento é acionado quando um cliente requisita uma lista de PRODUTOS. Ele retorna uma lista de todos os PRODUTOS no banco de dados para o cliente]
+
+#### Parametros:
+
+```
+`{Socket} socket`: O socket do Socket.IO socket repreentando o client que acionou o evento.
+```
+
+#### Triggers
+
+Lista de todos os emits no evento [product:list]
+
+```
+product:list
+```
+
+##### Trigger #1 - [product:list]
+
+Retorna um array com a lista de todos os produtos no banco de dados
+
+```
+[
+    {
+        "id": 11,
+        "name": "Produto de Teste",
+        "ncm": "9999.99.99"
+    },
+    {
+        "id": 12,
+        "name": "Produto Doze",
+        "ncm": "5555.55.55"
+    },
+    {
+        "id": 13,
+        "name": "Produto X",
+        "ncm": "0070.07.77"
+    }
+]
+```
+
+### Event Name: [customer:list]
+
+**Description:** [Este evento é acionado quando um cliente requisita uma lista de CLIENTES. Ele retorna uma lista de todos os CLIENTES no banco de dados para o cliente]
+
+#### Parametros:
+
+```
+`{Socket} socket`: O socket do Socket.IO socket repreentando o client que acionou o evento.
+```
+
+#### Triggers
+
+Lista de todos os emits no evento [customer:list]
+
+```
+customer:list
+```
+
+##### Trigger #1 - [customer:list]
+
+Retorna um array com a lista de todos os CLIENTES no banco de dados
+
+```
+[
+    {
+        "id": 1,
+        "name": "teste",
+        "email": "teste@clienteteste.com",
+        "password": "teste",
+        "register_date": "1697725469382",
+        "phone": "41988888888",
+        "cpf": "12345678901",
+        "city": "curitiba",
+        "state": "pr",
+        "certificateId": 1
+    },
+    {
+        "id": 20,
+        "name": "BOZ",
+        "email": "boz@bozteste.com",
+        "password": "teste",
+        "register_date": "1698339896450",
+        "phone": "41988888888",
+        "cpf": "99999999",
+        "city": "curitiba",
+        "state": "pr",
+        "certificateId": 23
+    },
+    {
+        "id": 21,
+        "name": "fernando",
+        "email": "fernando@agenciaboz.com.br",
+        "password": "123",
+        "register_date": "1698341957513",
+        "phone": "41984556795",
+        "cpf": "02576698506",
+        "city": "curitiba",
+        "state": "pr",
+        "certificateId": 24
+    }
+]
+```
+
+### Event Name: [customer:signup]
+
+**Description:** [Este evento é acionado quando um usuário deseja cadastrar uma nova conta de Cliente]
+
+#### Parametros:
+
+```
+{Object} data:
+`{Socket} socket`: O socket utilizado para fazer comunicação.
+
+`{Customer} data`: Um objeto contendo as informações do novo usuário a tal como nome, email, senha, etc...
+```
+
+#### Message:
+
+Este evento espera as seguintes propriedades na mensagem:
+
+```
+{
+    "name": "John Peter",
+    "email": "john@peter.com.br",
+    "password": "123456789",
+    "phone": "41999999999",
+    "cpf": "00000000000",
+    "city": "Curitiba",
+    "state": "PR"
+}
+```
+
+#### Triggers
+
+Lista de todos os emits no evento [customer:signup]
+
+```
+signup:success
+signup:invalid
+signup:error
+```
+
+##### Trigger #1 - [signup:success]
+
+Se a criação da nova conta de usuario for um sucesso:
+
+```
+{
+    "id": 22,
+    "name": "John Peter",
+    "email": "john@peter.com.br",
+    "password": "123456789",
+    "register_date": "1698415824594",
+    "phone": "41999999999",
+    "cpf": "00000000000",
+    "city": "Curitiba",
+    "state": "PR",
+    "certificateId": 25,
+    "certificate": {
+        "id": 25,
+        "expiry": "",
+        "certificate": ""
+    },
+    "companies": []
+}
+```
+
+##### Trigger #2 - [signup:invalid]
+
+Se algum dos dados inseridos pelo usuário forem inválidos:
+
+**==OBERSVAÇÃO: A lógica deste gatilho áinda está incompleta==**
+
+```
+Input valid user data
+```
+
+##### Trigger #3 - [signup:error]
+
+Para demais erros:
+
+```
+{
+    "name": "PrismaClientValidationError",
+    "clientVersion": "X.X.X"
+}
+```
+
+### Event Name: [company:list]
+
+**==OBSERVAÇÃO: ESSE EVENTO AINDA ESTÁ SENDO CONSTRUIDO
+==**
+**Description:** [Este evento é acionado quando um usuário requisita uma lista de EMPRESAS. Ele retorna uma lista de todos as empresas no banco de dados]
+
+#### Parametros:
+
+```
+`{Socket} socket`: O socket do Socket.IO socket repreentando o client que acionou o evento.
+```
+
+#### Triggers
+
+Lista de todos os emits no evento [company:list]
+
+```
+company:list
+```
+
+##### Trigger #1 - [company:list]
+
+Retorna um array com a lista de todas as EMPRESAS no banco de dados, e os clientes relacionados á aquela determinada empresa.
+
+]
+
+```
+[
+    {
+        "id": 1,
+        "name": "mc donalds",
+        "cnpj": "1234567890123",
+        "city": "mcdonalds",
+        "state": "pr",
+        "customerId": 21,
+        "customer": {
+            "id": 21,
+            "name": "fernando",
+            "email": "fernando@agenciaboz.com.br",
+            "password": "123",
+            "register_date": "1698341957513",
+            "phone": "41984556795",
+            "cpf": "02576698506",
+            "city": "curitiba",
+            "state": "pr",
+            "certificateId": 24
+        }
+    }
+```
+
+### Event Name: [company:create]
+
+\*\*==OBERSVAÇÃO: A lógica deste EVENTO áinda está incompleta
+
+**Description:** [Este evento é acionado quando um usuário deseja cadastrar uma nova conta de Cliente]
+
+#### Parametros:
+
+```
+{Object} data:
+`{Socket} socket`: O socket utilizado para fazer comunicação.
+
+`{Company} data`: Um objeto contendo as informações da nova companhia a tal como nome, cnpj, cidade, etc...
+```
+
+#### Message:
+
+Este evento espera as seguintes propriedades na mensagem:
+
+```
+{
+    "name": "mc donalds",
+    "cnpj": "1234567890123",
+    "city": "mcdonalds",
+    "state": "pr",
+    "customerId": 21
+}
+```
+
+#### Triggers
+
+Lista de todos os emits no evento [company:create]
+
+```
+creation:success
+creation:invalid
+creation:error
+```
+
+##### Trigger #1 - [creation:success]
+
+Se a criação da nova conta de usuario for um sucesso:
+
+```
+{
+    "id": 2,
+    "name": "Bosch",
+    "cnpj": "1234567890123",
+    "city": "Bosch Town",
+    "state": "BT",
+    "customerId": 20
+}
+```
+
+##### Trigger #2 - [creation:invalid]
+
+Se algum dos dados inseridos pelo usuário forem inválidos:
+
+**==OBERSVAÇÃO: A lógica deste gatilho áinda está incompleta==**
+
+```
+Input valid user data
+```
+
+##### Trigger #3 - [creation:error]
+
+Para demais erros:
+
+```
+{
+    "name": "PrismaClientValidationError",
+    "clientVersion": "X.X.X"
+}
+```

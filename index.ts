@@ -12,8 +12,6 @@ import {
   initializeIoServer,
 } from "./src/io/socket";
 import http from "http";
-import swaggerUi from "swagger-ui-express";
-import swaggerDocument from "./swagger.json"; // Change this line
 
 dotenv.config();
 
@@ -69,13 +67,3 @@ try {
     console.log(`[server]: Server is running at http://${port}`);
   });
 }
-
-const swaggerApp = express(); // Create a new Express app for Swagger
-swaggerApp.use("/swagger", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-
-const swaggerPort = 4108; // Set the port for Swagger documentation
-swaggerApp.listen(swaggerPort, () => {
-  console.log(
-    `[swagger]: Swagger is running at http://localhost:${swaggerPort}/swagger`
-  );
-});
