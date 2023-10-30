@@ -1,5 +1,6 @@
 import { Customer, PrismaClient, DigitalCertificate } from "@prisma/client";
 import { Socket } from "socket.io";
+import { formatCPF, formatPhone } from "./formatting"; // Import the function
 
 const prisma = new PrismaClient();
 
@@ -20,13 +21,15 @@ export const handleSignup = async (socket: Socket, data: Customer) => {
   });
 
   try {
+    const formattedCPF = formatCPF(data.cpf);
+    const formattedPhone = formatPhone(data.phone);
     const user = await prisma.customer.create({
       data: {
         name: data.name,
         email: data.email,
         password: data.password,
-        phone: data.phone,
-        cpf: data.cpf,
+        phone: formattedPhone,
+        cpf: formattedCPF,
         city: data.city,
         state: data.state,
         register_date: new Date().getTime().toString(),
@@ -38,11 +41,9 @@ export const handleSignup = async (socket: Socket, data: Customer) => {
 
     if (user) {
       socket.emit("signup:success", user);
-    } else {
-      socket.emit("signup:invalid", "Input valid user data");
     }
-  } catch (error) {
-    socket.emit("signup:error", error);
+  } catch (error: any) {
+    socket.emit("signup:error", error.message);
   }
 };
 
