@@ -1,5 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import { Socket } from "socket.io";
+import { ClientBag } from "../definitions/client";
 
 const prisma = new PrismaClient();
 
@@ -11,20 +12,22 @@ const list = async (socket: Socket) => {
 };
 
 // TODA A LOGICA DE LOGIN
-const login = async (socket: Socket, data: LoginForm) => {
+const login = async (socket: Socket, data: LoginForm, client: ClientBag) => {
   console.log(data);
 
   try {
-    const user = await prisma.admin.findFirst({
+    const admin = await prisma.admin.findFirst({
       where: { email: data.email, password: data.password },
     });
-    if (user) {
-      socket.emit("login:admin", user);
+    if (admin) {
+      client.add({ socket, user: admin });
+      socket.emit("login:admin", admin);
     } else {
       const customer = await prisma.customer.findFirst({
         where: { email: data.email, password: data.password },
       });
       if (customer) {
+        client.add({ socket, user: customer });
         socket.emit("login:customer", customer);
       } else {
         socket.emit("login:error", { error: "Usuário ou senha incorretos" });

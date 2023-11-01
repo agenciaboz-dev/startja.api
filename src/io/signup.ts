@@ -1,6 +1,5 @@
 import { Customer, PrismaClient, DigitalCertificate } from "@prisma/client";
 import { Socket } from "socket.io";
-import { formatCPF, formatPhone } from "./formatting"; // Import the function
 
 const prisma = new PrismaClient();
 
