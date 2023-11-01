@@ -21,15 +21,13 @@ export const handleSignup = async (socket: Socket, data: Customer) => {
   });
 
   try {
-    const formattedCPF = formatCPF(data.cpf);
-    const formattedPhone = formatPhone(data.phone);
     const user = await prisma.customer.create({
       data: {
         name: data.name,
         email: data.email,
         password: data.password,
-        phone: formattedPhone,
-        cpf: formattedCPF,
+        phone: data.phone,
+        cpf: data.cpf,
         city: data.city,
         state: data.state,
         register_date: new Date().getTime().toString(),

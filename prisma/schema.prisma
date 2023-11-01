@@ -18,11 +18,11 @@ model Admin {
 model Customer {
     id              Int                 @id @default(autoincrement())
     name            String
-    email           String
+    email           String              @unique
     password        String
     register_date   String
     phone           String
-    cpf             String
+    cpf             String              @unique
     city            String
     state           String
     
@@ -51,10 +51,21 @@ model Product {
 
 model Company {
     id              Int                 @id @default(autoincrement())
+    type            String
     name            String
-    cnpj            String
+    cnpj            String              @unique
+    iine            String
     city            String
     state           String
+    district        String
+    street          String
+    adjunct         String
+    number          String
+    cep             String
+    email           String?
+    phone           String?
+    
+    
     
     customerId      Int
     customer        Customer            @relation(fields: [customerId], references: [id])

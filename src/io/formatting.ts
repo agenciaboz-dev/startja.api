@@ -34,16 +34,16 @@ export function formatPhone(telefone: string | null): string {
 
 // FUNÇÃO DE VALIDAÇÃO #3
 // Função que checka a válidade do NCM, e formata caso seja um número válido
-export function validateNCM(ncm: string): string | null {
-  // Limpa o código de pontuação desnecesária
-  const cleanedNCM = ncm.replace(/[^0-9]/g, "");
+// export function validateNCM(ncm: string): string | null {
+//   // Limpa o código de pontuação desnecesária
+//   const cleanedNCM = ncm.replace(/[^0-9]/g, "");
 
-  // Formata o código NCM limpo na seguinte estrutura de código: 0000.00.00
-  if (cleanedNCM.length === 8) {
-    return `${cleanedNCM.substr(0, 4)}.${cleanedNCM.substr(
-      4,
-      2
-    )}.${cleanedNCM.substr(6, 2)}`;
-  }
-  return null;
-}
+//   // Formata o código NCM limpo na seguinte estrutura de código: 0000.00.00
+//   if (cleanedNCM.length === 8) {
+//     return `${cleanedNCM.substr(0, 4)}.${cleanedNCM.substr(
+//       4,
+//       2
+//     )}.${cleanedNCM.substr(6, 2)}`;
+//   }
+//   return null;
+// }
