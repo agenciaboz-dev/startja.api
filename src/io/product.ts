@@ -11,12 +11,11 @@ const list = async (socket: Socket) => {
 
 // Função de criação de novo produtos
 export const createProduct = async (socket: Socket, data: Product) => {
-  // Valida e formata o código NCM
   try {
     const product = await prisma.product.create({
       data: {
         name: data.name,
-        ncm: data.ncm, // Usa o NCM formatado
+        ncm: data.ncm,
       },
     });
 

@@ -19,7 +19,7 @@ export const create = async (socket: Socket, data: Company) => {
       data: {
         type: data.type, // Nacional ou Exterior
         name: data.name,
-        cnpj: data.cnpj,
+        document: data.document,
         iine: data.iine, //Indicador de Inscrição Estadual - As opções são: "Contribuinte de ICMS", "Não contribuinte de ICMS", "Contribuinte isento."
         city: data.city,
         state: data.state,

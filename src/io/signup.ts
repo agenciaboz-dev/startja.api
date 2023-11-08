@@ -26,7 +26,7 @@ export const handleSignup = async (socket: Socket, data: Customer) => {
         email: data.email,
         password: data.password,
         phone: data.phone,
-        cpf: data.cpf,
+        document: data.document,
         city: data.city,
         state: data.state,
         register_date: new Date().getTime().toString(),

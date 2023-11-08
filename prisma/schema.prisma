@@ -22,7 +22,7 @@ model Customer {
     password        String
     register_date   String
     phone           String
-    cpf             String              @unique
+    document        String              @unique
     city            String
     state           String
     
@@ -46,14 +46,16 @@ model DigitalCertificate {
 model Product {
     id              Int                 @id @default(autoincrement())
     name            String              
-    ncm             String              
+    ncm             String       
+
+    rule            regraTributacao?
 }
 
 model Company {
     id              Int                 @id @default(autoincrement())
     type            String
     name            String
-    cnpj            String              @unique
+    document        String              @unique
     iine            String
     city            String
     state           String
@@ -71,3 +73,34 @@ model Company {
     customer        Customer            @relation(fields: [customerId], references: [id])
 }
 
+model Natureza {
+
+    id          Int                     @unique @default(autoincrement())
+    operation   String
+    type        String
+    finality    String
+    motive      String
+
+    rule        regraTributacao?        @relation(fields: [ruleId],references: [id])
+    ruleId      Int?                    @unique
+}
+
+model regraTributacao {
+
+    id          Int                     @unique @default(autoincrement())
+    uf          String
+    icms        String
+    cfop        String
+    percentage  String
+    motive      String
+    rate        String
+    deferral    String
+    cst         String
+    cofins      String
+
+    nature      Natureza?
+    product     Product                 @relation(fields: [productId],references: [id])
+    productId   Int                     @unique
+
+
+}
