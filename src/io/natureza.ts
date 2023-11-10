@@ -8,14 +8,54 @@ import { Socket } from "socket.io";
 
 const prisma = new PrismaClient();
 
-// Função que lista as naturezas de operacao
 export const list = async (socket: Socket) => {
-  const naturezaOperacao = await prisma.natureza.findMany();
-  socket.emit("natureza:list", naturezaOperacao); // Corrected the variable name
+  try {
+    // Fetch naturezaOperacao with associated rules
+    const naturezas = await prisma.natureza.findMany({
+      include: { rules: { include: { natures: true } } },
+    });
+
+    const regras = await prisma.regraTributacao.findMany({
+      include: { natures: true, products: true },
+    });
+
+    if (naturezas && regras) {
+      socket.emit("natureza:list", {
+        naturezas: naturezas,
+        regras: regras,
+      });
+    }
+  } catch (error) {
+    console.error("Error fetching Naturezas and Regras:", error);
+    socket.emit("natureza:error", error);
+  }
 };
 
-//  Criar natureza de operacao
-export const createNatureza = async (socket: Socket, data: Natureza) => {
+// Função que lista as naturezas de operacao
+// export const list = async (socket: Socket) => {
+//   const naturezaOperacao = await prisma.natureza.findMany();
+//   const regras = await prisma.regraTributacao.findMany();
+
+//   socket.emit("natureza:list", {
+//     naturezaOperacao: naturezaOperacao,
+//     regras: regras,
+//   }); // Corrected the variable name
+// };
+
+// Define natures, products, and rules based on your data structure
+
+// Criar natureza de operacao
+const createNatureza = async (
+  socket: Socket,
+  data: {
+    operation: string;
+    type: string;
+    finality: string;
+    motive: string;
+    rules: { id: number }[];
+  }
+) => {
+  const rules = data.rules;
   try {
     const natureza = await prisma.natureza.create({
       data: {
@@ -23,19 +63,39 @@ export const createNatureza = async (socket: Socket, data: Natureza) => {
         type: data.type,
         finality: data.finality,
         motive: data.motive,
-        ruleId: data.ruleId,
+        rules: { connect: rules.map((rule) => ({ id: rule.id })) },
       },
+      include: { rules: true },
     });
     if (natureza) {
-      socket.emit("natureza:success", natureza); // Corrected the event name
+      socket.emit("natureza:success", natureza);
     }
   } catch (error) {
-    socket.emit("natureza:error", error); // Corrected the event name
+    console.error("Error creating Natureza:", error);
+    socket.emit("natureza:error", error);
   }
 };
 
-//  Criar natureza de operacao
-export const createRule = async (socket: Socket, data: regraTributacao) => {
+// Criar regra de tributacao
+const createRule = async (
+  socket: Socket,
+  data: {
+    uf: string;
+    icms: string;
+    cfop: string;
+    percentage: string;
+    motive: string;
+    rate: string;
+    deferral: string;
+    cst: string;
+    cofins: string;
+    natures: { id: number }[];
+    products: { id: number }[];
+  }
+) => {
+  const natures = data.natures;
+  const products = data.products;
+
   try {
     const rule = await prisma.regraTributacao.create({
       data: {
@@ -48,14 +108,16 @@ export const createRule = async (socket: Socket, data: regraTributacao) => {
         deferral: data.deferral,
         cst: data.cst,
         cofins: data.cofins,
-        product: {},
+        natures: { connect: natures.map((nature) => ({ id: nature.id })) },
+        products: { connect: products.map((product) => ({ id: product.id })) },
       },
     });
     if (rule) {
-      socket.emit("rule:success", rule); // Corrected the event name
+      socket.emit("rule:success", rule);
     }
   } catch (error) {
-    socket.emit("rule:error", error); // Corrected the event name
+    console.error("Error creating Rule:", error);
+    socket.emit("rule:error", error);
   }
 };
 

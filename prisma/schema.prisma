@@ -31,10 +31,6 @@ model Customer {
     certificate     DigitalCertificate  @relation(fields: [certificateId], references: [id])
 }
 
-model Access {
-    id              Int                 @id @default(autoincrement())
-}
-
 model DigitalCertificate {
     id              Int                 @id @default(autoincrement())
     expiry          String
@@ -47,8 +43,7 @@ model Product {
     id              Int                 @id @default(autoincrement())
     name            String              
     ncm             String       
-
-    rule            regraTributacao?
+    rules           regraTributacao[]
 }
 
 model Company {
@@ -66,28 +61,22 @@ model Company {
     cep             String
     email           String?
     phone           String?
-    
-    
-    
     customerId      Int
     customer        Customer            @relation(fields: [customerId], references: [id])
 }
 
 model Natureza {
 
-    id          Int                     @unique @default(autoincrement())
+    id          Int                     @id @default(autoincrement())
     operation   String
     type        String
     finality    String
     motive      String
-
-    rule        regraTributacao?        @relation(fields: [ruleId],references: [id])
-    ruleId      Int?                    @unique
+    rules       regraTributacao[]
 }
 
 model regraTributacao {
-
-    id          Int                     @unique @default(autoincrement())
+    id          Int                     @id @default(autoincrement())
     uf          String
     icms        String
     cfop        String
@@ -97,10 +86,6 @@ model regraTributacao {
     deferral    String
     cst         String
     cofins      String
-
-    nature      Natureza?
-    product     Product                 @relation(fields: [productId],references: [id])
-    productId   Int                     @unique
-
-
+    natures     Natureza[]
+    products    Product[]
 }

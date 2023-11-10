@@ -3,6 +3,7 @@
 
   - You are about to drop the column `cnpj` on the `Company` table. All the data in the column will be lost.
   - You are about to drop the column `cpf` on the `Customer` table. All the data in the column will be lost.
+  - You are about to drop the `Access` table. If the table is not empty, all the data it contains will be lost.
   - A unique constraint covering the columns `[document]` on the table `Company` will be added. If there are existing duplicate values, this will fail.
   - A unique constraint covering the columns `[document]` on the table `Customer` will be added. If there are existing duplicate values, this will fail.
   - Added the required column `document` to the `Company` table without a default value. This is not possible if the table is not empty.
@@ -26,6 +27,9 @@ ALTER TABLE `Company` DROP COLUMN `cnpj`,
 ALTER TABLE `Customer` DROP COLUMN `cpf`,
     ADD COLUMN `document` VARCHAR(191) NOT NULL;
 
+-- DropTable
+DROP TABLE `Access`;
+
 -- CreateTable
 CREATE TABLE `Natureza` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
@@ -33,10 +37,8 @@ CREATE TABLE `Natureza` (
     `type` VARCHAR(191) NOT NULL,
     `finality` VARCHAR(191) NOT NULL,
     `motive` VARCHAR(191) NOT NULL,
-    `ruleId` INTEGER NOT NULL,
 
-    UNIQUE INDEX `Natureza_id_key`(`id`),
-    UNIQUE INDEX `Natureza_ruleId_key`(`ruleId`)
+    PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
@@ -51,10 +53,26 @@ CREATE TABLE `regraTributacao` (
     `deferral` VARCHAR(191) NOT NULL,
     `cst` VARCHAR(191) NOT NULL,
     `cofins` VARCHAR(191) NOT NULL,
-    `productId` INTEGER NOT NULL,
 
-    UNIQUE INDEX `regraTributacao_id_key`(`id`),
-    UNIQUE INDEX `regraTributacao_productId_key`(`productId`)
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `_ProductToregraTributacao` (
+    `A` INTEGER NOT NULL,
+    `B` INTEGER NOT NULL,
+
+    UNIQUE INDEX `_ProductToregraTributacao_AB_unique`(`A`, `B`),
+    INDEX `_ProductToregraTributacao_B_index`(`B`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `_NaturezaToregraTributacao` (
+    `A` INTEGER NOT NULL,
+    `B` INTEGER NOT NULL,
+
+    UNIQUE INDEX `_NaturezaToregraTributacao_AB_unique`(`A`, `B`),
+    INDEX `_NaturezaToregraTributacao_B_index`(`B`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateIndex
@@ -70,7 +88,13 @@ ALTER TABLE `Customer` ADD CONSTRAINT `Customer_certificateId_fkey` FOREIGN KEY 
 ALTER TABLE `Company` ADD CONSTRAINT `Company_customerId_fkey` FOREIGN KEY (`customerId`) REFERENCES `Customer`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `Natureza` ADD CONSTRAINT `Natureza_ruleId_fkey` FOREIGN KEY (`ruleId`) REFERENCES `regraTributacao`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `_ProductToregraTributacao` ADD CONSTRAINT `_ProductToregraTributacao_A_fkey` FOREIGN KEY (`A`) REFERENCES `Product`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `regraTributacao` ADD CONSTRAINT `regraTributacao_productId_fkey` FOREIGN KEY (`productId`) REFERENCES `Product`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `_ProductToregraTributacao` ADD CONSTRAINT `_ProductToregraTributacao_B_fkey` FOREIGN KEY (`B`) REFERENCES `regraTributacao`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `_NaturezaToregraTributacao` ADD CONSTRAINT `_NaturezaToregraTributacao_A_fkey` FOREIGN KEY (`A`) REFERENCES `Natureza`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `_NaturezaToregraTributacao` ADD CONSTRAINT `_NaturezaToregraTributacao_B_fkey` FOREIGN KEY (`B`) REFERENCES `regraTributacao`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
