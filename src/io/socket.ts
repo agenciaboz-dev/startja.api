@@ -85,7 +85,7 @@ export const handleSocket = (socket: Socket) => {
     logout(socket, clients);
   });
 
-  socket.on("natureza:list", () => natureza.list(socket));
-  socket.on("natureza:create", (data) => natureza.createNatureza(socket, data));
+  socket.on("nature:list", () => natureza.list(socket));
+  socket.on("nature:create", (data) => natureza.createNatureza(socket, data));
   socket.on("rule:create", (data) => natureza.createRule(socket, data));
 };

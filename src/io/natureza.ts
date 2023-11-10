@@ -20,29 +20,16 @@ export const list = async (socket: Socket) => {
     });
 
     if (naturezas && regras) {
-      socket.emit("natureza:list", {
+      socket.emit("nature:list", {
         naturezas: naturezas,
         regras: regras,
       });
     }
   } catch (error) {
     console.error("Error fetching Naturezas and Regras:", error);
-    socket.emit("natureza:error", error);
+    socket.emit("nature:error", error);
   }
 };
-
-// Função que lista as naturezas de operacao
-// export const list = async (socket: Socket) => {
-//   const naturezaOperacao = await prisma.natureza.findMany();
-//   const regras = await prisma.regraTributacao.findMany();
-
-//   socket.emit("natureza:list", {
-//     naturezaOperacao: naturezaOperacao,
-//     regras: regras,
-//   }); // Corrected the variable name
-// };
-
-// Define natures, products, and rules based on your data structure
 
 // Criar natureza de operacao
 const createNatureza = async (
@@ -68,11 +55,11 @@ const createNatureza = async (
       include: { rules: true },
     });
     if (natureza) {
-      socket.emit("natureza:success", natureza);
+      socket.emit("nature:success", natureza);
     }
   } catch (error) {
     console.error("Error creating Natureza:", error);
-    socket.emit("natureza:error", error);
+    socket.emit("nature:error", error);
   }
 };
 
