@@ -20,7 +20,7 @@ product:create
 customer:list
 customer:signup
 
-company:register
+company:create
 company:list
 ```
 
@@ -383,25 +383,14 @@ Se a criação da nova conta de usuario for um sucesso:
 }
 ```
 
-##### Trigger #2 - [signup:invalid]
+##### Trigger #2 - [signup:error]
 
-Se algum dos dados inseridos pelo usuário forem inválidos:
+Se algum dos dados inseridos pelo usuário forem inválidos, retorna uma mensagem especificando qual campo continha informações inválidas
 
 **==OBERSVAÇÃO: A lógica deste gatilho áinda está incompleta==**
 
 ```
-Input valid user data
-```
-
-##### Trigger #3 - [signup:error]
-
-Para demais erros:
-
-```
-{
-    "name": "PrismaClientValidationError",
-    "clientVersion": "X.X.X"
-}
+"XXX INVÁLIDO"
 ```
 
 ### Event Name: [company:list]
@@ -458,7 +447,7 @@ Retorna um array com a lista de todas as EMPRESAS no banco de dados, e os client
 
 \*\*==OBERSVAÇÃO: A lógica deste EVENTO áinda está incompleta
 
-**Description:** [Este evento é acionado quando um usuário deseja cadastrar uma nova conta de Cliente]
+**Description:** [Este evento é acionado quando um usuário deseja cadastrar uma nova empresa]
 
 #### Parametros:
 
@@ -475,10 +464,19 @@ Este evento espera as seguintes propriedades na mensagem:
 
 ```
 {
+    "type": "Nacional",
     "name": "mc donalds",
     "cnpj": "1234567890123",
+    "iine": "Contibuinte de ICMS"
     "city": "mcdonalds",
     "state": "pr",
+    "district": "Agua Verde",
+    "street": "Rua das carmelindas",
+    "adjunct": "Ap 303",
+    "number": "1050",
+    "cep": "81050460",
+    "email": "ronaldo@mcdonaldo.com",
+    "phone": "41999815114",
     "customerId": 21
 }
 ```
@@ -495,7 +493,7 @@ creation:error
 
 ##### Trigger #1 - [creation:success]
 
-Se a criação da nova conta de usuario for um sucesso:
+Se a criação da nova empresa for um sucesso:
 
 ```
 {
@@ -519,6 +517,311 @@ Input valid user data
 ```
 
 ##### Trigger #3 - [creation:error]
+
+Para demais erros:
+
+```
+{
+    "name": "PrismaClientValidationError",
+    "clientVersion": "X.X.X"
+}
+```
+
+### Event Name: [nature:list]
+
+**==OBSERVAÇÃO: ESSE EVENTO AINDA ESTÁ SENDO CONSTRUIDO
+==**
+**Description:** [Este evento é acionado quando um usuário requisita uma lista de NATUREZAS DE OPERAÇÃO. Retornando uma lista de todas as naturezas no banco de dados]
+
+#### Parametros:
+
+```
+`{Socket} socket`: O socket do Socket.IO socket repreentando o client que acionou o evento.
+```
+
+#### Triggers
+
+Lista de todos os emits no evento [company:list]
+
+```
+nature:list
+```
+
+##### Trigger #1 - [nature:list]
+
+Retorna um array com a lista de todas as naturezas de operação, e as regras atreladas á essa natureza no banco de dados.
+
+==Dentro das regras, é possivel ver as naturezas atreladas á regra, e os produtos atrelados á regra.==
+
+```
+{
+    "naturezas": [
+        {
+            "id": 10,
+            "operation": "00000009",
+            "type": "00000059",
+            "finality": "00000059",
+            "motive": "00000059",
+            "rules": [
+                {
+                    "id": 1,
+                    "uf": "RS",
+                    "icms": "00000009",
+                    "cfop": "00000059",
+                    "percentage": "00000059",
+                    "motive": "00000059",
+                    "rate": "dddddd",
+                    "deferral": "ddddd",
+                    "cst": "fff",
+                    "cofins": "ssss",
+                    "natures": [
+                        {
+                            "id": 10,
+                            "operation": "00000009",
+                            "type": "00000059",
+                            "finality": "00000059",
+                            "motive": "00000059"
+                        }
+                    ]
+                }
+            ]
+        },
+    ],
+    "regras": [
+        {
+            "id": 1,
+            "uf": "RS",
+            "icms": "00000009",
+            "cfop": "00000059",
+            "percentage": "00000059",
+            "motive": "00000059",
+            "rate": "dddddd",
+            "deferral": "ddddd",
+            "cst": "fff",
+            "cofins": "ssss",
+            "natures": [
+                {
+                    "id": 10,
+                    "operation": "00000009",
+                    "type": "00000059",
+                    "finality": "00000059",
+                    "motive": "00000059"
+                }
+            ],
+            "products": []
+        },
+        {
+            "id": 4,
+            "uf": "RS",
+            "icms": "00000009",
+            "cfop": "00000059",
+            "percentage": "00000059",
+            "motive": "00000059",
+            "rate": "dddddd",
+            "deferral": "ddddd",
+            "cst": "fff",
+            "cofins": "ssss",
+            "natures": [],
+            "products": []
+        }
+    ]
+}
+```
+
+### Event Name: [nature:create]
+
+**Description:** [Este evento é acionado quando um usuário deseja criar uma nova natureza de operação]
+
+#### Parametros:
+
+```
+{Object} data:
+`{Socket} socket`: O socket utilizado para fazer comunicação.
+
+`{Natureza} data`: Um objeto contendo as informações da nova companhia a tal como nome, cnpj, cidade, etc...
+```
+
+#### Message:
+
+Este evento espera as seguintes propriedades na mensagem:
+
+```
+{
+    "name": "Natureza Teste 10",
+    "operation": "88888888",
+    "type": "88888888",
+    "finality": "88888888",
+    "motive": "88888888",
+    "rules": [
+        {
+            "id": 1
+        }
+    ]
+}
+```
+
+#### Triggers
+
+Lista de todos os emits no evento [nature:create]
+
+```
+nature:success
+nature:error
+```
+
+##### Trigger #1 - [nature:success]
+
+Se a criação da nova natureza de operação for um sucesso:
+
+```
+{
+    "id": 12,
+    "operation": "88888888",
+    "type": "88888888",
+    "finality": "88888888",
+    "motive": "88888888",
+    "rules": [
+        {
+            "id": 1,
+            "uf": "RS",
+            "icms": "00000009",
+            "cfop": "00000059",
+            "percentage": "00000059",
+            "motive": "00000059",
+            "rate": "dddddd",
+            "deferral": "ddddd",
+            "cst": "fff",
+            "cofins": "ssss"
+        }
+    ]
+}
+```
+
+##### Trigger #2 - [nature:error]
+
+Para demais erros:
+
+```
+{
+    "name": "PrismaClientValidationError",
+    "clientVersion": "X.X.X"
+}
+```
+
+### Event Name: [rule:create]
+
+**Description:** [Este evento é acionado quando um usuário deseja criar uma regra de tributação]
+
+#### Parametros:
+
+```
+{Object} data:
+`{Socket} socket`: O socket utilizado para fazer comunicação.
+
+`{regraTributacao} data`: Um objeto contendo as informações da nova companhia a tal como nome, cnpj, cidade, etc...
+```
+
+#### Message:
+
+Este evento espera as seguintes propriedades na mensagem:
+==natures e products são arrays, que podem conter mais de uma regra ou produto atrelados á mesma regra.==
+
+**==EXEMPLO COM 1 ID:==**
+
+```
+{
+    "uf": "RS",
+    "icms": "11118111",
+    "cfop": "11111711",
+    "percentage": "13111111",
+    "motive": "11111121",
+    "rate": "11111115",
+    "deferral": "11311111",
+    "cst": "XXY",
+    "cofins": "XXY",
+    "natures": [
+        {
+            "id": 2
+        }
+    ],
+    "products": [
+        {
+            "id": 2
+        }
+    ]
+}
+```
+
+**==EXEMPLO COM 2 ID:==**
+
+```
+{
+  "uf": "RS",
+  "icms": "11118111",
+  "cfop": "11111711",
+  "percentage": "13111111",
+  "motive": "11111121",
+  "rate": "11111115",
+  "deferral": "11311111",
+  "cst": "XXY",
+  "cofins": "XXY",
+  "natures": [
+    { "id": 2 },
+    { "id": 3 }
+  ],
+  "products": [
+    { "id": 4 },
+    { "id": 5 }
+  ]
+}
+
+```
+
+#### Triggers
+
+Lista de todos os emits no evento [rule:create]
+
+```
+rule:success
+rule:error
+```
+
+##### Trigger #1 - [rule:success]
+
+Se a criação da nova natureza de operação for um sucesso:
+
+```
+{
+    "id": 7,
+    "uf": "RS",
+    "icms": "11118111",
+    "cfop": "11111711",
+    "percentage": "13111111",
+    "motive": "11111121",
+    "rate": "11111115",
+    "deferral": "11311111",
+    "cst": "XXY",
+    "cofins": "XXY",
+    "natures": [
+        {
+        "id": 2,
+        "operation": "00000009",
+        "type": "00000059",
+        "finality": "00000059",
+        "motive": "00000059"
+        }
+    ],
+    "products": [
+        {
+        "id": 2,
+        "name": "Trigo",
+        "ncm": "00000002"
+        }
+    ]
+},
+```
+
+##### Trigger #2 - [rule:error]
 
 Para demais erros:
 
