@@ -16,11 +16,11 @@ const handleLogin = async (socket: Socket, data: LoginForm) => {
   const customer = await databaseHandler.user.loginCustomer(data);
 
   if (admin) {
-    socket.emit("user:login:success2", admin);
+    socket.emit("admin:login:success", admin);
   } else if (customer) {
-    socket.emit("user:login:success2", customer);
+    socket.emit("customer:login:success", customer);
   } else {
-    socket.emit("user:login:failed2", { error: "Credenciais inválidas2." });
+    socket.emit("user:login:failed", { error: "Credenciais inválidas." });
   }
 };
 
@@ -31,22 +31,20 @@ const handleSignup = async (
   try {
     databaseHandler.user.create(data);
     // Emit success event
-    socket.emit("application:status:review", data);
-    socket.broadcast.emit("admin:list:update", data);
+    socket.emit("user:signup:success", data);
   } catch (error: any) {
     console.log(error);
     if (error.code === "P2002" && error.meta) {
       // Mapping field errors to error messages
       const fieldErrorMap: any = {
-        username: "The username already exists.",
-        email: "The email already exists.",
+        username: "Username already exists.",
+        email: "Email already exists.",
         cpf: "CPF already registered.",
         rg: "RG already registered.",
         cnpj: "CNPJ already registered.",
         voter_card: "Voter card already registered.",
         work_card: "Work card already exists.",
       };
-
       // Check which field caused the error
       for (const field in fieldErrorMap) {
         if (error.meta.target.includes(field)) {
@@ -73,10 +71,10 @@ const userList = async (socket: Socket) => {
 const customerList = async (socket: Socket) => {
   try {
     const customer = await databaseHandler.user.customerList();
-    socket.emit("user:list", customer);
+    socket.emit("customer:list", customer);
   } catch (error) {
     console.error(`Error fetching customer list`);
-    socket.emit("user:list:error", { error });
+    socket.emit("customer:list:error", { error });
   }
 };
 
@@ -86,17 +84,17 @@ const productList = async (socket: Socket) => {
     socket.emit("product:list", product);
   } catch (error) {
     console.error(`Error fetching product list`);
-    socket.emit("user:list:error", { error });
+    socket.emit("product:list:error", { error });
   }
 };
 
 const productCreate = async (socket: Socket, data: any) => {
   try {
     const product = await databaseHandler.product.create(data);
-    socket.emit("product:create:success", product);
+    socket.emit("product:creation:successful", product);
   } catch (error) {
     console.error(`Error creating product`);
-    socket.emit("product:create:error", { error });
+    socket.emit("product:creation:error", { error });
   }
 };
 
@@ -106,17 +104,17 @@ const companyList = async (socket: Socket) => {
     socket.emit("company:list", company);
   } catch (error) {
     console.error(`Error fetching company list`);
-    socket.emit("user:list:error", { error });
+    socket.emit("company:list:error", { error });
   }
 };
 
 const companyCreate = async (socket: Socket, data: NewCompany) => {
   try {
     const company = await databaseHandler.company.create(data);
-    socket.emit("company:create:success", company);
+    socket.emit("company:creation:success", company);
   } catch (error) {
-    console.error(`Error creating product`, error);
-    socket.emit("product:create:error", { error });
+    console.error(`Error creating company`, error);
+    socket.emit("company:creation:error", { error });
   }
 };
 
@@ -125,17 +123,17 @@ const natureList = async (socket: Socket) => {
     const natures = await databaseHandler.nature.list();
     socket.emit("nature:list", natures);
   } catch (error) {
-    console.error(`Error fetching company list`);
-    socket.emit("user:list:error", { error });
+    console.error(`Error fetching nature list`);
+    socket.emit("nature:list:error", { error });
   }
 };
 
 const natureCreate = async (socket: Socket, data: NewNature) => {
   try {
     const natureza = await databaseHandler.nature.create(data);
-    socket.emit("nature:success", natureza);
+    socket.emit("nature:creation:success", natureza);
   } catch (error) {
-    console.error("Error creating Natureza:", error);
+    console.error("Error creating nature:", error);
     socket.emit("nature:error", error);
   }
 };
@@ -143,9 +141,9 @@ const natureCreate = async (socket: Socket, data: NewNature) => {
 const ruleCreate = async (socket: Socket, data: NewRule) => {
   try {
     const natureza = await databaseHandler.rule.create(data);
-    socket.emit("rule:success", natureza);
+    socket.emit("rule:creation:success", natureza);
   } catch (error) {
-    console.error("Error creating Rule:", error);
+    console.error("Error creating rule:", error);
     socket.emit("rule:error", error);
   }
 };
