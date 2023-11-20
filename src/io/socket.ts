@@ -2,16 +2,9 @@ import { Socket } from "socket.io";
 import { Server as SocketIoServer } from "socket.io";
 import { Server as HttpServer } from "http";
 import { Server as HttpsServer } from "https";
-import { Customer } from "@prisma/client";
 import { Client, ClientBag } from "../definitions/client";
-import user from "./user";
-import product from "./product";
-import natureza from "./natureza";
-import customer from "./customer";
-import signup from "./signup";
-import { logout } from "./logout";
 
-import company from "./company";
+import main from "./main";
 
 let io: SocketIoServer | null = null;
 
@@ -67,25 +60,27 @@ export const handleSocket = (socket: Socket) => {
     console.log(`disconnected: ${socket.id}`);
   });
 
-  socket.on("user:login", (data) => user.login(socket, data, clients));
-  socket.on("user:list", (data) => user.list(socket));
+  socket.on("user:login", (data) => main.handleLogin(socket, data));
 
-  socket.on("product:list", (data) => product.list(socket));
-  socket.on("product:create", (data) => product.createProduct(socket, data));
+  socket.on("user:list", (data) => main.userList(socket));
 
-  socket.on("customer:list", (data) => customer.list(socket));
+  socket.on("product:list", (data) => main.productList(socket));
+
+  socket.on("product:create", (data) => main.productCreate(socket, data));
+
+  socket.on("customer:list", (data) => main.customerList(socket));
+
   socket.on("customer:signup", (data) => {
-    signup.handleSignup(socket, data);
+    main.handleSignup(socket, data);
   });
 
-  socket.on("company:list", (data) => company.list(socket));
-  socket.on("company:create", (data) => company.create(socket, data));
+  socket.on("company:list", (data) => main.companyList(socket));
 
-  socket.on("user:logout", () => {
-    logout(socket, clients);
-  });
+  socket.on("company:create", (data) => main.companyCreate(socket, data));
 
-  socket.on("nature:list", () => natureza.list(socket));
-  socket.on("nature:create", (data) => natureza.createNatureza(socket, data));
-  socket.on("rule:create", (data) => natureza.createRule(socket, data));
+  socket.on("nature:list", () => main.natureList(socket));
+
+  socket.on("nature:create", (data) => main.natureCreate(socket, data));
+
+  socket.on("rule:create", (data) => main.ruleCreate(socket, data));
 };
