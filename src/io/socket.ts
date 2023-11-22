@@ -83,4 +83,10 @@ export const handleSocket = (socket: Socket) => {
   socket.on("nature:create", (data) => main.natureCreate(socket, data));
 
   socket.on("rule:create", (data) => main.ruleCreate(socket, data));
+
+  socket.on("property:list", () => main.propertyList(socket));
+
+  socket.on("property:create", (data) => main.propertyCreate(socket, data));
+
+  socket.on("nota:create", (data) => main.notaCreate(socket, data));
 };

@@ -13,11 +13,12 @@ import {
 import {
   NewUser,
   NewCompany,
-  LoginForm,
-  CustomerSignupForm,
   NewProduct,
   NewNature,
   NewRule,
+  newProperty,
+  NewNota,
+  LoginForm,
 } from "./definitions/userOperations";
 
 const prisma = new PrismaClient();
@@ -44,16 +45,17 @@ const inclusions = {
   },
 };
 
-// Funções relacionadas aos usuários / clientes e admins
+// Funções relacionadas aos usuários / clientes e admins ⬇️
+
 const user = {
-  // Funções de login para Admins, e Clientes
-  loginAdmin: async (data: { login: string; password: string }) => {
+  // Funções de login para Admins
+  loginAdmin: async (data: LoginForm) => {
     return await prisma.admin.findFirst({
       where: { email: data.login, password: data.password },
     });
   },
-
-  loginCustomer: async (data: { login: string; password: string }) => {
+  // Função de login para clientes
+  loginCustomer: async (data: LoginForm) => {
     return await prisma.customer.findFirst({
       where: {
         OR: [{ email: data.login }, { document: data.login }],
@@ -119,7 +121,9 @@ const user = {
     });
   },
 };
-// Funções relacionadas aos produtos
+
+// Funções relacionadas aos produtos ⬇️
+
 const product = {
   // Função para listar todos os produtos
   list: async () => {
@@ -127,16 +131,19 @@ const product = {
 
     return { product };
   },
-
+  // Função para criar um novo produto
   create: async (data: NewProduct) => {
     return await prisma.product.create({
       data: {
         name: data.name,
         ncm: normalize(data.ncm),
+        nota: {},
       },
     });
   },
 };
+
+// Funções relacionadas as empresas ⬇️
 
 const company = {
   // Função para listar todas as empresas
@@ -144,7 +151,7 @@ const company = {
     const company = await prisma.company.findMany({});
     return { company };
   },
-
+  // Função para criar uma nova empresa
   create: async (data: NewCompany) => {
     return await prisma.company.create({
       data: {
@@ -167,7 +174,10 @@ const company = {
   },
 };
 
+// Funções relacionadas as naturezas ⬇️
+
 const nature = {
+  // Função para listar todas as naturezas
   list: async () => {
     const natures = await prisma.natureza.findMany({
       include: { rules: { include: { natures: true } } },
@@ -178,7 +188,7 @@ const nature = {
     });
     return { natures, rules };
   },
-
+  // Função para criar uma nova natureza
   create: async (data: NewNature) => {
     const rules = data.rules;
     return await prisma.natureza.create({
@@ -196,13 +206,16 @@ const nature = {
   },
 };
 
+// Funções relacionadas as regras de tributação ⬇️
+
 const rule = {
+  // Função para listar todas as regras de tributação
   list: async () => {
     return await prisma.regraTributacao.findMany({
       include: { natures: true, products: true },
     });
   },
-
+  // funcão para criar uma nova regra de tributação
   create: async (data: NewRule) => {
     const natures = data.natures;
     const products = data.products;
@@ -225,6 +238,65 @@ const rule = {
   },
 };
 
+const property = {
+  list: async () => {
+    return await prisma.property.findMany();
+  },
+
+  create: async (data: newProperty) => {
+    return await prisma.property.create({
+      data: {
+        ie: data.ie,
+        nifr: data.nifr,
+        cep: normalize(data.cep),
+        city: data.city,
+        state: data.state,
+        street: data.street,
+        number: data.number,
+        adjunct: data.adjunct,
+        district: data.district,
+        exploration: data.exploration,
+        declarant: data.declarant,
+        nota: {},
+      },
+    });
+  },
+};
+
+const nota = {
+  // list: async () => {
+  //   return await prisma.property.findMany();
+  // },
+
+  create: async (data: NewNota) => {
+    return await prisma.notaFiscal.create({
+      data: {
+        emission: data.emission,
+        seriesNfe: data.seriesNfe,
+        clientSupplier: data.clientSupplier,
+        issuer: data.issuer,
+        value: data.value,
+        situation: data.situation,
+        dateTime: data.dateTime,
+        paymentCondition: data.paymentCondition,
+        paymentType: data.paymentType,
+        freteType: data.freteType,
+        vehiclePlates: data.vehiclePlates,
+        vehicleUf: data.vehicleUf,
+        shippingCompany: data.shippingCompany,
+        productQnty: data.productQnty,
+        productType: data.productType,
+        bruteWeightKg: data.bruteWeightKg,
+        liquidWeightKg: data.liquidWeightKg,
+        product: {},
+        customer: {},
+        property: {},
+        nature: {},
+      },
+    });
+  },
+};
+
 // Assuming you have a `prisma.nature.create` method, replace it with the correct method name
 
-export default { user, product, company, nature, rule };
+export default { user, product, company, nature, rule, property, nota };

@@ -35,6 +35,7 @@ export declare interface NewProduct {
   name: string;
   ncm: string;
   rules: regraTributacao[];
+  nota: notaFiscal[];
 }
 
 export declare interface NewNature {
@@ -59,12 +60,46 @@ export declare interface NewRule {
   products: Product[];
 }
 
-export declare interface LoginForm {
-  login: string;
-  password: string;
+export declare interface newProperty {
+  ie: string;
+  nifr: string;
+  cep: string;
+  city: string;
+  state: string;
+  street: string;
+  number: string;
+  adjunct: string;
+  district: string;
+  exploration: string;
+  declarant: string;
+  nota: notaFiscal[];
 }
 
-export declare interface CustomerSignupForm {
+export declare interface NewNota {
+  emission: string;
+  seriesNfe: string;
+  clientSupplier: string;
+  issuer: string;
+  value: string;
+  situation: boolean;
+  dateTime: string;
+  paymentCondition: string;
+  paymentType: string;
+  freteType: string;
+  vehiclePlates: string;
+  vehicleUf: string;
+  shippingCompany: string;
+  productQnty: string;
+  productType: string;
+  bruteWeightKg: string;
+  liquidWeightKg: string;
+  product: Product[];
+  customer: Customer[];
+  property: Property[];
+  nature: Natureza[];
+}
+
+export declare interface LoginForm {
   login: string;
   password: string;
 }
