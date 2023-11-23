@@ -70,9 +70,7 @@ export const handleSocket = (socket: Socket) => {
 
   socket.on("customer:list", (data) => main.customerList(socket));
 
-  socket.on("customer:signup", (data) => {
-    main.handleSignup(socket, data);
-  });
+  socket.on("customer:signup", (data) => main.handleSignup(socket, data));
 
   socket.on("company:list", (data) => main.companyList(socket));
 

@@ -11,6 +11,7 @@ import {
 } from "../definitions/userOperations";
 import { ClientBag } from "../definitions/client";
 import databaseHandler from "../databaseHandler";
+import { error } from "console";
 
 const prisma = databaseHandler;
 
@@ -96,7 +97,7 @@ const productCreate = async (socket: Socket, data: NewProduct) => {
     const product = await databaseHandler.product.create(data);
     socket.emit("product:creation:successful", product);
   } catch (error) {
-    console.error(`Error creating product`);
+    console.error(`Error creating product`, error);
     socket.emit("product:creation:error", { error });
   }
 };
@@ -163,21 +164,22 @@ const propertyList = async (socket: Socket) => {
 
 const propertyCreate = async (socket: Socket, data: newProperty) => {
   try {
+    console.log(data);
     const properties = await databaseHandler.property.create(data);
     socket.emit("property:creation:success", properties);
   } catch (error) {
     console.error(`Error fetching nature list`);
-    socket.emit("nature:list:error", { error });
+    socket.emit("property:list:error", { error });
   }
 };
 
 const notaCreate = async (socket: Socket, data: NewNota) => {
   try {
-    const properties = await databaseHandler.nota.create(data);
-    socket.emit("property:creation:success", properties);
+    const nota = await databaseHandler.nota.create(data);
+    socket.emit("nota:creation:success", nota);
   } catch (error) {
-    console.error(`Error fetching nature list`);
-    socket.emit("nature:list:error", { error });
+    console.error(`Error creating nota`, error);
+    socket.emit("nota:creation:error", { error });
   }
 };
 

@@ -1,4 +1,15 @@
-import { Admin, Company, Customer, DigitalCertificate } from "@prisma/client";
+import {
+  Admin,
+  Customer,
+  DigitalCertificate,
+  Product,
+  Company,
+  Natureza,
+  regraTributacao,
+  Property,
+  notaFiscal,
+  Accounts,
+} from "@prisma/client";
 import { type } from "os";
 
 export declare interface NewUser {
@@ -34,8 +45,8 @@ export declare interface NewCompany {
 export declare interface NewProduct {
   name: string;
   ncm: string;
-  rules: regraTributacao[];
-  nota: notaFiscal[];
+  rules?: regraTributacao[];
+  nota?: notaFiscal[];
 }
 
 export declare interface NewNature {
@@ -43,7 +54,7 @@ export declare interface NewNature {
   type: string;
   finality: string;
   motive: string;
-  rules: regraTributacao[];
+  rules?: regraTributacao[];
 }
 
 export declare interface NewRule {
@@ -81,7 +92,7 @@ export declare interface NewNota {
   clientSupplier: string;
   issuer: string;
   value: string;
-  situation: boolean;
+  situation: string;
   dateTime: string;
   paymentCondition: string;
   paymentType: string;
@@ -93,10 +104,10 @@ export declare interface NewNota {
   productType: string;
   bruteWeightKg: string;
   liquidWeightKg: string;
-  product: Product[];
-  customer: Customer[];
-  property: Property[];
-  nature: Natureza[];
+  products: Product[];
+  customer: Customer;
+  property: Property;
+  nature: Natureza;
 }
 
 export declare interface LoginForm {

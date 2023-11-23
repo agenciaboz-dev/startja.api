@@ -26,13 +26,22 @@ app.use("/api", router);
 
 try {
   const server = https.createServer(
-      {
-          key: fs.readFileSync("/etc/letsencrypt/live/agencyboz.com/privkey.pem", "utf8"),
-          cert: fs.readFileSync("/etc/letsencrypt/live/agencyboz.com/cert.pem", "utf8"),
-          ca: fs.readFileSync("/etc/letsencrypt/live/agencyboz.com/fullchain.pem", "utf8"),
-      },
-      app
-  )
+    {
+      key: fs.readFileSync(
+        "/etc/letsencrypt/live/agencyboz.com/privkey.pem",
+        "utf8"
+      ),
+      cert: fs.readFileSync(
+        "/etc/letsencrypt/live/agencyboz.com/cert.pem",
+        "utf8"
+      ),
+      ca: fs.readFileSync(
+        "/etc/letsencrypt/live/agencyboz.com/fullchain.pem",
+        "utf8"
+      ),
+    },
+    app
+  );
 
   initializeIoServer(server);
   const io = getIoInstance();

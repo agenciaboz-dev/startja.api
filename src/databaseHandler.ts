@@ -133,11 +133,11 @@ const product = {
   },
   // Função para criar um novo produto
   create: async (data: NewProduct) => {
+    console.log(data);
     return await prisma.product.create({
       data: {
         name: data.name,
         ncm: normalize(data.ncm),
-        nota: {},
       },
     });
   },
@@ -190,17 +190,19 @@ const nature = {
   },
   // Função para criar uma nova natureza
   create: async (data: NewNature) => {
-    const rules = data.rules;
-    return await prisma.natureza.create({
-      data: {
-        operation: data.operation,
-        type: data.type,
-        finality: data.finality,
-        motive: data.motive,
+    const { rules, ...naturezaData } = data;
+
+    const createData = {
+      ...naturezaData,
+      ...(rules && {
         rules: {
           connect: rules.map((rule: { id: number }) => ({ id: rule.id })),
         },
-      },
+      }),
+    };
+
+    return await prisma.natureza.create({
+      data: createData,
       include: { rules: true },
     });
   },
@@ -217,9 +219,6 @@ const rule = {
   },
   // funcão para criar uma nova regra de tributação
   create: async (data: NewRule) => {
-    const natures = data.natures;
-    const products = data.products;
-
     return await prisma.regraTributacao.create({
       data: {
         uf: data.uf,
@@ -231,8 +230,10 @@ const rule = {
         deferral: data.deferral,
         cst: data.cst,
         cofins: data.cofins,
-        natures: { connect: natures.map((nature) => ({ id: nature.id })) },
-        products: { connect: products.map((product) => ({ id: product.id })) },
+        natures: { connect: data.natures.map((nature) => ({ id: nature.id })) },
+        products: {
+          connect: data.products.map((product) => ({ id: product.id })),
+        },
       },
     });
   },
@@ -257,7 +258,6 @@ const property = {
         district: data.district,
         exploration: data.exploration,
         declarant: data.declarant,
-        nota: {},
       },
     });
   },
@@ -271,13 +271,13 @@ const nota = {
   create: async (data: NewNota) => {
     return await prisma.notaFiscal.create({
       data: {
-        emission: data.emission,
+        emission: new Date().getTime().toString(),
         seriesNfe: data.seriesNfe,
         clientSupplier: data.clientSupplier,
         issuer: data.issuer,
         value: data.value,
         situation: data.situation,
-        dateTime: data.dateTime,
+        dateTime: new Date().getTime().toString(),
         paymentCondition: data.paymentCondition,
         paymentType: data.paymentType,
         freteType: data.freteType,
@@ -288,15 +288,15 @@ const nota = {
         productType: data.productType,
         bruteWeightKg: data.bruteWeightKg,
         liquidWeightKg: data.liquidWeightKg,
-        product: {},
-        customer: {},
-        property: {},
-        nature: {},
+        natureId: data.nature.id,
+        customerId: data.customer.id,
+        propertyId: data.property.id,
+        products: {
+          connect: data.products.map((product) => ({ id: product.id })),
+        },
       },
     });
   },
 };
-
-// Assuming you have a `prisma.nature.create` method, replace it with the correct method name
 
 export default { user, product, company, nature, rule, property, nota };

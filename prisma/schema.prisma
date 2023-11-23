@@ -26,10 +26,11 @@ model Customer {
     city                String
     state               String
     
-    companies           Company[]
+
     certificateId       Int                 @unique
     certificate         DigitalCertificate  @relation(fields: [certificateId], references: [id])
-    nota                notaFiscal[]
+    notas               notaFiscal[]
+    companies           Company[]
 }
 
 model DigitalCertificate {
@@ -41,13 +42,12 @@ model DigitalCertificate {
 }
 
 model Product {
-    id                  Int                 @id @default(autoincrement())
+    id                  Int                    @id @default(autoincrement())
     name                String              
     ncm                 String       
     rules               regraTributacao[]
 
-    notaId              Int
-    nota                notaFiscal            @relation(fields: [notaId], references: [id])
+    notas               notaFiscal[]
 }
 
 model Company {
@@ -77,7 +77,7 @@ model Natureza {
     finality            String
     motive              String
     rules               regraTributacao[]
-    nota                notaFiscal[]
+    notas                notaFiscal[]
 
 
 }
@@ -111,20 +111,20 @@ model Property {
     district            String
     exploration         String
     declarant           String
-    nota                notaFiscal[]
+    notas               notaFiscal[]
 }
 
 
 
 model notaFiscal {
     id                  Int                     @id @default(autoincrement())
-    emission            DateTime
+    emission            String
     seriesNfe           String
     clientSupplier      String
     issuer              String
     value               String
-    situation           Boolean
-    dateTime            DateTime?
+    situation           String
+    dateTime            String?
     paymentCondition    String
     paymentType         String
     freteType           String
@@ -137,7 +137,8 @@ model notaFiscal {
     liquidWeightKg      String
 
 
-    product             Product[]
+
+    products            Product[]
     
     customerId          Int
     customer            Customer             @relation(fields: [customerId], references: [id])
