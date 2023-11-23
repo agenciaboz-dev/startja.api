@@ -47,11 +47,11 @@ export declare interface NewProduct {
 }
 
 export declare interface NewNature {
-  operation: string;
-  type: string;
-  finality: string;
-  motive: string;
-  rules?: regraTributacao[];
+    operation: string
+    type: string
+    finality: string
+    motive: string
+    rules: { id: number }[]
 }
 
 export declare interface NewRule {

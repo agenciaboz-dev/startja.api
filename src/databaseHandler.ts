@@ -174,8 +174,8 @@ const nature = {
   // Função para listar todas as naturezas
   list: async () => {
     const natures = await prisma.natureza.findMany({
-      include: { rules: { include: { natures: true } } },
-    });
+        include: { rules: true }
+    })
 
     const rules = await prisma.regraTributacao.findMany({
       include: { natures: true, products: true },
@@ -187,13 +187,11 @@ const nature = {
     const { rules, ...naturezaData } = data;
 
     const createData = {
-      ...naturezaData,
-      ...(rules && {
+        ...naturezaData,
         rules: {
-          connect: rules.map((rule: { id: number }) => ({ id: rule.id })),
-        },
-      }),
-    };
+            connect: rules.map((rule: { id: number }) => ({ id: rule.id }))
+        }
+    }
 
     return await prisma.natureza.create({
       data: createData,

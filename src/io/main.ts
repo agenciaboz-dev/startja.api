@@ -45,7 +45,7 @@ const companyCreate = async (socket: Socket, data: NewCompany) => {
 const natureList = async (socket: Socket) => {
     try {
         const natures = await databaseHandler.nature.list()
-        socket.emit("nature:list", natures)
+        socket.emit("nature:list", natures) // manda só a lista
     } catch (error) {
         console.error(`Error fetching nature list`)
         socket.emit("nature:list:error", { error })

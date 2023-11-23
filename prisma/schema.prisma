@@ -77,7 +77,7 @@ model Natureza {
     finality            String
     motive              String
     rules               regraTributacao[]
-    notas                notaFiscal[]
+    notas               notaFiscal[]
 
 
 }
