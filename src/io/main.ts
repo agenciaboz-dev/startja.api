@@ -1,32 +1,21 @@
 import { Socket } from "socket.io";
-import {
-  NewUser,
-  LoginForm,
-  NewNature,
-  NewRule,
-  NewCompany,
-  NewProduct,
-  newProperty,
-  NewNota,
-} from "../definitions/userOperations";
-import { ClientBag } from "../definitions/client";
-import databaseHandler from "../databaseHandler";
-import { error } from "console";
-
-const prisma = databaseHandler;
+import { NewUser, LoginForm, NewNature, NewRule, NewCompany, NewProduct, newProperty, NewNota } from "../definitions/userOperations"
+import databaseHandler from "../databaseHandler"
 
 const handleLogin = async (socket: Socket, data: LoginForm) => {
-  const admin = await databaseHandler.user.loginAdmin(data);
-  const customer = await databaseHandler.user.loginCustomer(data);
+    const admin = await databaseHandler.user.loginAdmin(data)
 
-  if (admin) {
-    socket.emit("admin:login:success", admin);
-  } else if (customer) {
-    socket.emit("customer:login:success", customer);
-  } else {
-    socket.emit("user:login:failed", { error: "Credenciais inválidas." });
-  }
-};
+    if (admin) {
+        socket.emit("admin:login:success", admin)
+    } else {
+        const customer = await databaseHandler.user.loginCustomer(data)
+        if (customer) {
+            socket.emit("customer:login:success", customer)
+        } else {
+            socket.emit("user:login:failed", { error: "Credenciais inválidas." })
+        }
+    }
+}
 
 const handleSignup = async (
   socket: Socket,
