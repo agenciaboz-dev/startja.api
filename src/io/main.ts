@@ -64,8 +64,8 @@ const natureCreate = async (socket: Socket, data: NewNature) => {
 
 const ruleCreate = async (socket: Socket, data: NewRule) => {
     try {
-        const natureza = await databaseHandler.rule.create(data)
-        socket.emit("rule:creation:success", natureza)
+        const rule = await databaseHandler.rule.create(data)
+        socket.emit("rule:creation:success", rule)
     } catch (error) {
         console.error("Error creating rule:", error)
         socket.emit("rule:error", error)
