@@ -3,6 +3,8 @@ import { Server as SocketIoServer } from "socket.io";
 import { Server as HttpServer } from "http";
 import { Server as HttpsServer } from "https"
 import main from "./main"
+import user from "./user"
+import customer from "./customer"
 
 let io: SocketIoServer | null = null
 
@@ -27,14 +29,14 @@ export const handleSocket = (socket: Socket) => {
         console.log(`disconnected: ${socket.id}`)
     })
 
-    socket.on("user:login", (data) => main.handleLogin(socket, data))
-    socket.on("user:list", (data) => main.userList(socket))
+    socket.on("user:login", (data) => user.handleLogin(socket, data))
+    socket.on("user:list", (data) => user.list(socket))
 
     socket.on("product:list", (data) => main.productList(socket))
     socket.on("product:create", (data) => main.productCreate(socket, data))
 
-    socket.on("customer:list", (data) => main.customerList(socket))
-    socket.on("customer:signup", (data) => main.handleSignup(socket, data))
+    socket.on("customer:list", (data) => customer.list(socket))
+    socket.on("customer:signup", (data) => customer.handleSignup(socket, data))
 
     socket.on("company:list", (data) => main.companyList(socket))
     socket.on("company:create", (data) => main.companyCreate(socket, data))
