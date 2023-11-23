@@ -142,33 +142,31 @@ const product = {
 // Funções relacionadas as empresas ⬇️
 
 const company = {
-  // Função para listar todas as empresas
-  list: async () => {
-    const company = await prisma.company.findMany({});
-    return { company };
-  },
-  // Função para criar uma nova empresa
-  create: async (data: NewCompany) => {
-    return await prisma.company.create({
-      data: {
-        type: data.type,
-        name: data.name,
-        document: normalize(data.document),
-        iine: normalize(data.iine),
-        city: data.city,
-        state: data.state,
-        district: data.district,
-        street: data.street,
-        adjunct: data.adjunct,
-        number: data.number,
-        cep: normalize(data.cep),
-        email: normalize(data.email),
-        phone: normalize(data.phone),
-        customerId: data.customerId,
-      },
-    });
-  },
-};
+    // Função para listar todas as empresas
+    list: async () => await prisma.company.findMany(),
+
+    // Função para criar uma nova empresa
+    create: async (data: NewCompany) => {
+        return await prisma.company.create({
+            data: {
+                type: data.type,
+                name: data.name,
+                document: normalize(data.document),
+                iine: normalize(data.iine),
+                city: data.city,
+                state: data.state,
+                district: data.district,
+                street: data.street,
+                adjunct: data.adjunct,
+                number: data.number,
+                cep: normalize(data.cep),
+                email: normalize(data.email),
+                phone: normalize(data.phone),
+                customerId: data.customerId
+            }
+        })
+    }
+}
 
 // Funções relacionadas as naturezas ⬇️
 
