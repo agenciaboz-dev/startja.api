@@ -88,8 +88,8 @@ const propertyCreate = async (socket: Socket, data: newProperty) => {
         const properties = await databaseHandler.property.create(data)
         socket.emit("property:creation:success", properties)
     } catch (error) {
-        console.error(`Error fetching nature list`)
-        socket.emit("property:list:error", { error })
+        console.error(`Error creating property`)
+        socket.emit("property:creation:failed", { error })
     }
 }
 
