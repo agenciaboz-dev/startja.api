@@ -13,16 +13,13 @@ import {
 import { type } from "os";
 
 export declare interface NewUser {
-  name: string;
-  email: string;
-  password: string;
-  phone: string;
-  document: string;
-  city: string;
-  state: string;
-  register_date: string;
-  companies: Company[];
-  certificate: DigitalCertificate;
+    name: string
+    email: string
+    password: string
+    phone: string
+    document: string
+    city: string
+    state: string
 }
 
 export declare interface NewCompany {

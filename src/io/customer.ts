@@ -17,9 +17,9 @@ const handleSignup = async (
     data: NewUser // Change 'any' to 'NewUser' to ensure type safety
 ) => {
     try {
-        databaseHandler.user.create(data)
+        const customer = await databaseHandler.user.create(data)
         // Emit success event
-        socket.emit("user:signup:success", data)
+        socket.emit("user:signup:success", customer)
     } catch (error: any) {
         console.log(error)
         if (error.code === "P2002" && error.meta) {
