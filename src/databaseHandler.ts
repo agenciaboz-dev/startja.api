@@ -23,8 +23,8 @@ import {
 
 const prisma = new PrismaClient();
 
-const inclusions: {
-    customer: { certificate: true; companies: true }
+const inclusions = {
+    customer: { certificate: true, companies: true }
 }
 
 const selections = {
