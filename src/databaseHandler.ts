@@ -172,12 +172,10 @@ const company = {
 
 const nature = {
   // Função para listar todas as naturezas
-  list: async () => {
-    const natures = await prisma.natureza.findMany({
+  list: async () =>
+    await prisma.natureza.findMany({
       include: { rules: true },
-    });
-    return { natures };
-  },
+    }),
   // Função para criar uma nova natureza
   create: async (data: NewNature) => {
     const { rules, ...naturezaData } = data;
