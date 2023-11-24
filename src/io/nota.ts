@@ -1,16 +1,6 @@
 import { Socket } from "socket.io";
-import { NewRule, NewNota } from "../definitions/userOperations";
+import { NewNota } from "../definitions/userOperations";
 import databaseHandler from "../databaseHandler";
-
-const ruleCreate = async (socket: Socket, data: NewRule) => {
-  try {
-    const rule = await databaseHandler.rule.create(data);
-    socket.emit("rule:creation:success", rule);
-  } catch (error) {
-    console.error("Error creating rule:", error);
-    socket.emit("rule:error", error);
-  }
-};
 
 const notaCreate = async (socket: Socket, data: NewNota) => {
   try {
@@ -23,7 +13,5 @@ const notaCreate = async (socket: Socket, data: NewNota) => {
 };
 
 export default {
-  ruleCreate,
-
   notaCreate,
 };

@@ -2,13 +2,14 @@ import { Socket } from "socket.io";
 import { Server as SocketIoServer } from "socket.io";
 import { Server as HttpServer } from "http";
 import { Server as HttpsServer } from "https";
-import main from "./main";
+import nota from "./nota";
 import user from "./user";
 import customer from "./customer";
 import product from "./product";
 import company from "./company";
 import nature from "./nature";
 import property from "./property";
+import rule from "./rule";
 
 let io: SocketIoServer | null = null;
 
@@ -50,10 +51,10 @@ export const handleSocket = (socket: Socket) => {
   socket.on("nature:list", () => nature.natureList(socket));
   socket.on("nature:create", (data) => nature.natureCreate(socket, data));
 
-  socket.on("rule:create", (data) => main.ruleCreate(socket, data));
+  socket.on("rule:create", (data) => rule.ruleCreate(socket, data));
 
   socket.on("property:list", () => property.propertyList(socket));
   socket.on("property:create", (data) => property.propertyCreate(socket, data));
 
-  socket.on("nota:create", (data) => main.notaCreate(socket, data));
+  socket.on("nota:create", (data) => nota.notaCreate(socket, data));
 };
