@@ -47,76 +47,76 @@ const selections = {
 // Funções relacionadas aos usuários / clientes e admins ⬇️
 
 const user = {
-  // Funções de login para Admins
-  loginAdmin: async (data: LoginForm) =>
-    await prisma.admin.findFirst({
-      where: { email: data.login, password: data.password },
-    }),
+    // Funções de login para Admins
+    loginAdmin: async (data: LoginForm) =>
+        await prisma.admin.findFirst({
+            where: { OR: [{ email: data.login }], AND: { password: data.password } }
+        }),
 
-  // Função de login para clientes
-  loginCustomer: async (data: LoginForm) =>
-    await prisma.customer.findFirst({
-      where: {
-        OR: [{ email: data.login }, { document: data.login }],
-        AND: { password: data.password },
-      },
-    }),
-  // Função para listar todos os dados de todos os usuarios. ADMINS e CLIENTES
-  list: async () => {
-    const admin = await prisma.admin.findMany({});
-    const customer = await prisma.customer.findMany({});
-    return { admin, customer };
-  },
+    // Função de login para clientes
+    loginCustomer: async (data: LoginForm) =>
+        await prisma.customer.findFirst({
+            where: {
+                OR: [{ email: data.login }, { document: data.login }],
+                AND: { password: data.password }
+            }
+        }),
+    // Função para listar todos os dados de todos os usuarios. ADMINS e CLIENTES
+    list: async () => {
+        const admin = await prisma.admin.findMany({})
+        const customer = await prisma.customer.findMany({})
+        return { admin, customer }
+    },
 
-  // Funcão para listar todos os CLIENTES, omitindo informações sensíveis.
-  customerList: async () => {
-    const customers = await prisma.customer.findMany({
-      select: selections.customer,
-    });
-    return customers;
-  },
+    // Funcão para listar todos os CLIENTES, omitindo informações sensíveis.
+    customerList: async () => {
+        const customers = await prisma.customer.findMany({
+            select: selections.customer
+        })
+        return customers
+    },
 
-  // Função de criação de novos CLIENTES.
-  create: async (data: NewUser) => {
-    console.log("Iniciando a criação do usuário...");
-    const certificateInput: DigitalCertificate = {
-      id: 0,
-      certificate: "",
-      expiry: "",
-    };
+    // Função de criação de novos CLIENTES.
+    create: async (data: NewUser) => {
+        console.log("Iniciando a criação do usuário...")
+        const certificateInput: DigitalCertificate = {
+            id: 0,
+            certificate: "",
+            expiry: ""
+        }
 
-    const certificate = await prisma.digitalCertificate.create({
-      data: {
-        expiry: certificateInput.expiry,
-        certificate: certificateInput.certificate,
-      },
-    });
+        const certificate = await prisma.digitalCertificate.create({
+            data: {
+                expiry: certificateInput.expiry,
+                certificate: certificateInput.certificate
+            }
+        })
 
-    return await prisma.customer.create({
-      data: {
-        name: data.name,
-        email: normalize(data.email),
-        password: data.password,
-        phone: data.phone,
-        document: normalize(data.document),
-        city: data.city,
-        state: data.state,
-        register_date: new Date().getTime().toString(),
-        certificateId: certificate.id,
-      },
-      select: selections.customer,
-    });
-  },
+        return await prisma.customer.create({
+            data: {
+                name: data.name,
+                email: normalize(data.email),
+                password: data.password,
+                phone: data.phone,
+                document: normalize(data.document),
+                city: data.city,
+                state: data.state,
+                register_date: new Date().getTime().toString(),
+                certificateId: certificate.id
+            },
+            select: selections.customer
+        })
+    },
 
-  exists: async (data: NewUser) => {
-    return await prisma.customer.findUnique({
-      where: {
-        email: data.email,
-        document: data.document,
-      },
-    });
-  },
-};
+    exists: async (data: NewUser) => {
+        return await prisma.customer.findUnique({
+            where: {
+                email: data.email,
+                document: data.document
+            }
+        })
+    }
+}
 
 // Funções relacionadas aos produtos ⬇️
 
