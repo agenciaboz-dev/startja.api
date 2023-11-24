@@ -51,10 +51,12 @@ export const handleSocket = (socket: Socket) => {
   socket.on("nature:list", () => nature.natureList(socket));
   socket.on("nature:create", (data) => nature.natureCreate(socket, data));
 
+  socket.on("rule:list", () => rule.ruleList(socket));
   socket.on("rule:create", (data) => rule.ruleCreate(socket, data));
 
   socket.on("property:list", () => property.propertyList(socket));
   socket.on("property:create", (data) => property.propertyCreate(socket, data));
 
   socket.on("nota:create", (data) => nota.notaCreate(socket, data));
+  socket.on("nota:list", () => nota.notaList(socket));
 };

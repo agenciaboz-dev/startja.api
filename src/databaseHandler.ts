@@ -231,6 +231,7 @@ const rule = {
   },
 };
 
+// Funções relacionadas as Properiedades ⬇️
 const property = {
   list: async () => {
     return await prisma.property.findMany();
@@ -255,10 +256,12 @@ const property = {
   },
 };
 
+// Funções relacionadas as notas fiscais ⬇️
+
 const nota = {
-  // list: async () => {
-  //   return await prisma.property.findMany();
-  // },
+  list: async () => {
+    return await prisma.notaFiscal.findMany();
+  },
 
   create: async (data: NewNota) => {
     return await prisma.notaFiscal.create({
