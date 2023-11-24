@@ -176,11 +176,7 @@ const nature = {
     const natures = await prisma.natureza.findMany({
       include: { rules: true },
     });
-
-    const rules = await prisma.regraTributacao.findMany({
-      include: { natures: true, products: true },
-    });
-    return { natures, rules };
+    return { natures };
   },
   // Função para criar uma nova natureza
   create: async (data: NewNature) => {
