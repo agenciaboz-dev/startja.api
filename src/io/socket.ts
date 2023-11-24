@@ -8,6 +8,7 @@ import customer from "./customer";
 import product from "./product";
 import company from "./company";
 import nature from "./nature";
+import property from "./property";
 
 let io: SocketIoServer | null = null;
 
@@ -51,8 +52,8 @@ export const handleSocket = (socket: Socket) => {
 
   socket.on("rule:create", (data) => main.ruleCreate(socket, data));
 
-  socket.on("property:list", () => main.propertyList(socket));
-  socket.on("property:create", (data) => main.propertyCreate(socket, data));
+  socket.on("property:list", () => property.propertyList(socket));
+  socket.on("property:create", (data) => property.propertyCreate(socket, data));
 
   socket.on("nota:create", (data) => main.notaCreate(socket, data));
 };
