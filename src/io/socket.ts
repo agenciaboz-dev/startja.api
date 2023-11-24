@@ -6,6 +6,7 @@ import main from "./main";
 import user from "./user";
 import customer from "./customer";
 import product from "./product";
+import company from "./company";
 
 let io: SocketIoServer | null = null;
 
@@ -41,8 +42,8 @@ export const handleSocket = (socket: Socket) => {
   socket.on("customer:list", () => customer.list(socket));
   socket.on("customer:signup", (data) => customer.handleSignup(socket, data));
 
-  socket.on("company:list", () => main.companyList(socket));
-  socket.on("company:create", (data) => main.companyCreate(socket, data));
+  socket.on("company:list", () => company.companyList(socket));
+  socket.on("company:create", (data) => company.companyCreate(socket, data));
 
   socket.on("nature:list", () => main.natureList(socket));
   socket.on("nature:create", (data) => main.natureCreate(socket, data));
