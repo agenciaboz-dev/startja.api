@@ -13,30 +13,30 @@ import {
 import { type } from "os";
 
 export declare interface NewUser {
-    name: string
-    email: string
-    password: string
-    phone: string
-    document: string
-    city: string
-    state: string
+  name: string;
+  email: string;
+  password: string;
+  phone: string;
+  document: string;
+  city: string;
+  state: string;
 }
 
 export declare interface NewCompany {
-    type: string
-    name: string
-    document: string
-    iine: string
-    city: string
-    state: string
-    district: string
-    street: string
-    adjunct: string
-    number: string
-    cep: string
-    email: string
-    phone: string
-    customerId: number
+  type: string;
+  name: string;
+  document: string;
+  iine: string;
+  city: string;
+  state: string;
+  district: string;
+  street: string;
+  adjunct: string;
+  number: string;
+  cep: string;
+  email: string;
+  phone: string;
+  customerId: number;
 }
 
 export declare interface NewProduct {
@@ -47,11 +47,11 @@ export declare interface NewProduct {
 }
 
 export declare interface NewNature {
-    operation: string
-    type: string
-    finality: string
-    motive: string
-    rules: { id: number }[]
+  operation: string;
+  type: string;
+  finality: string;
+  motive: string;
+  rules: { id: number }[];
 }
 
 export declare interface NewRule {
@@ -68,7 +68,7 @@ export declare interface NewRule {
   products: Product[];
 }
 
-export declare interface newProperty {
+export declare interface NewProperty {
   ie: string;
   nifr: string;
   cep: string;
