@@ -23,26 +23,30 @@ import {
 
 const prisma = new PrismaClient();
 
+const inclusions: {
+    customer: { certificate: true; companies: true }
+}
+
 const selections = {
-  customer: {
-    id: true,
-    name: true,
-    email: true,
-    document: true,
-    phone: true,
-    certificate: {
-      select: {
-        expiry: true,
-      },
+    customer: {
+        id: true,
+        name: true,
+        email: true,
+        document: true,
+        phone: true,
+        certificate: {
+            select: {
+                expiry: true
+            }
+        },
+        register_date: true
     },
-    register_date: true,
-  },
-  admin: {
-    select: {
-      name: true,
-    },
-  },
-};
+    admin: {
+        select: {
+            name: true
+        }
+    }
+}
 
 // Funções relacionadas aos usuários / clientes e admins ⬇️
 
@@ -59,19 +63,20 @@ const user = {
             where: {
                 OR: [{ email: data.login }, { document: data.login }],
                 AND: { password: data.password }
-            }
+            },
+            include: inclusions.customer
         }),
     // Função para listar todos os dados de todos os usuarios. ADMINS e CLIENTES
     list: async () => {
         const admin = await prisma.admin.findMany({})
-        const customer = await prisma.customer.findMany({})
+        const customer = await prisma.customer.findMany({ include: inclusions.customer })
         return { admin, customer }
     },
 
     // Funcão para listar todos os CLIENTES, omitindo informações sensíveis.
     customerList: async () => {
         const customers = await prisma.customer.findMany({
-            select: selections.customer
+            include: inclusions.customer
         })
         return customers
     },
@@ -104,7 +109,7 @@ const user = {
                 register_date: new Date().getTime().toString(),
                 certificateId: certificate.id
             },
-            select: selections.customer
+            include: inclusions.customer
         })
     },
 
@@ -113,7 +118,8 @@ const user = {
             where: {
                 email: data.email,
                 document: data.document
-            }
+            },
+            include: inclusions.customer
         })
     }
 }
