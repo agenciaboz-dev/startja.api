@@ -16,7 +16,7 @@ import {
   NewProduct,
   NewNature,
   NewRule,
-  newProperty,
+  NewProperty,
   NewNota,
   LoginForm,
 } from "./definitions/userOperations";
@@ -24,99 +24,99 @@ import {
 const prisma = new PrismaClient();
 
 const selections = {
-    customer: {
-        id: true,
-        name: true,
-        email: true,
-        document: true,
-        phone: true,
-        certificate: {
-            select: {
-                expiry: true
-            }
-        },
-        register_date: true
+  customer: {
+    id: true,
+    name: true,
+    email: true,
+    document: true,
+    phone: true,
+    certificate: {
+      select: {
+        expiry: true,
+      },
     },
-    admin: {
-        select: {
-            name: true
-        }
-    }
-}
+    register_date: true,
+  },
+  admin: {
+    select: {
+      name: true,
+    },
+  },
+};
 
 // Funções relacionadas aos usuários / clientes e admins ⬇️
 
 const user = {
-    // Funções de login para Admins
-    loginAdmin: async (data: LoginForm) =>
-        await prisma.admin.findFirst({
-            where: { email: data.login, password: data.password }
-        }),
+  // Funções de login para Admins
+  loginAdmin: async (data: LoginForm) =>
+    await prisma.admin.findFirst({
+      where: { email: data.login, password: data.password },
+    }),
 
-    // Função de login para clientes
-    loginCustomer: async (data: LoginForm) =>
-        await prisma.customer.findFirst({
-            where: {
-                OR: [{ email: data.login }, { document: data.login }],
-                AND: { password: data.password }
-            }
-        }),
-    // Função para listar todos os dados de todos os usuarios. ADMINS e CLIENTES
-    list: async () => {
-        const admin = await prisma.admin.findMany({})
-        const customer = await prisma.customer.findMany({})
-        return { admin, customer }
-    },
+  // Função de login para clientes
+  loginCustomer: async (data: LoginForm) =>
+    await prisma.customer.findFirst({
+      where: {
+        OR: [{ email: data.login }, { document: data.login }],
+        AND: { password: data.password },
+      },
+    }),
+  // Função para listar todos os dados de todos os usuarios. ADMINS e CLIENTES
+  list: async () => {
+    const admin = await prisma.admin.findMany({});
+    const customer = await prisma.customer.findMany({});
+    return { admin, customer };
+  },
 
-    // Funcão para listar todos os CLIENTES, omitindo informações sensíveis.
-    customerList: async () => {
-        const customers = await prisma.customer.findMany({
-            select: selections.customer
-        })
-        return customers
-    },
+  // Funcão para listar todos os CLIENTES, omitindo informações sensíveis.
+  customerList: async () => {
+    const customers = await prisma.customer.findMany({
+      select: selections.customer,
+    });
+    return customers;
+  },
 
-    // Função de criação de novos CLIENTES.
-    create: async (data: NewUser) => {
-        console.log("Iniciando a criação do usuário...")
-        const certificateInput: DigitalCertificate = {
-            id: 0,
-            certificate: "",
-            expiry: ""
-        }
+  // Função de criação de novos CLIENTES.
+  create: async (data: NewUser) => {
+    console.log("Iniciando a criação do usuário...");
+    const certificateInput: DigitalCertificate = {
+      id: 0,
+      certificate: "",
+      expiry: "",
+    };
 
-        const certificate = await prisma.digitalCertificate.create({
-            data: {
-                expiry: certificateInput.expiry,
-                certificate: certificateInput.certificate
-            }
-        })
+    const certificate = await prisma.digitalCertificate.create({
+      data: {
+        expiry: certificateInput.expiry,
+        certificate: certificateInput.certificate,
+      },
+    });
 
-        return await prisma.customer.create({
-            data: {
-                name: data.name,
-                email: normalize(data.email),
-                password: data.password,
-                phone: data.phone,
-                document: normalize(data.document),
-                city: data.city,
-                state: data.state,
-                register_date: new Date().getTime().toString(),
-                certificateId: certificate.id
-            },
-            select: selections.customer
-        })
-    },
+    return await prisma.customer.create({
+      data: {
+        name: data.name,
+        email: normalize(data.email),
+        password: data.password,
+        phone: data.phone,
+        document: normalize(data.document),
+        city: data.city,
+        state: data.state,
+        register_date: new Date().getTime().toString(),
+        certificateId: certificate.id,
+      },
+      select: selections.customer,
+    });
+  },
 
-    exists: async (data: NewUser) => {
-        return await prisma.customer.findUnique({
-            where: {
-                email: data.email,
-                document: data.document
-            }
-        })
-    }
-}
+  exists: async (data: NewUser) => {
+    return await prisma.customer.findUnique({
+      where: {
+        email: data.email,
+        document: data.document,
+      },
+    });
+  },
+};
 
 // Funções relacionadas aos produtos ⬇️
 
@@ -142,31 +142,31 @@ const product = {
 // Funções relacionadas as empresas ⬇️
 
 const company = {
-    // Função para listar todas as empresas
-    list: async () => await prisma.company.findMany(),
+  // Função para listar todas as empresas
+  list: async () => await prisma.company.findMany(),
 
-    // Função para criar uma nova empresa
-    create: async (data: NewCompany) => {
-        return await prisma.company.create({
-            data: {
-                type: data.type,
-                name: data.name,
-                document: normalize(data.document),
-                iine: normalize(data.iine),
-                city: data.city,
-                state: data.state,
-                district: data.district,
-                street: data.street,
-                adjunct: data.adjunct,
-                number: data.number,
-                cep: normalize(data.cep),
-                email: normalize(data.email),
-                phone: normalize(data.phone),
-                customerId: data.customerId
-            }
-        })
-    }
-}
+  // Função para criar uma nova empresa
+  create: async (data: NewCompany) => {
+    return await prisma.company.create({
+      data: {
+        type: data.type,
+        name: data.name,
+        document: normalize(data.document),
+        iine: normalize(data.iine),
+        city: data.city,
+        state: data.state,
+        district: data.district,
+        street: data.street,
+        adjunct: data.adjunct,
+        number: data.number,
+        cep: normalize(data.cep),
+        email: normalize(data.email),
+        phone: normalize(data.phone),
+        customerId: data.customerId,
+      },
+    });
+  },
+};
 
 // Funções relacionadas as naturezas ⬇️
 
@@ -174,8 +174,8 @@ const nature = {
   // Função para listar todas as naturezas
   list: async () => {
     const natures = await prisma.natureza.findMany({
-        include: { rules: true }
-    })
+      include: { rules: true },
+    });
 
     const rules = await prisma.regraTributacao.findMany({
       include: { natures: true, products: true },
@@ -187,11 +187,11 @@ const nature = {
     const { rules, ...naturezaData } = data;
 
     const createData = {
-        ...naturezaData,
-        rules: {
-            connect: rules.map((rule: { id: number }) => ({ id: rule.id }))
-        }
-    }
+      ...naturezaData,
+      rules: {
+        connect: rules.map((rule: { id: number }) => ({ id: rule.id })),
+      },
+    };
 
     return await prisma.natureza.create({
       data: createData,
@@ -236,7 +236,7 @@ const property = {
     return await prisma.property.findMany();
   },
 
-  create: async (data: newProperty) => {
+  create: async (data: NewProperty) => {
     return await prisma.property.create({
       data: {
         ie: data.ie,
