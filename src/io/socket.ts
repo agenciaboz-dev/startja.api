@@ -5,6 +5,7 @@ import { Server as HttpsServer } from "https"
 import main from "./main"
 import user from "./user"
 import customer from "./customer"
+import product from "./product"
 
 let io: SocketIoServer | null = null
 
@@ -32,8 +33,8 @@ export const handleSocket = (socket: Socket) => {
     socket.on("user:login", (data) => user.handleLogin(socket, data))
     socket.on("user:list", (data) => user.list(socket))
 
-    socket.on("product:list", (data) => main.productList(socket))
-    socket.on("product:create", (data) => main.productCreate(socket, data))
+    socket.on("product:list", (data) => product.productList(socket))
+    socket.on("product:create", (data) => product.productCreate(socket, data))
 
     socket.on("customer:list", (data) => customer.list(socket))
     socket.on("customer:signup", (data) => customer.handleSignup(socket, data))
