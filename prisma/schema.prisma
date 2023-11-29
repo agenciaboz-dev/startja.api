@@ -29,7 +29,6 @@ model Customer {
 
     certificateId       Int                 @unique
     certificate         DigitalCertificate  @relation(fields: [certificateId], references: [id])
-    notas               notaFiscal[]
     companies           Company[]
 }
 
@@ -67,6 +66,8 @@ model Company {
     phone               String?
     customerId          Int
     customer            Customer            @relation(fields: [customerId], references: [id])
+
+    notas               notaFiscal[]
 }
 
 model Natureza {
@@ -140,8 +141,8 @@ model notaFiscal {
 
     products            Product[]
     
-    customerId          Int
-    customer            Customer             @relation(fields: [customerId], references: [id])
+    companyId           Int
+    company             Company             @relation(fields: [companyId], references: [id])
 
     propertyId          Int
     property            Property             @relation(fields: [propertyId], references: [id])
