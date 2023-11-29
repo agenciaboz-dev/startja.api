@@ -84,27 +84,26 @@ export declare interface NewProperty {
 }
 
 export declare interface NewNota {
-  emission: string;
-  seriesNfe: string;
-  clientSupplier: string;
-  issuer: string;
-  value: string;
-  situation: string;
-  dateTime: string;
-  paymentCondition: string;
-  paymentType: string;
-  freteType: string;
-  vehiclePlates: string;
-  vehicleUf: string;
-  shippingCompany: string;
-  productQnty: string;
-  productType: string;
-  bruteWeightKg: string;
-  liquidWeightKg: string;
-  products: Product[];
-  customer: Customer;
-  property: Property;
-  nature: Natureza;
+    seriesNfe: string
+    clientSupplier: string
+    issuer: string
+    value: string
+    situation: string
+    dateTime: string
+    paymentCondition: string
+    paymentType: string
+    freteType: string
+    vehiclePlates: string
+    vehicleUf: string
+    shippingCompany: string
+    productQnty: string
+    productType: string
+    bruteWeightKg: string
+    liquidWeightKg: string
+    products: Product[]
+    customer: Customer
+    property: Property
+    nature: Natureza
 }
 
 export declare interface LoginForm {
