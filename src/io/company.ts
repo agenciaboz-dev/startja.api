@@ -16,6 +16,7 @@ const companyCreate = async (socket: Socket, data: NewCompany) => {
   try {
     const company = await databaseHandler.company.create(data);
     socket.emit("company:creation:success", company);
+    socket.broadcast.emit("company:new", company);
   } catch (error) {
     console.error(`Error creating company`, error);
     socket.emit("company:creation:error", { error });
