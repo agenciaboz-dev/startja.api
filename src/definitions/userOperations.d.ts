@@ -101,7 +101,7 @@ export declare interface NewNota {
     bruteWeightKg: string
     liquidWeightKg: string
     products: Product[]
-    customer: Customer
+    company: Company
     property: Property
     nature: Natureza
 }

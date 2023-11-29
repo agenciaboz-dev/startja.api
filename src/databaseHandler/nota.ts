@@ -30,7 +30,7 @@ const prisma = new PrismaClient();
               bruteWeightKg: data.bruteWeightKg,
               liquidWeightKg: data.liquidWeightKg,
               natureId: data.nature.id,
-              customerId: data.customer.id,
+              companyId: data.company.id,
               propertyId: data.property.id,
               products: {
                   connect: data.products.map((product) => ({ id: product.id }))
