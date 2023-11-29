@@ -15,7 +15,8 @@ const create = async (data: NewNota) => {
     return await prisma.notaFiscal.create({
         data: {
             emission: new Date().getTime().toString(),
-            seriesNfe: data.seriesNfe,
+            series: data.series,
+            nfe: data.nfe,
             clientSupplier: data.clientSupplier,
             issuer: data.issuer,
             value: data.value,

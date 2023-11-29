@@ -84,7 +84,8 @@ export declare interface NewProperty {
 }
 
 export declare interface NewNota {
-    seriesNfe: string
+    series: string
+    nfe: string
     clientSupplier: string
     issuer: string
     value: string
