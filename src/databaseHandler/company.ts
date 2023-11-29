@@ -4,8 +4,10 @@ import { NewCompany } from "../definitions/userOperations";
 
 const prisma = new PrismaClient();
 
+const include = { notas: true }
+
 // Função para listar todas as empresas
-const list = async () => await prisma.company.findMany();
+const list = async () => await prisma.company.findMany({ include: include })
 
 // Função para criar uma nova empresa
 const create = async (data: NewCompany) => {
@@ -29,4 +31,4 @@ const create = async (data: NewCompany) => {
   });
 };
 
-export default { list, create };
+export default { include, list, create }
