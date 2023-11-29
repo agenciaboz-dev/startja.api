@@ -120,7 +120,8 @@ model Property {
 model notaFiscal {
     id                  Int                     @id @default(autoincrement())
     emission            String                  @db.Text
-    seriesNfe           String
+    series              String
+    nfe                 String
     clientSupplier      String
     issuer              String
     value               String
