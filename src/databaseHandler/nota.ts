@@ -1,9 +1,5 @@
-import { getIoInstance } from "../io/socket";
-import normalize from "../io/formatting";
 import { notaFiscal, PrismaClient } from "@prisma/client";
-import {
-  NewNota,
-} from "../definitions/userOperations";
+import { NewNota } from "../definitions/userOperations";
 
 const prisma = new PrismaClient();
 

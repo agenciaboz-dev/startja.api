@@ -1,12 +1,5 @@
-import { getIoInstance } from "../io/socket";
-import normalize from "../io/formatting";
-import {
-  Natureza,
-  PrismaClient,
-} from "@prisma/client";
-import {
-  NewNature,
-} from "../definitions/userOperations";
+import { Natureza, PrismaClient } from "@prisma/client";
+import { NewNature } from "../definitions/userOperations";
 
 const prisma = new PrismaClient();
 
