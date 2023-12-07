@@ -13,13 +13,21 @@ import {
 import { type } from "os";
 
 export declare interface NewUser {
-  name: string;
-  email: string;
-  password: string;
-  phone: string;
-  document: string;
-  city: string;
-  state: string;
+    name: string
+    email: string
+    password: string
+    phone: string
+    document: string
+    city: string
+    state: string
+    bairro: string
+    cep: string
+    complemento: string
+    inscricao_estadual: string
+    isento: boolean
+    numero: string
+    regime_tributario: string
+    rua: string
 }
 
 export declare interface NewCompany {

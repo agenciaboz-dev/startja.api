@@ -1,7 +1,7 @@
 import focusNFe from "../src/api/focusNFe"
 
 const data = focusNFe.buildInvoice({
-    serie: 2,
+    serie: 922,
     natureza_operacao: "quem sabe",
     tipo_documento: 1,
     local_destino: 1,

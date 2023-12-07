@@ -25,6 +25,14 @@ model Customer {
     document            String              @unique
     city                String
     state               String
+    bairro                 String              
+    numero                 String              
+    complemento                 String              
+    rua                 String              
+    cep                 String              
+    regime_tributario   String              
+    inscricao_estadual  String              
+    isento              Boolean             
     
 
     certificateId       Int                 @unique
