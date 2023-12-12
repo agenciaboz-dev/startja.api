@@ -6,31 +6,33 @@ const prisma = new PrismaClient();
 
 // Funções relacionadas as regras de tributação ⬇️
 
-  // Função para listar todas as regras de tributação
-  const list = async () => {
-      return await prisma.regraTributacao.findMany({
-          include: { natures: true, products: true }
-      })
-  }
-  // função para criar uma nova regra de tributação
-  const create = async (data: NewRule) => {
-      return await prisma.regraTributacao.create({
-          data: {
-              uf: data.uf,
-              icms: data.icms,
-              cfop: data.cfop,
-              percentage: data.percentage,
-              motive: data.motive,
-              rate: data.rate,
-              deferral: data.deferral,
-              cst: data.cst,
-              cofins: data.cofins,
-              natures: { connect: data.natures.map((nature) => ({ id: nature.id })) },
-              products: {
-                  connect: data.products.map((product) => ({ id: product.id }))
-              }
-          }
-      })
-  }
+// Função para listar todas as regras de tributação
+const list = async () => {
+  return await prisma.regraTributacao.findMany({
+    include: { natures: true, products: true },
+  });
+};
+// função para criar uma nova regra de tributação
+const create = async (data: NewRule) => {
+  return await prisma.regraTributacao.create({
+    data: {
+      uf: data.uf,
+      aliquota: data.aliquota,
+      cfop: data.cfop,
+      percentageBaseCalculo: data.percentageBaseCalculo,
+      deferralPercentage: data.deferralPercentage,
+      additionalInfo: data.additionalInfo,
+      icmsOrigin: data.icmsOrigin,
+      fiscalBenefit: data.fiscalBenefit,
+      icmsSituation: data.icmsSituation,
+      pisSituation: data.pisSituation,
+      cofinsSituation: data.cofinsSituation,
+      natures: { connect: data.natures.map((nature) => ({ id: nature.id })) },
+      products: {
+        connect: data.products.map((product) => ({ id: product.id })),
+      },
+    },
+  });
+};
 
-export default { list, create }
+export default { list, create };

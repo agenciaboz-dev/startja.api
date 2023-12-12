@@ -1,38 +1,37 @@
 import normalize from "../io/formatting";
-import { Company, PrismaClient } from "@prisma/client";
+import { PrismaClient } from "@prisma/client";
 import { NewCompany } from "../definitions/userOperations";
-import nota from "./nota"
+import nota from "./nota";
 
-const prisma = new PrismaClient()
-
-const include = { notas: { include: nota.include } }
+const prisma = new PrismaClient();
 
 // Função para listar todas as empresas
-const list = async () => await prisma.company.findMany({ include })
+const list = async () => await prisma.company.findMany();
 
 // Função para criar uma nova empresa
 const create = async (data: NewCompany) => {
   return await prisma.company.create({
-      data: {
-          type: data.type,
-          name: data.name,
-          document: normalize(data.document),
-          iine: normalize(data.iine),
-          city: data.city,
-          state: data.state,
-          district: data.district,
-          street: data.street,
-          adjunct: data.adjunct,
-          number: data.number,
-          cep: normalize(data.cep),
-          email: normalize(data.email),
-          phone: normalize(data.phone),
-          customerId: data.customerId
-      },
-      include
-  })
+    data: {
+      type: data.type,
+      name: data.name,
+      document: normalize(data.document),
+      inscricaoEstadual: normalize(data.inscricaoEstadual),
+      indicadorEstadual: data.indicadorEstadual,
+      city: data.city,
+      state: data.state,
+      district: data.district,
+      street: data.street,
+      adjunct: data.adjunct,
+      number: data.number,
+      cep: normalize(data.cep),
+      email: normalize(data.email),
+      phone: data.phone,
+      customerId: data.customerId,
+    },
+  });
 };
 
-const get = async (id: number) => await prisma.company.findUnique({ where: { id }, include })
+const get = async (id: number) =>
+  await prisma.company.findUnique({ where: { id } });
 
-export default { include, list, create, get }
+export default { list, create, get };

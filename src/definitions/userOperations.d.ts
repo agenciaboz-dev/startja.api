@@ -23,11 +23,12 @@ export declare interface NewUser {
   district: string;
   street: string;
   adjunct: string;
-  number: string;
+  number: number;
   cep: string;
   register_date: string;
+  certificateId: string;
   businessName: string;
-  regimeTributario: string;
+  regimeTributario: number;
   inscricaoEstadual: string;
   isento: boolean;
 }
@@ -97,17 +98,14 @@ export declare interface NewProperty {
 }
 
 export declare interface NewNota {
+  series: string;
   generalInfo: string;
-  emissionDate: string;
-  emissionTime: string;
   paymentCondition: string;
   paymentType: string;
   qtdParcelas: number;
   valorParcelas: number;
   vencimentoParcelas: string;
   freteType: string;
-  freteValue: number;
-  freteInsurance: number;
   vehiclePlates: string;
   vehicleUf: string;
   shippingCompany: string;
