@@ -124,6 +124,14 @@ export declare interface NewNota {
   nature: Natureza;
 }
 
+export declare interface NewBankAccount {
+  internal: boolean;
+  name: string;
+  agency: string;
+  accNumber: string;
+  bankName: string;
+}
+
 export declare interface LoginForm {
   login: string;
   password: string;
