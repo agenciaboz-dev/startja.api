@@ -97,25 +97,26 @@ export declare interface NewProperty {
 }
 
 export declare interface NewNota {
-  series: string;
-  emission: string;
-  nfe: string;
-  clientSupplier: string;
-  issuer: string;
-  unitaryComercialValue: number;
-  unitaryTributableValue: number;
-  icmsSituation: string;
-  dateTime: string;
+  generalInfo: string;
+  emissionDate: string;
+  emissionTime: string;
   paymentCondition: string;
   paymentType: string;
+  qtdParcelas: number;
+  valorParcelas: number;
+  vencimentoParcelas: string;
   freteType: string;
+  freteValue: number;
+  freteInsurance: number;
   vehiclePlates: string;
   vehicleUf: string;
   shippingCompany: string;
-  productQnty: number;
-  productType: string;
+  transportedProductQuantity: string;
+  transportedProductType: string;
   bruteWeightKg: string;
   liquidWeightKg: string;
+  totalValue: number;
+  totalProductValue: number;
   products: Product[];
   rules: regraTributacao[];
   company: Company;
@@ -126,4 +127,14 @@ export declare interface NewNota {
 export declare interface LoginForm {
   login: string;
   password: string;
+}
+
+export declare interface ProdutoNotaFiscal {
+  unidadeComercial: string;
+  unidadeTributavel: string;
+  productQnty: number;
+  unitaryComercialValue: number;
+  unitaryTributableValue: number;
+  produtoId: number;
+  notaId: number;
 }
