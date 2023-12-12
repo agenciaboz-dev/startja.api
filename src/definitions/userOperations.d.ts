@@ -20,14 +20,16 @@ export declare interface NewUser {
   document: string;
   city: string;
   state: string;
-  bairro: string;
+  district: string;
+  street: string;
+  adjunct: string;
+  number: string;
   cep: string;
-  complemento: string;
-  inscricao_estadual: string;
+  register_date: string;
+  businessName: string;
+  regimeTributario: string;
+  inscricaoEstadual: string;
   isento: boolean;
-  numero: string;
-  regime_tributario: string;
-  rua: string;
 }
 
 export declare interface NewCompany {
