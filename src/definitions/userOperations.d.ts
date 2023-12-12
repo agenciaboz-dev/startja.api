@@ -68,11 +68,13 @@ export declare interface NewNature {
 export declare interface NewRule {
   uf: string;
   aliquota: number;
-  cfop: string;
+  cfop: number;
   percentageBaseCalculo: number;
-  deferral: string;
-  motive: string;
+  deferralPercentage: string;
+  additionalInfo: string;
+  icmsOrigin: number;
   fiscalBenefit: string;
+  icmsSituation: string;
   pisSituation: string;
   cofinsSituation: string;
   natures: Natureza[];
