@@ -1,12 +1,8 @@
 import { Admin, Customer, PrismaClient } from "@prisma/client";
 import { LoginForm } from "../definitions/userOperations";
-import company from "./company"
+import company from "./company";
 
-const prisma = new PrismaClient()
-
-const inclusions = {
-    customer: { certificate: true, companies: { include: company.include } }
-}
+const prisma = new PrismaClient();
 
 // Funções relacionadas aos usuários / clientes e admins ⬇️
 // Funções de login para Admins
@@ -22,14 +18,11 @@ const loginCustomer = async (data: LoginForm) =>
       OR: [{ email: data.login }, { document: data.login }],
       AND: { password: data.password },
     },
-    include: inclusions.customer,
   });
 // Função para listar todos os dados de todos os usuários. ADMINS e CLIENTES
 const list = async () => {
   const admin = await prisma.admin.findMany({});
-  const customer = await prisma.customer.findMany({
-    include: inclusions.customer,
-  });
+  const customer = await prisma.customer.findMany({});
   return { admin, customer };
 };
 
@@ -38,7 +31,6 @@ const get = async (id: number) =>
     where: {
       id,
     },
-    include: inclusions.customer,
   });
 
 export default { loginAdmin, loginCustomer, list, get };

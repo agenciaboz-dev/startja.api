@@ -98,7 +98,7 @@ export declare interface NewProperty {
 }
 
 export declare interface NewNota {
-  series: string;
+  series: number;
   generalInfo: string;
   paymentCondition: string;
   paymentType: string;

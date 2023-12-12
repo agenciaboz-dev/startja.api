@@ -12,6 +12,7 @@ const list = async () => {
 const create = async (data: NewNota) => {
   return await prisma.notaFiscal.create({
     data: {
+      series: 922,
       generalInfo: data.generalInfo,
       paymentCondition: data.paymentCondition,
       paymentType: data.paymentType,
@@ -34,9 +35,9 @@ const create = async (data: NewNota) => {
       rules: {
         connect: data.rules.map((rule) => ({ id: rule.id })),
       },
-      company: {}, // Add the missing 'company' property
-      property: {}, // Add the missing 'property' property
-      nature: {}, // Add the missing 'nature' property
+      company: {},
+      property: {},
+      nature: {},
     },
     include,
   });

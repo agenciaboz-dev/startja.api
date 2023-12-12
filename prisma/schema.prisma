@@ -161,7 +161,7 @@ model ProdutoNotaFiscal{
 model notaFiscal {
 
     id                          Int                     @id @default(autoincrement())
-    series                      String
+    series                      Int
     generalInfo                 String
     emissionDate                String?                 @db.Text
     emissionTime                String?                 @db.Text
