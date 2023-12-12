@@ -115,7 +115,7 @@ export declare interface NewNota {
   liquidWeightKg: string;
   totalValue: number;
   totalProductValue: number;
-  products: Product[];
+  products: ProdutoNotaFiscal[];
   rules: regraTributacao[];
   company: Company;
   property: Property;

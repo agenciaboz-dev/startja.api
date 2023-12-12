@@ -68,7 +68,7 @@ const create = async (data: NewUser) => {
       cep: data.cep,
       adjunct: data.adjunct,
       inscricaoEstadual: data.inscricaoEstadual,
-      isento: data.isento,
+      isento: false,
       number: data.number,
       regimeTributario: data.regimeTributario,
       street: data.street,

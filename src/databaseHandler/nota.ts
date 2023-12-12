@@ -30,14 +30,23 @@ const create = async (data: NewNota) => {
       totalValue: data.totalValue,
       totalProductValue: data.totalProductValue,
       products: {
-        connect: data.products.map((product) => ({ id: product.id })),
+        createMany: {
+          data: data.products.map((product) => ({
+            unidadeComercial: product.unidadeComercial,
+            unidadeTributavel: product.unidadeTributavel,
+            productQnty: product.productQnty,
+            unitaryComercialValue: product.unitaryComercialValue,
+            unitaryTributableValue: product.unitaryTributableValue,
+            produtoId: product.produtoId,
+          })),
+        },
       },
       rules: {
         connect: data.rules.map((rule) => ({ id: rule.id })),
       },
-      company: {},
-      property: {},
-      nature: {},
+      company: { connect: { id: data.company.id } },
+      property: { connect: { id: data.property.id } },
+      nature: { connect: { id: data.nature.id } },
     },
     include,
   });

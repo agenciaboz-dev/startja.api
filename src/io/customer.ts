@@ -12,12 +12,10 @@ const list = async (socket: Socket) => {
   }
 };
 
-const handleSignup = async (
-  socket: Socket,
-  data: NewUser // Change 'any' to 'NewUser' to ensure type safety
-) => {
+const handleSignup = async (socket: Socket, data: NewUser) => {
   try {
     const customer = await databaseHandler.customer.create(data);
+
     // Emit success event
     socket.emit("user:signup:success", customer);
   } catch (error: any) {
@@ -27,7 +25,7 @@ const handleSignup = async (
       const fieldErrorMap: any = {
         username: "Username already exists.",
         email: "Email already exists.",
-        document: "document already registered.",
+        document: "Document already registered.",
       };
       // Check which field caused the error
       for (const field in fieldErrorMap) {
