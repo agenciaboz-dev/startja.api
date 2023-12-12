@@ -9,163 +9,200 @@ datasource db {
 }
 
 model Admin {
-    id                  Int                 @id @default(autoincrement())
-    name                String
-    email               String              @unique
-    password            String
+
+    id                          Int                 @id @default(autoincrement())
+    name                        String
+    email                       String              @unique
+    password                    String
+
 }
 
 model Customer {
-    id                  Int                 @id @default(autoincrement())
-    name                String
-    email               String              @unique
-    password            String
-    register_date       String
-    phone               String
-    document            String              @unique
-    city                String
-    state               String
-    bairro                 String              
-    numero                 String              
-    complemento                 String              
-    rua                 String              
-    cep                 String              
-    regime_tributario   String              
-    inscricao_estadual  String              
-    isento              Boolean             
-    
 
-    certificateId       Int                 @unique
-    certificate         DigitalCertificate  @relation(fields: [certificateId], references: [id])
-    companies           Company[]
+    id                          Int                 @id @default(autoincrement())
+    name                        String
+    email                       String              @unique
+    password                    String
+    register_date               String
+    phone                       String
+    document                    String              @unique
+    city                        String
+    state                       String
+    district                    String              
+    number                      Int              
+    adjunct                     String              
+    street                      String              
+    cep                         String         
+    businessName                String     
+    regimeTributario            Int              
+    inscricaoEstadual           String              
+    isento                      Boolean             
+    
+    certificateId               Int                 @unique
+    certificate                 DigitalCertificate  @relation(fields: [certificateId], references: [id])
+    companies                   Company[]
+
 }
 
 model DigitalCertificate {
-    id                  Int                 @id @default(autoincrement())
-    expiry              String
-    certificate         String              @db.Text
+
+    id                          Int                 @id @default(autoincrement())
+    expiry                      String
+    certificate                 String              @db.Text
     
-    customer            Customer?
+    customer                    Customer?
+    
 }
 
 model Product {
-    id                  Int                    @id @default(autoincrement())
-    name                String              
-    ncm                 String       
-    rules               regraTributacao[]
 
-    notas               notaFiscal[]
+    id                          Int                    @id @default(autoincrement())
+    name                        String              
+    ncm                         String       
+    rules                       regraTributacao[]
+    produtosNota                ProdutoNotaFiscal[]
+
 }
 
 model Company {
-    id                  Int                 @id @default(autoincrement())
-    type                String
-    name                String
-    document            String              @unique
-    iine                String
-    city                String
-    state               String
-    district            String
-    street              String
-    adjunct             String
-    number              String
-    cep                 String
-    email               String?
-    phone               String?
-    customerId          Int
-    customer            Customer            @relation(fields: [customerId], references: [id])
 
-    notas               notaFiscal[]
+    id                          Int                 @id @default(autoincrement())
+    type                        String
+    name                        String
+    document                    String              @unique
+    inscricaoEstadual           String?
+    indicadorEstadual           Int
+    city                        String
+    state                       String
+    district                    String
+    street                      String
+    adjunct                     String
+    number                      Int
+    cep                         String
+    email                       String?
+    phone                       Int?
+    
+    customerId                  Int
+    customer                    Customer            @relation(fields: [customerId], references: [id])
+
+    notas                       notaFiscal[]
+
 }
 
 model Natureza {
 
-    id                  Int                 @id @default(autoincrement())
-    operation           String
-    type                String
-    finality            String
-    motive              String
-    rules               regraTributacao[]
-    notas               notaFiscal[]
-
+    id                          Int                 @id @default(autoincrement())
+    operation                   String
+    type                        String
+    finality                    String
+    motive                      String
+    rules                       regraTributacao[]
+    notas                       notaFiscal[]
 
 }
 
 model regraTributacao {
-    id                  Int                     @id @default(autoincrement())
-    uf                  String
-    icms                String
-    cfop                String
-    percentage          String
-    motive              String
-    rate                String
-    deferral            String
-    cst                 String
-    cofins              String
-    natures             Natureza[]
-    products            Product[]
+
+    id                          Int                     @id @default(autoincrement())
+    uf                          String
+    aliquota                    Int
+    cfop                        Int
+    percentageBaseCalculo       Float
+    deferralPercentage          String
+    additionalInfo              String
+    icmsOrigin                  Int
+    fiscalBenefit               String
+    icmsSituation               String
+    pisSituation                String
+    cofinsSituation             String
+
+    notas                       notaFiscal[]
+    natures                     Natureza[]
+    products                    Product[]
+
 }
 
 model Property {
 
-    id                  Int                     @id @default(autoincrement())
-    ie                  String
-    nifr                String
-    cep                 String
-    city                String
-    state               String
-    street              String
-    number              String
-    adjunct             String
-    district            String
-    exploration         String
-    declarant           String
-    notas               notaFiscal[]
+    id                          Int                     @id @default(autoincrement())
+    ie                          String
+    nifr                        String
+    cep                         String
+    city                        String
+    state                       String
+    street                      String
+    number                      String
+    adjunct                     String
+    district                    String
+    exploration                 String
+    declarant                   String
+    notas                       notaFiscal[]
+
 }
 
+model ProdutoNotaFiscal{
 
+    id                          Int @id @default(autoincrement())
+    unidadeComercial            String
+    unidadeTributavel           String
+    productQnty                 Int
+    unitaryComercialValue       Float
+    unitaryTributableValue      Float
+
+
+    produto                     Product @relation(fields: [produtoId], references: [id])
+    produtoId                   Int
+
+    nota                        notaFiscal @relation(fields: [notaId], references: [id])
+    notaId                      Int
+
+}
 
 model notaFiscal {
-    id                  Int                     @id @default(autoincrement())
-    emission            String                  @db.Text
-    series              String
-    nfe                 String
-    clientSupplier      String
-    issuer              String
-    value               String
-    situation           String
-    dateTime            String?                 @db.Text
-    paymentCondition    String
-    paymentType         String
-    freteType           String
-    vehiclePlates       String
-    vehicleUf           String
-    shippingCompany     String
-    productQnty         String
-    productType         String
-    bruteWeightKg       String
-    liquidWeightKg      String
 
+    id                          Int                     @id @default(autoincrement())
+    generalInfo                 String
+    emissionDate                String?                 @db.Text
+    emissionTime                String?                 @db.Text
+    paymentCondition            String
+    paymentType                 String
+    qtdParcelas                 Int
+    valorParcelas               Float
+    vencimentoParcelas          String
+    freteType                   String
+    freteValue                  Int?
+    freteInsurance              Int?
+    vehiclePlates               String
+    vehicleUf                   String
+    shippingCompany             String
+    transportedProductQuantity  String
+    transportedProductType      String
+    bruteWeightKg               String
+    liquidWeightKg              String
+    totalValue                  Int
+    totalProductValue           Int
 
-
-    products            Product[]
+    products                    ProdutoNotaFiscal[]
+    rules                       regraTributacao[]
     
-    companyId           Int
-    company             Company             @relation(fields: [companyId], references: [id])
+    companyId                   Int
+    company                     Company             @relation(fields: [companyId], references: [id])
 
-    propertyId          Int
-    property            Property             @relation(fields: [propertyId], references: [id])
+    propertyId                  Int
+    property                    Property             @relation(fields: [propertyId], references: [id])
 
-    natureId            Int
-    nature              Natureza             @relation(fields: [natureId], references: [id])
+    natureId                    Int
+    nature                      Natureza             @relation(fields: [natureId], references: [id])
     
 }
 
 model Accounts {
-    id                  Int                     @id @default (autoincrement())
-    internal            Boolean                 @default(false)
-    name                String
-    agency              String
-    accNumber           String
-    bankName            String
+
+    id                          Int                     @id @default (autoincrement())
+    internal                    Boolean                 @default(false)
+    name                        String
+    agency                      String
+    accNumber                   String
+    bankName                    String
+
 }
