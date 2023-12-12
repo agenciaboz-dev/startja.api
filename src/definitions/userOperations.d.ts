@@ -13,21 +13,21 @@ import {
 import { type } from "os";
 
 export declare interface NewUser {
-    name: string
-    email: string
-    password: string
-    phone: string
-    document: string
-    city: string
-    state: string
-    bairro: string
-    cep: string
-    complemento: string
-    inscricao_estadual: string
-    isento: boolean
-    numero: string
-    regime_tributario: string
-    rua: string
+  name: string;
+  email: string;
+  password: string;
+  phone: string;
+  document: string;
+  city: string;
+  state: string;
+  bairro: string;
+  cep: string;
+  complemento: string;
+  inscricao_estadual: string;
+  isento: boolean;
+  numero: string;
+  regime_tributario: string;
+  rua: string;
 }
 
 export declare interface NewCompany {
@@ -64,14 +64,14 @@ export declare interface NewNature {
 
 export declare interface NewRule {
   uf: string;
-  icms: string;
+  aliquota: number;
   cfop: string;
-  percentage: string;
-  motive: string;
-  rate: string;
+  percentageBaseCalculo: number;
   deferral: string;
-  cst: string;
-  cofins: string;
+  motive: string;
+  fiscalBenefit: string;
+  pisSituation: string;
+  cofinsSituation: string;
   natures: Natureza[];
   products: Product[];
 }
@@ -92,27 +92,30 @@ export declare interface NewProperty {
 }
 
 export declare interface NewNota {
-    series: string
-    nfe: string
-    clientSupplier: string
-    issuer: string
-    value: string
-    situation: string
-    dateTime: string
-    paymentCondition: string
-    paymentType: string
-    freteType: string
-    vehiclePlates: string
-    vehicleUf: string
-    shippingCompany: string
-    productQnty: string
-    productType: string
-    bruteWeightKg: string
-    liquidWeightKg: string
-    products: Product[]
-    company: Company
-    property: Property
-    nature: Natureza
+  series: string;
+  emission: string;
+  nfe: string;
+  clientSupplier: string;
+  issuer: string;
+  unitaryComercialValue: number;
+  unitaryTributableValue: number;
+  icmsSituation: string;
+  dateTime: string;
+  paymentCondition: string;
+  paymentType: string;
+  freteType: string;
+  vehiclePlates: string;
+  vehicleUf: string;
+  shippingCompany: string;
+  productQnty: number;
+  productType: string;
+  bruteWeightKg: string;
+  liquidWeightKg: string;
+  products: Product[];
+  rules: regraTributacao[];
+  company: Company;
+  property: Property;
+  nature: Natureza;
 }
 
 export declare interface LoginForm {
