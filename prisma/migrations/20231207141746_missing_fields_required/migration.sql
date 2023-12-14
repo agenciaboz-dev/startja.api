@@ -1,9 +1,0 @@
--- AlterTable
-ALTER TABLE `Customer` ALTER COLUMN `bairro` DROP DEFAULT,
-    ALTER COLUMN `cep` DROP DEFAULT,
-    ALTER COLUMN `complemento` DROP DEFAULT,
-    ALTER COLUMN `inscricao_estadual` DROP DEFAULT,
-    ALTER COLUMN `isento` DROP DEFAULT,
-    ALTER COLUMN `numero` DROP DEFAULT,
-    ALTER COLUMN `regime_tributario` DROP DEFAULT,
-    ALTER COLUMN `rua` DROP DEFAULT;

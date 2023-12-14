@@ -131,7 +131,7 @@ export declare interface NewBankAccount {
 }
 
 export declare interface LoginForm {
-  login: string;
+  email: string;
   password: string;
 }
 
