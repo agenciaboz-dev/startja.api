@@ -64,6 +64,7 @@ export declare interface NewNature {
   type: string;
   finality: string;
   motive: string;
+  emissionFinality: string;
   rules: { id: number }[];
 }
 
