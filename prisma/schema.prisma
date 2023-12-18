@@ -59,6 +59,7 @@ model Product {
     id                          Int                    @id @default(autoincrement())
     name                        String              
     ncm                         String       
+    icmsOrigin                  String
     rules                       regraTributacao[]
     produtosNota                ProdutoNotaFiscal[]
 
@@ -96,6 +97,7 @@ model Natureza {
     type                        String
     finality                    String
     motive                      String
+    emissionFinality            String
     rules                       regraTributacao[]
     notas                       notaFiscal[]
 
@@ -127,6 +129,7 @@ model Property {
     id                          Int                     @id @default(autoincrement())
     ie                          String
     nifr                        String
+    series                      String
     cep                         String
     city                        String
     state                       String
@@ -144,10 +147,10 @@ model ProdutoNotaFiscal{
 
     id                          Int @id @default(autoincrement())
     unidadeComercial            String
-    unidadeTributavel           String
     productQnty                 Int
     unitaryComercialValue       Float
     unitaryTributableValue      Float
+    buyerPresence               String
 
 
     produto                     Product @relation(fields: [produtoId], references: [id])
