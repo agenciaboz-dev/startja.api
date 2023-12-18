@@ -29,12 +29,14 @@ const createProduct = async () => {
     id: 0,
     name: prompt("Digite o nome: "),
     ncm: prompt("Digite o NCM do produto: "),
+    icmsOrigin: prompt("Digite o ICMS de origem do produto: "),
   };
 
   const product = await prisma.product.create({
     data: {
       name: input.name,
       ncm: input.ncm,
+      icmsOrigin: input.icmsOrigin,
     },
   });
 

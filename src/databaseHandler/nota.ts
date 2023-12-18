@@ -33,11 +33,12 @@ const create = async (data: NewNota) => {
         createMany: {
           data: data.products.map((product) => ({
             unidadeComercial: product.unidadeComercial,
-            unidadeTributavel: product.unidadeTributavel,
+            unidadeTributavel: product.unidadeComercial,
             productQnty: product.productQnty,
             unitaryComercialValue: product.unitaryComercialValue,
             unitaryTributableValue: product.unitaryTributableValue,
             produtoId: product.produtoId,
+            buyerPresence: product.buyerPresence,
           })),
         },
       },

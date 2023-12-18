@@ -140,10 +140,10 @@ export declare interface LoginForm {
 
 export declare interface ProdutoNotaFiscal {
   unidadeComercial: string;
-  unidadeTributavel: string;
   productQnty: number;
   unitaryComercialValue: number;
   unitaryTributableValue: number;
+  buyerPresence: string;
   produtoId: number;
   notaId: number;
 }
