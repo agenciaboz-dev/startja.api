@@ -95,6 +95,7 @@ export declare interface NewProperty {
   district: string;
   exploration: string;
   declarant: string;
+  series: string;
   nota: notaFiscal[];
 }
 

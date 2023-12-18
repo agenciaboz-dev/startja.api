@@ -9,26 +9,27 @@ const inclusions = {
 };
 
 // Funções relacionadas as Propriedades ⬇️
-  const list = async () => {
-      return await prisma.property.findMany()
-  }
+const list = async () => {
+  return await prisma.property.findMany();
+};
 
-  const create = async (data: NewProperty) => {
-      return await prisma.property.create({
-          data: {
-              ie: data.ie,
-              nifr: data.nifr,
-              cep: normalize(data.cep),
-              city: data.city,
-              state: data.state,
-              street: data.street,
-              number: data.number,
-              adjunct: data.adjunct,
-              district: data.district,
-              exploration: data.exploration,
-              declarant: data.declarant
-          }
-      })
-  }
+const create = async (data: NewProperty) => {
+  return await prisma.property.create({
+    data: {
+      ie: data.ie,
+      nifr: data.nifr,
+      cep: normalize(data.cep),
+      city: data.city,
+      state: data.state,
+      street: data.street,
+      number: data.number,
+      adjunct: data.adjunct,
+      district: data.district,
+      exploration: data.exploration,
+      declarant: data.declarant,
+      series: data.series,
+    },
+  });
+};
 
-export default { list, create }
+export default { list, create };
