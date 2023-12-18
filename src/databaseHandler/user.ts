@@ -9,15 +9,18 @@ const prisma = new PrismaClient();
 
 const loginAdmin = async (data: LoginForm) =>
   await prisma.admin.findFirst({
-    where: { email: data.email, password: data.password },
+    where: { OR: [{ email: data.email }], AND: { password: data.password } },
   });
 
 // Função de login para clientes
 const loginCustomer = async (data: LoginForm) =>
   await prisma.customer.findFirst({
-    where: { email: data.email, password: data.password },
+    where: {
+      OR: [{ email: data.email }, { document: data.email }],
+      AND: { password: data.password },
+    },
   });
-// Função para listar todos os dados de todos os usuários. ADMINS e CLIENTES
+// Função para listar todos os dados de todos os usuarios. ADMINS e CLIENTES
 const list = async () => {
   const admin = await prisma.admin.findMany({});
   const customer = await prisma.customer.findMany({});

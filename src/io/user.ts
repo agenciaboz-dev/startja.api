@@ -3,18 +3,18 @@ import { LoginForm } from "../definitions/userOperations";
 import databaseHandler from "../databaseHandler";
 
 const handleLogin = async (socket: Socket, data: LoginForm) => {
-  const customer = await databaseHandler.user.loginCustomer(data);
+  const admin = await databaseHandler.user.loginAdmin(data);
 
-  if (customer && customer.password === data.password) {
-    // Successfully logged in
-    socket.emit("customer:login:success", customer);
+  if (admin) {
+    // Successfully logged in as an admin
+    socket.emit("admin:login:success", admin);
   } else {
     // Admin login failed, try customer login
-    const admin = await databaseHandler.user.loginAdmin(data);
+    const customer = await databaseHandler.user.loginCustomer(data);
 
-    if (admin && admin.password === data.password) {
+    if (customer) {
       // Successfully logged in as a customer
-      socket.emit("admin:login:success", admin);
+      socket.emit("customer:login:success", customer);
     } else {
       // Both login attempts failed
       socket.emit("user:login:failed", { error: "Credenciais inválidas." });
