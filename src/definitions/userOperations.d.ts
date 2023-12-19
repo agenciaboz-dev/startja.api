@@ -56,7 +56,7 @@ export declare interface NewProduct {
   ncm: string;
   icmsOrigin: string;
   rules?: regraTributacao[];
-  nota?: notaFiscal[];
+  produtosNota?: ProdutoNotaFiscal[];
 }
 
 export declare interface NewNature {
