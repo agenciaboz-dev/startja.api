@@ -34,21 +34,21 @@ export declare interface NewUser {
 }
 
 export declare interface NewCompany {
-  type: string;
-  name: string;
-  document: string;
-  inscricaoEstadual: string;
-  indicadorEstadual: number;
-  city: string;
-  state: string;
-  district: string;
-  street: string;
-  adjunct: string;
-  number: number;
-  cep: string;
-  email: string;
-  phone: number;
-  customerId: number;
+    type: string
+    name: string
+    document: string
+    inscricaoEstadual: string
+    indicadorEstadual: string
+    city: string
+    state: string
+    district: string
+    street: string
+    adjunct: string
+    number: string
+    cep: string
+    email: string
+    phone: string
+    customerId: number
 }
 
 export declare interface NewProduct {

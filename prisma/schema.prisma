@@ -71,17 +71,17 @@ model Company {
     type                        String
     name                        String
     document                    String              @unique
-    inscricaoEstadual           String?
-    indicadorEstadual           Int
+    inscricaoEstadual           String
+    indicadorEstadual           String
     city                        String
     state                       String
     district                    String
     street                      String
-    adjunct                     String
-    number                      Int
+    adjunct                     String?
+    number                      String
     cep                         String
-    email                       String?
-    phone                       Int?
+    email                       String
+    phone                       String
     
     customerId                  Int
     customer                    Customer            @relation(fields: [customerId], references: [id])

@@ -1,9 +1,9 @@
 const normalize = (string: string) =>
-  string
-    .toLocaleLowerCase()
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .replace(/\./g, "");
+    string
+        .toLocaleLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .replace(/\D/g, "")
 
 export default normalize;
 
