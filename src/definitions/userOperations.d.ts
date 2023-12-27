@@ -13,24 +13,23 @@ import {
 import { type } from "os";
 
 export declare interface NewUser {
-  name: string;
-  email: string;
-  password: string;
-  phone: string;
-  document: string;
-  city: string;
-  state: string;
-  district: string;
-  street: string;
-  adjunct: string;
-  number: number;
-  cep: string;
-  register_date: string;
-  certificateId: string;
-  businessName: string;
-  regimeTributario: number;
-  inscricaoEstadual: string;
-  isento: boolean;
+    name: string
+    email: string
+    password: string
+    phone: string
+    document: string
+    city: string
+    state: string
+    district: string
+    street: string
+    adjunct: string
+    number: number
+    cep: string
+    register_date: string
+    certificateId: string
+    regimeTributario: number
+    inscricaoEstadual: string
+    isento: boolean
 }
 
 export declare interface NewCompany {
@@ -49,6 +48,7 @@ export declare interface NewCompany {
     email: string
     phone: string
     customerId: number
+    businessName: string
 }
 
 export declare interface NewProduct {

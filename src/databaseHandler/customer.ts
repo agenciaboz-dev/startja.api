@@ -54,28 +54,27 @@ const create = async (data: NewUser) => {
   });
 
   return await prisma.customer.create({
-    data: {
-      name: data.name,
-      email: normalize(data.email),
-      password: data.password,
-      phone: data.phone,
-      document: normalize(data.document),
-      city: data.city,
-      state: data.state,
-      register_date: new Date().getTime().toString(),
-      certificateId: certificate.id,
-      district: data.district,
-      cep: data.cep,
-      adjunct: data.adjunct,
-      inscricaoEstadual: data.inscricaoEstadual,
-      isento: false,
-      number: data.number,
-      regimeTributario: data.regimeTributario,
-      street: data.street,
-      businessName: data.businessName,
-    },
-    include: inclusions.customer,
-  });
+      data: {
+          name: data.name,
+          email: normalize(data.email),
+          password: data.password,
+          phone: data.phone,
+          document: normalize(data.document),
+          city: data.city,
+          state: data.state,
+          register_date: new Date().getTime().toString(),
+          certificateId: certificate.id,
+          district: data.district,
+          cep: data.cep,
+          adjunct: data.adjunct,
+          inscricaoEstadual: data.inscricaoEstadual,
+          isento: false,
+          number: data.number,
+          regimeTributario: data.regimeTributario,
+          street: data.street
+      },
+      include: inclusions.customer
+  })
 };
 
 const exists = async (data: NewUser) => {

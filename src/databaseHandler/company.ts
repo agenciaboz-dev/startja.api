@@ -26,7 +26,8 @@ const create = async (data: NewCompany) => {
           cep: normalize(data.cep),
           email: data.email.toLowerCase(),
           phone: data.phone,
-          customerId: data.customerId
+          customerId: data.customerId,
+          businessName: data.businessName
       }
   })
 };
