@@ -17,6 +17,7 @@ const buildInvoice = (data: FocusNFeInvoiceForm) => {
     const new_data: FocusNFeInvoiceData = {
         // token,
 
+        numero: data.numero,
         serie: data.serie,
         natureza_operacao: data.natureza_operacao,
         data_emissao: new Date().toISOString().split("T")[0],
@@ -24,7 +25,7 @@ const buildInvoice = (data: FocusNFeInvoiceForm) => {
         tipo_documento: data.tipo_documento,
         local_destino: data.local_destino,
         finalidade_emissao: data.finalidade_emissao,
-        consumidor_final: data.consumidor_final,
+        consumidor_final: data.destinatario.indicador_inscricao_estadual == 9 ? 1 : data.consumidor_final,
         presenca_comprador: data.presenca_comprador,
         cnpj_emitente: !!data.emitente.cnpj ? data.emitente.cnpj : null,
         cpf_emitente: !data.emitente.cnpj ? data.emitente.cpf : null,

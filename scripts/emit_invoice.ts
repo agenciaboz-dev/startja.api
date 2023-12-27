@@ -1,6 +1,7 @@
 import focusNFe from "../src/api/focusNFe"
 
 const data = focusNFe.buildInvoice({
+    numero: 1,
     serie: 922,
     natureza_operacao: "quem sabe",
     tipo_documento: 1,
@@ -48,7 +49,7 @@ const data = focusNFe.buildInvoice({
             icms_situacao_tributaria: "00",
             id: "1",
             name: "chopp",
-            ncm: "12345678",
+            ncm: "61091000",
             pis_situacao_tributaria: "01",
             quantidade: 5,
             unidade_comercial: "un",
