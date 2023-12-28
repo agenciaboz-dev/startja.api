@@ -16,12 +16,11 @@ const list = async () => {
 const create = async (data: NewProduct) => {
   console.log(data);
   return await prisma.product.create({
-    data: {
-      name: data.name,
-      icmsOrigin: data.icmsOrigin,
-      ncm: normalize(data.ncm),
-    },
-  });
+      data: {
+          name: data.name,
+          ncm: normalize(data.ncm)
+      }
+  })
 };
 
 export default { list, create };

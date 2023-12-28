@@ -5,7 +5,7 @@ const api = axios.create({ baseURL: "https://homologacao.focusnfe.com.br", auth:
 const emitInvoice = async (data: FocusNFeInvoiceData, reference: string) => {
     const response = await api.post(`/v2/nfe?ref=${reference}`, data)
 
-    console.log(response.data)
+    return response
 }
 
 const consultInvoice = async (reference: string) => {

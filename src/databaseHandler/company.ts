@@ -5,8 +5,10 @@ import nota from "./nota";
 
 const prisma = new PrismaClient();
 
+const include = { notas: { include: nota.include } }
+
 // Função para listar todas as empresas
-const list = async () => await prisma.company.findMany();
+const list = async () => await prisma.company.findMany({ include })
 
 // Função para criar uma nova empresa
 const create = async (data: NewCompany) => {
@@ -28,11 +30,11 @@ const create = async (data: NewCompany) => {
           phone: data.phone,
           customerId: data.customerId,
           businessName: data.businessName
-      }
+      },
+      include
   })
 };
 
-const get = async (id: number) =>
-  await prisma.company.findUnique({ where: { id } });
+const get = async (id: number) => await prisma.company.findUnique({ where: { id }, include })
 
-export default { list, create, get };
+export default { include, list, create, get }

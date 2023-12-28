@@ -4,7 +4,7 @@ import company from "./company";
 
 const prisma = new PrismaClient();
 
-const include = { companies: true, certificate: true }
+const include = { companies: { include: company.include }, certificate: true }
 
 // Funções relacionadas aos usuários / clientes e admins ⬇️
 // Funções de login para Admins

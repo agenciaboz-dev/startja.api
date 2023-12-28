@@ -58,8 +58,7 @@ model Product {
     id                          Int                    @id @default(autoincrement())
     name                        String              
     ncm                         String       
-    icmsOrigin                  String
-    rules                       regraTributacao[]
+
     produtosNota                ProdutoNotaFiscal[]
 
 }
@@ -98,29 +97,20 @@ model Natureza {
     finality                    String
     motive                      String
     emissionFinality            String
-    rules                       regraTributacao[]
-    notas                       notaFiscal[]
 
 }
 
 model regraTributacao {
+    id                              Int                     @id @default(autoincrement())
+    aliquota                        Int
+    cfop                            Int
+    cofins_situacao_tributaria      String
+    icms_modalidade_base_calculo    Int
+    icms_origem                     Int
+    icms_situacao_tributaria        String
+    pis_situacao_tributaria         String
 
-    id                          Int                     @id @default(autoincrement())
-    uf                          String
-    aliquota                    Int
-    cfop                        Int
-    percentageBaseCalculo       Float
-    deferralPercentage          String
-    additionalInfo              String
-    icmsOrigin                  Int
-    fiscalBenefit               String
-    icmsSituation               String
-    pisSituation                String
-    cofinsSituation             String
-
-    notas                       notaFiscal[]
-    natures                     Natureza[]
-    products                    Product[]
+    products                        ProdutoNotaFiscal[]
 
 }
 
@@ -139,18 +129,15 @@ model Property {
     district                    String
     exploration                 String
     declarant                   String
-    notas                       notaFiscal[]
 
 }
 
 model ProdutoNotaFiscal{
 
     id                          Int @id @default(autoincrement())
-    unidadeComercial            String
+    unidade                     String
+    unitaryValue                Float
     productQnty                 Int
-    unitaryComercialValue       Float
-    unitaryTributableValue      Float
-    buyerPresence               String
 
 
     produto                     Product @relation(fields: [produtoId], references: [id])
@@ -159,45 +146,43 @@ model ProdutoNotaFiscal{
     nota                        notaFiscal @relation(fields: [notaId], references: [id])
     notaId                      Int
 
+    rule                        regraTributacao?        @relation(fields: [rule_id], references: [id])
+    rule_id                     Int?
+
 }
 
 model notaFiscal {
 
     id                          Int                     @id @default(autoincrement())
-    series                      Int
-    generalInfo                 String
-    emissionDate                String?                 @db.Text
-    emissionTime                String?                 @db.Text
-    paymentCondition            String
-    paymentType                 String
-    qtdParcelas                 Int
-    valorParcelas               Float
-    vencimentoParcelas          String
-    freteType                   String
-    freteValue                  Int?
-    freteInsurance              Int?
-    vehiclePlates               String
-    vehicleUf                   String
-    shippingCompany             String
-    transportedProductQuantity  String
-    transportedProductType      String
-    bruteWeightKg               String
-    liquidWeightKg              String
-    totalValue                  Int
-    totalProductValue           Int
+    emissionDatetime            String?                 @db.Text
+    numero                  Int
+    serie                   Int
+    natureza_operacao       String
+    tipo_documento                  Int
+    local_destino                   Int
+    finalidade_emissao                  Int
+    consumidor_final                    Int
+    presenca_comprador                  Int
+
+    emitente_id                 Int
+    destinatario_id             Int
+
+    valor_frete         Float
+    valor_seguro            Float
+    valor_produtos          Float
+    valor_total         Float
+
+    status              String  @default("")
+    chave               String  @default("")
+    protocolo           String  @default("")
+    url_xml             String  @default("")
+    url_pdf             String  @default("")
 
     products                    ProdutoNotaFiscal[]
-    rules                       regraTributacao[]
     
     companyId                   Int
     company                     Company             @relation(fields: [companyId], references: [id])
 
-    propertyId                  Int
-    property                    Property             @relation(fields: [propertyId], references: [id])
-
-    natureId                    Int
-    nature                      Natureza             @relation(fields: [natureId], references: [id])
-    
 }
 
 model Accounts {

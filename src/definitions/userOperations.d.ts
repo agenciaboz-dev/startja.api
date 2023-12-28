@@ -69,81 +69,67 @@ export declare interface NewNature {
 }
 
 export declare interface NewRule {
-  uf: string;
-  aliquota: number;
-  cfop: number;
-  percentageBaseCalculo: number;
-  deferralPercentage: string;
-  additionalInfo: string;
-  icmsOrigin: number;
-  fiscalBenefit: string;
-  icmsSituation: string;
-  pisSituation: string;
-  cofinsSituation: string;
-  natures: Natureza[];
-  products: Product[];
+    aliquota: number
+    cfop: number
+    cofins_situacao_tributaria: string
+    icms_modalidade_base_calculo: number
+    icms_origem: number
+    icms_situacao_tributaria: string
+    pis_situacao_tributaria: string
+
+    products: ProdutoNotaFiscal[]
 }
 
 export declare interface NewProperty {
-  ie: string;
-  nifr: string;
-  cep: string;
-  city: string;
-  state: string;
-  street: string;
-  number: string;
-  adjunct: string;
-  district: string;
-  exploration: string;
-  declarant: string;
-  series: string;
-  nota: notaFiscal[];
+    ie: string
+    nifr: string
+    cep: string
+    city: string
+    state: string
+    street: string
+    number: string
+    adjunct: string
+    district: string
+    exploration: string
+    declarant: string
+    series: string
+    nota: notaFiscal[]
 }
 
 export declare interface NewNota {
-  series: number;
-  generalInfo: string;
-  paymentCondition: string;
-  paymentType: string;
-  qtdParcelas: number;
-  valorParcelas: number;
-  vencimentoParcelas: string;
-  freteType: string;
-  vehiclePlates: string;
-  vehicleUf: string;
-  shippingCompany: string;
-  transportedProductQuantity: string;
-  transportedProductType: string;
-  bruteWeightKg: string;
-  liquidWeightKg: string;
-  totalValue: number;
-  totalProductValue: number;
-  products: ProdutoNotaFiscal[];
-  rules: regraTributacao[];
-  company: Company;
-  property: Property;
-  nature: Natureza;
+    series: number
+    generalInfo: string
+    paymentCondition: string
+    paymentType: string
+    qtdParcelas: number
+    valorParcelas: number
+    vencimentoParcelas: string
+    freteType: string
+    vehiclePlates: string
+    vehicleUf: string
+    shippingCompany: string
+    transportedProductQuantity: string
+    transportedProductType: string
+    bruteWeightKg: string
+    liquidWeightKg: string
+    totalValue: number
+    totalProductValue: number
+    products: ProdutoNotaFiscal[]
+    rules: regraTributacao[]
+    company: Company
+    property: Property
+    nature: Natureza
 }
 
 export declare interface NewBankAccount {
-  internal: boolean;
-  name: string;
-  agency: string;
-  accNumber: string;
-  bankName: string;
+    internal: boolean
+    name: string
+    agency: string
+    accNumber: string
+    bankName: string
 }
 
 export declare interface LoginForm {
-  email: string;
-  password: string;
-}
-
-export declare interface ProdutoNotaFiscal {
-  unidadeComercial: string;
-  productQnty: number;
-  unitaryComercialValue: number;
-  unitaryTributableValue: number;
-  buyerPresence: string;
-  produtoId: number;
-  notaId: number;
+    email: string
+    password: string
 }

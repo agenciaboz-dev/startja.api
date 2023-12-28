@@ -3,54 +3,58 @@ import { NewNota } from "../definitions/userOperations";
 
 const prisma = new PrismaClient();
 
-const include = { nature: true, products: true, property: true };
+const include = { company: true, products: { include: { produto: true, rule: true } } }
 
 const list = async () => {
-  return await prisma.notaFiscal.findMany();
-};
+    return await prisma.notaFiscal.findMany()
+}
 
-const create = async (data: NewNota) => {
-  return await prisma.notaFiscal.create({
-    data: {
-      series: 922,
-      generalInfo: data.generalInfo,
-      paymentCondition: data.paymentCondition,
-      paymentType: data.paymentType,
-      qtdParcelas: data.qtdParcelas,
-      valorParcelas: data.valorParcelas,
-      vencimentoParcelas: data.vencimentoParcelas,
-      freteType: data.freteType,
-      vehiclePlates: data.vehiclePlates,
-      vehicleUf: data.vehicleUf,
-      shippingCompany: data.shippingCompany,
-      transportedProductQuantity: data.transportedProductQuantity,
-      transportedProductType: data.transportedProductType,
-      bruteWeightKg: data.bruteWeightKg,
-      liquidWeightKg: data.liquidWeightKg,
-      totalValue: data.totalValue,
-      totalProductValue: data.totalProductValue,
-      products: {
-        createMany: {
-          data: data.products.map((product) => ({
-            unidadeComercial: product.unidadeComercial,
-            unidadeTributavel: product.unidadeComercial,
-            productQnty: product.productQnty,
-            unitaryComercialValue: product.unitaryComercialValue,
-            unitaryTributableValue: product.unitaryTributableValue,
-            produtoId: product.produtoId,
-            buyerPresence: product.buyerPresence,
-          })),
+const updateStatus = async (id: number, status: string) => await prisma.notaFiscal.update({ where: { id }, data: { status }, include })
+
+const authorizedUpdate = async (data: NfeWebhook) =>
+    await prisma.notaFiscal.update({
+        where: { id: Number(data.ref) },
+        data: {
+            chave: data.chave_nfe,
+            protocolo: data.protocolo,
+            url_pdf: data.caminho_danfe,
+            url_xml: data.caminho_xml_nota_fiscal
         },
-      },
-      rules: {
-        connect: data.rules.map((rule) => ({ id: rule.id })),
-      },
-      company: { connect: { id: data.company.id } },
-      property: { connect: { id: data.property.id } },
-      nature: { connect: { id: data.nature.id } },
-    },
-    include,
-  });
-};
+        include
+    })
 
-export default { list, create };
+const create = async (data: FocusNFeInvoiceForm, emitente_id: number) => {
+    return await prisma.notaFiscal.create({
+        data: {
+            consumidor_final: data.consumidor_final,
+            destinatario_id: 0,
+            emitente_id: emitente_id,
+            finalidade_emissao: data.finalidade_emissao,
+            local_destino: data.local_destino,
+            natureza_operacao: data.natureza_operacao,
+            numero: data.numero,
+            presenca_comprador: data.presenca_comprador,
+            serie: data.serie,
+            tipo_documento: data.tipo_documento,
+            valor_frete: data.valor.frete,
+            valor_produtos: data.valor.produtos,
+            valor_seguro: data.valor.seguro,
+            valor_total: data.valor.total,
+            companyId: emitente_id,
+
+            emissionDatetime: new Date().getTime().toString(),
+
+            products: {
+                create: data.produtos.map((product) => ({
+                    productQnty: product.quantidade,
+                    unidade: product.unidade_comercial,
+                    unitaryValue: Number(product.valor_unitario_comercial),
+                    produto: { connect: { id: Number(product.id) } }
+                }))
+            }
+        },
+        include
+    })
+}
+
+export default { include, list, create, updateStatus, authorizedUpdate }

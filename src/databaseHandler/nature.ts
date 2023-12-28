@@ -6,10 +6,7 @@ const prisma = new PrismaClient();
 // Funções relacionadas as naturezas ⬇️
 
   // Função para listar todas as naturezas
-  const list = async () =>
-      await prisma.natureza.findMany({
-          include: { rules: true }
-      })
+  const list = async () => await prisma.natureza.findMany({})
   // Função para criar uma nova natureza
   const create = async (data: NewNature) => {
       const { rules, ...naturezaData } = data
@@ -22,8 +19,7 @@ const prisma = new PrismaClient();
       }
 
       return await prisma.natureza.create({
-          data: createData,
-          include: { rules: true }
+          data: createData
       })
   }
 

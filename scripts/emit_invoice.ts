@@ -1,7 +1,7 @@
 import focusNFe from "../src/api/focusNFe"
 
 const data = focusNFe.buildInvoice({
-    numero: 1,
+    numero: 9000,
     serie: 922,
     natureza_operacao: "quem sabe",
     tipo_documento: 1,
@@ -60,4 +60,4 @@ const data = focusNFe.buildInvoice({
     ]
 })
 
-focusNFe.emitInvoice(data, "teste_nota_1")
+focusNFe.emitInvoice(data, "teste_nota_2")
