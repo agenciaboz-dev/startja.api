@@ -18,7 +18,7 @@ const create = async (data: NewCompany) => {
           name: data.name,
           document: normalize(data.document),
           inscricaoEstadual: normalize(data.inscricaoEstadual),
-          indicadorEstadual: data.indicadorEstadual,
+          indicadorEstadual: data.indicadorEstadual.toString(),
           city: data.city,
           state: data.state,
           district: data.district,
