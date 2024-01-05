@@ -47,36 +47,28 @@ export const handleSocket = (socket: Socket) => {
   });
 
   socket.on("user:login", (data: LoginForm) => user.handleLogin(socket, data));
-  socket.on("user:list", () => user.list(socket));
+  socket.on("user:list:all", () => user.list(socket))
 
-  socket.on("product:list", () => product.productList(socket));
-  socket.on("product:create", (data: NewProduct) =>
-    product.productCreate(socket, data)
-  );
+  socket.on("product:list", () => product.productList(socket))
+  socket.on("product:create", (data: NewProduct) => product.productCreate(socket, data))
 
-  socket.on("customer:list", () => customer.list(socket));
-  socket.on("customer:signup", (data: NewUser) =>
-    customer.handleSignup(socket, data)
-  );
+  socket.on("user:list", () => customer.list(socket))
+  socket.on("user:signup", (data: NewUser) => customer.handleSignup(socket, data))
 
-  socket.on("company:list", () => company.companyList(socket));
-  socket.on("company:create", (data: NewCompany) =>
-    company.companyCreate(socket, data)
-  );
+  socket.on("company:list", () => company.companyList(socket))
+  socket.on("company:create", (data: NewCompany) => company.companyCreate(socket, data))
 
-  socket.on("nature:list", () => nature.natureList(socket));
-  socket.on("nature:create", (data: NewNature) =>
-    nature.natureCreate(socket, data)
-  );
+  socket.on("nature:list", () => nature.natureList(socket))
+  socket.on("nature:create", (data: NewNature) => nature.natureCreate(socket, data))
 
-  socket.on("rule:list", () => rule.ruleList(socket));
-  socket.on("rule:create", (data: NewRule) => rule.ruleCreate(socket, data));
+  socket.on("rule:list", () => rule.ruleList(socket))
+  socket.on("rule:create", (data: NewRule) => rule.ruleCreate(socket, data))
 
-  socket.on("property:list", () => property.propertyList(socket));
-  socket.on("property:create", (data: NewProperty) =>
-    property.propertyCreate(socket, data)
-  );
+  socket.on("property:list", () => property.propertyList(socket))
+  socket.on("property:create", (data: NewProperty) => property.propertyCreate(socket, data))
 
-  socket.on("nota:create", (data: { nota: FocusNFeInvoiceForm; emitente_id: number }) => nota.notaCreate(socket, data.nota, data.emitente_id))
+  socket.on("nota:create", (data: { nota: FocusNFeInvoiceForm; emitente_id: number; destinatario_id: number }) =>
+      nota.notaCreate(socket, data.nota, data.emitente_id, data.destinatario_id)
+  )
   socket.on("nota:list", () => nota.notaList(socket));
 };

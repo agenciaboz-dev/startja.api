@@ -2,10 +2,11 @@ import normalize from "../io/formatting";
 import { Customer, DigitalCertificate, PrismaClient } from "@prisma/client";
 import { NewUser } from "../definitions/userOperations";
 import company from "./company"
+import nota from "./nota"
 
 const prisma = new PrismaClient()
 
-const include = { certificate: true, companies: { include: company.include } }
+const include = { certificate: true, companies: { include: company.include }, notas: { include: nota.include } }
 
 const selections = {
     customer: {

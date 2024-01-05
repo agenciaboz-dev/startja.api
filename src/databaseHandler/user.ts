@@ -1,10 +1,11 @@
 import { Admin, Customer, PrismaClient } from "@prisma/client";
 import { LoginForm } from "../definitions/userOperations";
 import company from "./company";
+import nota from "./nota"
 
 const prisma = new PrismaClient();
 
-const include = { companies: { include: company.include }, certificate: true }
+const include = { companies: { include: company.include }, certificate: true, notas: { include: nota.include } }
 
 // Funções relacionadas aos usuários / clientes e admins ⬇️
 // Funções de login para Admins

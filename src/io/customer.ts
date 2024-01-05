@@ -5,10 +5,10 @@ import { NewUser } from "../definitions/userOperations";
 const list = async (socket: Socket) => {
   try {
     const customer = await databaseHandler.customer.customerList();
-    socket.emit("customer:list", customer);
+    socket.emit("user:list", customer)
   } catch (error) {
     console.error(`Error fetching customer list`);
-    socket.emit("customer:list:error", { error });
+    socket.emit("user:list:error", { error })
   }
 };
 

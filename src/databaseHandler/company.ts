@@ -5,7 +5,7 @@ import nota from "./nota";
 
 const prisma = new PrismaClient();
 
-const include = { notas: { include: nota.include } }
+const include = {}
 
 // Função para listar todas as empresas
 const list = async () => await prisma.company.findMany({ include })

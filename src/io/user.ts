@@ -14,7 +14,7 @@ const handleLogin = async (socket: Socket, data: LoginForm) => {
 
     if (customer) {
       // Successfully logged in as a customer
-      socket.emit("customer:login:success", customer);
+      socket.emit("user:login:success", customer)
     } else {
       // Both login attempts failed
       socket.emit("user:login:failed", { error: "Credenciais inválidas." });

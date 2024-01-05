@@ -3,13 +3,14 @@ import { NewNota } from "../definitions/userOperations";
 
 const prisma = new PrismaClient();
 
-const include = { company: true, products: { include: { produto: true, rule: true } } }
+const include = { destinatario: true, emitente: true, products: { include: { produto: true, rule: true } } }
 
 const list = async () => {
     return await prisma.notaFiscal.findMany()
 }
 
-const updateStatus = async (id: number, status: string) => await prisma.notaFiscal.update({ where: { id }, data: { status }, include })
+const updateStatus = async (id: number, status: string, message?: string) =>
+    await prisma.notaFiscal.update({ where: { id }, data: { status, mensagem_sefaz: message || "" }, include })
 
 const authorizedUpdate = async (data: NfeWebhook) =>
     await prisma.notaFiscal.update({
@@ -23,12 +24,12 @@ const authorizedUpdate = async (data: NfeWebhook) =>
         include
     })
 
-const create = async (data: FocusNFeInvoiceForm, emitente_id: number) => {
+const create = async (data: FocusNFeInvoiceForm, emitente_id: number, destinatario_id: number) => {
     return await prisma.notaFiscal.create({
         data: {
+            destinatario_id,
+            emitente_id,
             consumidor_final: data.consumidor_final,
-            destinatario_id: 0,
-            emitente_id: emitente_id,
             finalidade_emissao: data.finalidade_emissao,
             local_destino: data.local_destino,
             natureza_operacao: data.natureza_operacao,
@@ -40,7 +41,6 @@ const create = async (data: FocusNFeInvoiceForm, emitente_id: number) => {
             valor_produtos: data.valor.produtos,
             valor_seguro: data.valor.seguro,
             valor_total: data.valor.total,
-            companyId: emitente_id,
 
             emissionDatetime: new Date().getTime().toString(),
 
