@@ -16,7 +16,7 @@ router.post("/nfe/webhook", async (request: Request, response: Response) => {
 
     io.emit("nota:update", invoice)
 
-    response.status(100)
+    response.status(200)
 })
 
 export default router
