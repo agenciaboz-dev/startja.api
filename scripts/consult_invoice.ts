@@ -1,3 +1,3 @@
 import focusNFe from "../src/api/focusNFe"
 
-focusNFe.consultInvoice("21")
+focusNFe.consultInvoice("57")

@@ -35,7 +35,18 @@ model Customer {
     cep                         String         
     regimeTributario            Int              
     inscricaoEstadual           String              
-    isento                      Boolean             
+    isento                      Boolean        
+
+    businessName                String              @default("")
+    discrimina_impostos         Boolean             @default(true)     
+    enviar_email_destinatario   Boolean             @default(true)   
+    inscricao_municipal         String              @default("")
+    habilita_nfe                Boolean             @default(true)   
+    habilita_nfce               Boolean             @default(true)   
+    proximo_numero_nfe          Int                 @default(1)
+    serie_nfe                   Int                 @default(1)
+    
+
     
     certificateId               Int                 @unique
     certificate                 DigitalCertificate  @relation(fields: [certificateId], references: [id])
@@ -49,6 +60,7 @@ model DigitalCertificate {
     id                          Int                 @id @default(autoincrement())
     expiry                      String
     certificate                 String              @db.Text
+    password                    String              @db.Text @default("")
     
     customer                    Customer?
     
@@ -69,7 +81,7 @@ model Company {
     id                          Int                 @id @default(autoincrement())
     type                        String
     name                        String
-    businessName                String              @default("teste")
+    businessName                String              
     document                    String              @unique
     inscricaoEstadual           String
     indicadorEstadual           String

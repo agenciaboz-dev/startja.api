@@ -26,10 +26,21 @@ export declare interface NewUser {
     number: number
     cep: string
     register_date: string
-    certificateId: string
     regimeTributario: number
     inscricaoEstadual: string
     isento: boolean
+
+    businessName: string
+    discrimina_impostos: boolean
+    enviar_email_destinatario: boolean
+    inscricao_municipal: string
+    habilita_nfe: boolean
+    habilita_nfce: boolean
+    proximo_numero_nfe: number
+    serie_nfe: number
+
+    certificate: ArrayBuffer
+    certificate_password: string
 }
 
 export declare interface NewCompany {

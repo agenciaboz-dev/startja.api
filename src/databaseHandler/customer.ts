@@ -3,6 +3,7 @@ import { Customer, DigitalCertificate, PrismaClient } from "@prisma/client";
 import { NewUser } from "../definitions/userOperations";
 import company from "./company"
 import nota from "./nota"
+import { getExpiryDate } from "../tools/certificate_expiry"
 
 const prisma = new PrismaClient()
 
@@ -40,16 +41,24 @@ const customerList = async () => {
 // Função de criação de novos CLIENTES.
 const create = async (data: NewUser) => {
     console.log("Iniciando a criação do usuário...")
+
+    console.log(data)
+    const buffer = Buffer.from(data.certificate)
+    const certificate_base64 = buffer.toString("base64")
+    const expiryDate = getExpiryDate(buffer, data.certificate_password)
+
     const certificateInput: DigitalCertificate = {
         id: 0,
-        certificate: "",
-        expiry: ""
+        certificate: certificate_base64,
+        expiry: expiryDate?.getTime().toString() || "",
+        password: data.certificate_password
     }
 
     const certificate = await prisma.digitalCertificate.create({
         data: {
             expiry: certificateInput.expiry,
-            certificate: certificateInput.certificate
+            certificate: certificateInput.certificate,
+            password: certificateInput.password
         }
     })
 
@@ -71,7 +80,16 @@ const create = async (data: NewUser) => {
             isento: false,
             number: data.number,
             regimeTributario: data.regimeTributario,
-            street: data.street
+            street: data.street,
+
+            businessName: data.businessName,
+            discrimina_impostos: data.discrimina_impostos,
+            enviar_email_destinatario: data.enviar_email_destinatario,
+            habilita_nfce: data.habilita_nfce,
+            habilita_nfe: data.habilita_nfe,
+            inscricao_municipal: data.inscricao_municipal,
+            proximo_numero_nfe: data.proximo_numero_nfe,
+            serie_nfe: data.serie_nfe
         },
         include
     })

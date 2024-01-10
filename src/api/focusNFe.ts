@@ -2,6 +2,14 @@ import axios from "axios"
 
 const api = axios.create({ baseURL: "https://homologacao.focusnfe.com.br", auth: { username: "aOfbGj1AgNrGv9Zty5dfhPCmV3SEqDqY", password: "" } })
 
+const signCustomer = async (data: FocusNFECustomerData) => {
+    const response = await axios.post("https://api.focusnfe.com.br/v2/empresas", data, {
+        auth: { username: "Jb5xcx5U8TDbgB9T8CxqqeGtfcemCWVI", password: "" }
+    })
+
+    return response.data
+}
+
 const emitInvoice = async (data: FocusNFeInvoiceData, reference: string) => {
     const response = await api.post(`/v2/nfe?ref=${reference}`, data)
 
@@ -89,4 +97,4 @@ const buildInvoice = (data: FocusNFeInvoiceForm) => {
     return new_data
 }
 
-export default { emitInvoice, buildInvoice, consultInvoice }
+export default { emitInvoice, buildInvoice, consultInvoice, signCustomer }
