@@ -8,6 +8,7 @@ declare interface FocusNFECustomerData {
     discrimina_impostos: boolean
     email: string
     enviar_email_destinatario: boolean
+    enviar_email_homologacao: boolean
     inscricao_estadual: number
     inscricao_municipal: number
     logradouro: string

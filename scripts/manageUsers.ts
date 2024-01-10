@@ -38,8 +38,7 @@ const createUser = () => {
     console.log("Criando novo usuário admin;");
     createAdmin();
   } else if (userType == "cliente") {
-    console.log("Criando novo usuário cliente;");
-    createCustomer();
+    console.log("faz pelo site")
   } else {
     console.log(
       'Resposta inválida. Os tipos válidos são "admin" ou "cliente".'
@@ -67,69 +66,6 @@ const createAdmin = async () => {
   console.log(admin);
 };
 
-const createCustomer = async () => {
-  const certificateInput: DigitalCertificate = {
-    id: 0,
-    certificate: "",
-    expiry: "",
-  };
-
-  const certificate = await prisma.digitalCertificate.create({
-    data: {
-      expiry: certificateInput.expiry,
-      certificate: certificateInput.certificate,
-    },
-  });
-
-  const input: Customer = {
-      id: 0,
-      name: prompt("Digite o nome: "),
-      email: prompt("Digite o e-mail: "),
-      password: prompt("Digite a senha: "),
-      phone: prompt("Digite o telefone: "),
-      document: prompt("Digite o cpf: "),
-      city: prompt("Digite a cidade: "),
-      state: prompt("Digite o estado: "),
-      adjunct: prompt("Digite o complemento: "),
-      cep: prompt("Digite o cep: "),
-      district: prompt("Digite o bairro: "),
-      inscricaoEstadual: prompt("Digite a inscrição estadual: "),
-      isento: false,
-      number: parseInt(prompt("Digite o número: ")),
-      regimeTributario: parseInt(prompt("Digite o regime tributário: ")),
-      street: prompt("Digite a rua: "),
-
-      register_date: new Date().getTime().toString(),
-
-      certificateId: certificate.id
-  }
-
-  const customer = await prisma.customer.create({
-      data: {
-          name: input.name,
-          email: input.email,
-          password: input.password,
-          phone: input.phone,
-          document: input.document,
-          city: input.city,
-          state: input.state,
-          register_date: input.register_date,
-          adjunct: input.adjunct,
-          cep: input.cep,
-          district: input.district,
-          inscricaoEstadual: input.inscricaoEstadual,
-          isento: input.isento,
-          number: input.number,
-          regimeTributario: input.regimeTributario,
-          street: input.street,
-
-          certificateId: input.certificateId
-      },
-      include: { certificate: true, companies: true }
-  })
-
-  console.log(customer);
-};
 
 // DELETAR USUARIO
 
