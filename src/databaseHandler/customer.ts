@@ -65,7 +65,7 @@ const create = async (data: NewUser) => {
     return await prisma.customer.create({
         data: {
             name: data.name,
-            email: normalize(data.email),
+            email: data.email.toLowerCase(),
             password: data.password,
             phone: data.phone,
             document: normalize(data.document),
