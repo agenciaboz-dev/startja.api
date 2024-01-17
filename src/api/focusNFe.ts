@@ -71,7 +71,7 @@ const buildInvoice = (data: FocusNFeInvoiceForm) => {
 
         items: data.produtos.map((item, index) => ({
             numero_item: index + 1,
-            codigo_produto: item.id,
+            codigo_produto: item.codigo_externo,
             descricao: item.name,
             cfop: item.cfop,
             unidade_comercial: item.unidade_comercial,

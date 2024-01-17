@@ -44,6 +44,7 @@ declare interface FocusNFeInvoiceForm {
 
     produtos: {
         id: string
+        codigo_externo: string
         name: string
         cfop: number
         unidade_comercial: string
