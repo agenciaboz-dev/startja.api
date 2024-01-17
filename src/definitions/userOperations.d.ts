@@ -45,6 +45,7 @@ export declare interface NewUser {
 
 export declare interface NewCompany {
     type: string
+    final_consumer: boolean
     name: string
     document: string
     inscricaoEstadual: string

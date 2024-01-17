@@ -58,6 +58,7 @@ export const handleSocket = (socket: Socket) => {
 
     socket.on("company:list", () => company.companyList(socket))
     socket.on("company:create", (data: NewCompany) => company.companyCreate(socket, data))
+    socket.on("company:update", (data: NewCompany, id: number) => company.update(socket, data, id))
 
     socket.on("nature:list", () => nature.natureList(socket))
     socket.on("nature:create", (data: NewNature) => nature.natureCreate(socket, data))

@@ -28,4 +28,18 @@ const companyCreate = async (socket: Socket, data: NewCompany) => {
     }
 }
 
-export default { companyCreate, companyList }
+const update = async (socket: Socket, data: NewCompany, id: number) => {
+    try {
+        const company = await databaseHandler.company.update(data, id)
+        socket.emit("company:creation:success", company)
+        const user = await databaseHandler.user.get(company.customerId)
+        const io = getIoInstance()
+        io.emit("user:update", user)
+        console.log(user)
+    } catch (error) {
+        console.error(`Error creating company`, error)
+        socket.emit("company:creation:error", { error })
+    }
+}
+
+export default { companyCreate, companyList, update }

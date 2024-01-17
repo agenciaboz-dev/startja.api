@@ -43,6 +43,7 @@ const data = focusNFe.buildInvoice({
         {
             aliquota: 25,
             cfop: 5102,
+            codigo_externo: "teste",
             cofins_situacao_tributaria: "01",
             icms_modalidade_base_calculo: 3,
             icms_origem: 0,
