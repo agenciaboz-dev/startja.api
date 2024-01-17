@@ -93,6 +93,7 @@ export declare interface NewRule {
 
 export declare interface NewProperty {
     ie: string
+    name: string
     nifr: string
     cep: string
     city: string
@@ -103,8 +104,9 @@ export declare interface NewProperty {
     district: string
     exploration: string
     declarant: string
-    series: string
-    nota: notaFiscal[]
+    nfe_series: string
+    nfe_number: string
+    user_id: number
 }
 
 export declare interface NewNota {

@@ -67,8 +67,8 @@ export const handleSocket = (socket: Socket) => {
     socket.on("property:list", () => property.propertyList(socket))
     socket.on("property:create", (data: NewProperty) => property.propertyCreate(socket, data))
 
-    socket.on("nota:create", (data: { nota: FocusNFeInvoiceForm; emitente_id: number; destinatario_id: number }) =>
-        nota.notaCreate(socket, data.nota, data.emitente_id, data.destinatario_id)
+    socket.on("nota:create", (data: { nota: FocusNFeInvoiceForm; emitente_id: number; destinatario_id: number; propriedade_id: number }) =>
+        nota.notaCreate(socket, data.nota, data.emitente_id, data.destinatario_id, data.propriedade_id)
     )
     socket.on("nota:list", () => nota.notaList(socket))
 

@@ -52,6 +52,7 @@ model Customer {
     certificate                 DigitalCertificate  @relation(fields: [certificateId], references: [id])
     companies                   Company[]
     notas                       notaFiscal[]
+    properties                  Property[]
 
 }
 
@@ -94,6 +95,7 @@ model Company {
     cep                         String
     email                       String
     phone                       String
+    final_consumer              Boolean             @default(false)
     
     customerId                  Int
     customer                    Customer            @relation(fields: [customerId], references: [id])
@@ -130,9 +132,9 @@ model regraTributacao {
 model Property {
 
     id                          Int                     @id @default(autoincrement())
+    name                        String
     ie                          String
     nifr                        String
-    series                      String
     cep                         String
     city                        String
     state                       String
@@ -142,6 +144,12 @@ model Property {
     district                    String
     exploration                 String
     declarant                   String
+    nfe_series                  String
+    nfe_number                  String
+
+    user_id                     Int
+    user                        Customer                 @relation(fields: [user_id], references: [id])
+    notas                       notaFiscal[]
 
 }
 
@@ -177,6 +185,8 @@ model notaFiscal {
     consumidor_final                    Int
     presenca_comprador                  Int
 
+    propriedade_id              Int
+    propriedade                 Property        @relation(fields: [propriedade_id], references: [id])
     emitente_id                 Int
     emitente                    Customer        @relation(fields: [emitente_id], references: [id])
     destinatario_id             Int

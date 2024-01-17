@@ -17,10 +17,10 @@ const notaList = async (socket: Socket) => {
     }
 }
 
-const notaCreate = async (socket: Socket, data: FocusNFeInvoiceForm, emitente_id: number, destinatario_id: number) => {
+const notaCreate = async (socket: Socket, data: FocusNFeInvoiceForm, emitente_id: number, destinatario_id: number, propriedade_id: number) => {
     console.log(data)
     try {
-        const invoice = await databaseHandler.nota.create(data, emitente_id, destinatario_id)
+        const invoice = await databaseHandler.nota.create(data, emitente_id, destinatario_id, propriedade_id)
         const focus_data = focusNFe.buildInvoice(data)
         const invoice_response = await focusNFe.emitInvoice(focus_data, invoice.id.toString())
         console.log(invoice_response.data)

@@ -7,7 +7,7 @@ import { getExpiryDate } from "../tools/certificate_expiry"
 
 const prisma = new PrismaClient()
 
-const include = { certificate: true, companies: { include: company.include }, notas: { include: nota.include } }
+const include = { certificate: true, companies: { include: company.include }, notas: { include: nota.include }, properties: true }
 
 const selections = {
     customer: {

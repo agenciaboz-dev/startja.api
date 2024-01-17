@@ -15,8 +15,10 @@ const propertyList = async (socket: Socket) => {
 const propertyCreate = async (socket: Socket, data: NewProperty) => {
   try {
     console.log(data);
-    const properties = await databaseHandler.property.create(data);
-    socket.emit("property:creation:success", properties);
+    const property = await databaseHandler.property.create(data)
+    const user = await databaseHandler.user.get(property.user_id)
+    socket.emit("property:creation:success", property)
+    socket.emit("user:update", user)
   } catch (error) {
     console.error(`Error creating property`);
     socket.emit("property:creation:failed", { error });
