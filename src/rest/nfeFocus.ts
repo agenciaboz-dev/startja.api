@@ -13,6 +13,11 @@ router.post("/nfe/webhook", async (request: Request, response: Response) => {
 
         if (data.status == "autorizado") {
             invoice = await databaseHandler.nota.authorizedUpdate(data)
+            
+            databaseHandler.property.advanceNfeNumber(invoice.propriedade_id, data.numero).then(async (property) => {
+                const user = await databaseHandler.user.get(property.user_id)
+                io.emit("user:update", user)
+            })
         }
 
         io.emit("nota:update", invoice)

@@ -56,4 +56,11 @@ const update = async (data: NewProperty, id: number) =>
         }
     })
 
-export default { list, create, update }
+const get = async (id: number) => await prisma.property.findUnique({ where: { id } })
+
+const advanceNfeNumber = async (id: number, authorized_number: string) => {
+    const next_number = Number(authorized_number) + 1
+    return await prisma.property.update({ where: { id }, data: { nfe_number: next_number.toString() } })
+}
+
+export default { list, create, update, get, advanceNfeNumber }
