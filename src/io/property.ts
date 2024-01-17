@@ -25,4 +25,16 @@ const propertyCreate = async (socket: Socket, data: NewProperty) => {
   }
 };
 
-export default { propertyCreate, propertyList };
+const update = async (socket: Socket, data: NewProperty, id: number) => {
+    try {
+        const property = await databaseHandler.property.update(data, id)
+        const user = await databaseHandler.user.get(property.user_id)
+        socket.emit("property:creation:success", property)
+        socket.emit("user:update", user)
+    } catch (error) {
+        console.error(`Error creating property`)
+        socket.emit("property:creation:failed", { error })
+    }
+}
+
+export default { propertyCreate, propertyList, update }

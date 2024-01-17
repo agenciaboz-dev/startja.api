@@ -35,4 +35,25 @@ const create = async (data: NewProperty) => {
   })
 };
 
-export default { list, create };
+const update = async (data: NewProperty, id: number) =>
+    await prisma.property.update({
+        where: { id },
+        data: {
+            ie: data.ie,
+            nifr: data.nifr,
+            cep: normalize(data.cep),
+            city: data.city,
+            state: data.state,
+            street: data.street,
+            number: data.number,
+            adjunct: data.adjunct,
+            district: data.district,
+            exploration: data.exploration,
+            declarant: data.declarant,
+            nfe_number: data.nfe_number,
+            nfe_series: data.nfe_series,
+            name: data.name
+        }
+    })
+
+export default { list, create, update }
