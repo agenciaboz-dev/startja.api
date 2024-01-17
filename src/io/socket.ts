@@ -51,6 +51,7 @@ export const handleSocket = (socket: Socket) => {
 
     socket.on("product:list", () => product.productList(socket))
     socket.on("product:create", (data: NewProduct) => product.productCreate(socket, data))
+    socket.on("product:update", (data: NewProduct, id: number) => product.update(socket, data, id))
 
     socket.on("user:list", () => customer.list(socket))
     socket.on("user:signup", (data: NewUser) => customer.handleSignup(socket, data))

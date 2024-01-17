@@ -10,8 +10,9 @@ const prompt = promptObj()
 const chooseFunction = () => {
     const functionType = prompt("Para CRIAR um PRODUTO digite CREATE / Para DELETAR um PRODUTO digite DELETE")
     if (functionType == "create") {
-        console.log("Iniciado o processo de criação de novo PRODUTO;")
-        createProduct()
+        console.log("comentei")
+        // console.log("Iniciado o processo de criação de novo PRODUTO;")
+        // createProduct()
     } else if (functionType == "delete") {
         console.log("Iniciado o processo de deleção de PRODUTO existente;")
         deleteProduct()
@@ -22,22 +23,22 @@ const chooseFunction = () => {
 }
 
 // CRIAR PRODUTO
-const createProduct = async () => {
-    const input: Product = {
-        id: 0,
-        name: prompt("Digite o nome: "),
-        ncm: prompt("Digite o NCM do produto: ")
-    }
+// const createProduct = async () => {
+//     const input: Product = {
+//         id: 0,
+//         name: prompt("Digite o nome: "),
+//         ncm: prompt("Digite o NCM do produto: ")
+//     }
 
-    const product = await prisma.product.create({
-        data: {
-            name: input.name,
-            ncm: input.ncm
-        }
-    })
+//     const product = await prisma.product.create({
+//         data: {
+//             name: input.name,
+//             ncm: input.ncm
+//         }
+//     })
 
-    console.log(product)
-}
+//     console.log(product)
+// }
 
 // DELETAR PRODUTO
 

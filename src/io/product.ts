@@ -26,4 +26,17 @@ const productCreate = async (socket: Socket, data: NewProduct) => {
     }
 }
 
-export default { productList, productCreate }
+const update = async (socket: Socket, data: NewProduct, id: number) => {
+    try {
+        const product = await databaseHandler.product.update(data, id)
+        socket.emit("product:creation:successful", product)
+
+        const io = getIoInstance()
+        io.emit("product:new", product)
+    } catch (error) {
+        console.error(`Error creating product`, error)
+        socket.emit("product:creation:error", { error })
+    }
+}
+
+export default { productList, productCreate, update }

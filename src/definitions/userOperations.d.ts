@@ -63,11 +63,12 @@ export declare interface NewCompany {
 }
 
 export declare interface NewProduct {
-  name: string;
-  ncm: string;
-  icmsOrigin: string;
-  rules?: regraTributacao[];
-  produtosNota?: ProdutoNotaFiscal[];
+    name: string
+    ncm: string
+    codigo_externo: string
+    icmsOrigin: number
+    rules?: regraTributacao[]
+    produtosNota?: ProdutoNotaFiscal[]
 }
 
 export declare interface NewNature {

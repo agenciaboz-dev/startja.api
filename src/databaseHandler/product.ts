@@ -18,9 +18,20 @@ const create = async (data: NewProduct) => {
   return await prisma.product.create({
       data: {
           name: data.name,
-          ncm: normalize(data.ncm)
+          ncm: normalize(data.ncm),
+          codigo_externo: data.codigo_externo
       }
   })
 };
 
-export default { list, create };
+const update = async (data: NewProduct, id: number) =>
+    await prisma.product.update({
+        where: { id },
+        data: {
+            name: data.name,
+            ncm: normalize(data.ncm),
+            codigo_externo: data.codigo_externo
+        }
+    })
+
+export default { list, create, update }
