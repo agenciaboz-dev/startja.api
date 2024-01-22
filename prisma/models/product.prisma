@@ -1,0 +1,37 @@
+model Product {
+
+    id                          Int                    @id @default(autoincrement())
+    name                        String              
+    ncm                         String  
+    codigo_externo              String                  @default("")     
+    icmsOrigin                  Int                     @default(0)
+
+    produtosNota                ProdutoNotaFiscal[]
+
+}
+
+
+model ProdutoNotaFiscal {
+    id         Int         @id @default(autoincrement())
+    unidade                     String
+    unitaryValue                Float
+    productQnty                 Int
+
+    nota                        notaFiscal @relation(fields: [notaId], references: [id])
+    notaId                      Int
+
+    rule                        regraTributacao?        @relation(fields: [rule_id], references: [id])
+    rule_id                     Int?
+    produtoId                   Int
+    produto                     Product @relation(fields: [produtoId], references: [id])
+}
+
+model notaFiscal {
+    id         Int         @id @default(autoincrement())
+    products                    ProdutoNotaFiscal[]     
+}
+
+model regraTributacao {
+    id         Int         @id @default(autoincrement())
+    products                        ProdutoNotaFiscal[]
+}

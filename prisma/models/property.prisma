@@ -1,0 +1,28 @@
+model Property {
+
+    id                          Int                     @id @default(autoincrement())
+    name                        String
+    ie                          String
+    nifr                        String
+    cep                         String
+    city                        String
+    state                       String
+    street                      String
+    number                      String
+    adjunct                     String
+    district                    String
+    exploration                 String
+    declarant                   String
+    nfe_series                  String
+    nfe_number                  String
+
+    
+    notas                       notaFiscal[]
+
+}
+
+model notaFiscal {
+    id         Int         @id @default(autoincrement())
+    propriedade_id              Int
+    propriedade                 Property        @relation(fields: [propriedade_id], references: [id])
+}

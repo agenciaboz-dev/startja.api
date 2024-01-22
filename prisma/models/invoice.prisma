@@ -1,0 +1,31 @@
+datasource db {
+    provider = "mysql"
+    url      = env("DATABASE_URL")
+}
+
+model notaFiscal {
+
+    id                          Int                     @id @default(autoincrement())
+    emissionDatetime            String?                 @db.Text
+    numero                  Int
+    serie                   Int
+    natureza_operacao       String
+    tipo_documento                  Int
+    local_destino                   Int
+    finalidade_emissao                  Int
+    consumidor_final                    Int
+    presenca_comprador                  Int
+
+    valor_frete         Float
+    valor_seguro            Float
+    valor_produtos          Float
+    valor_total         Float
+
+    status              String  @default("")
+    mensagem_sefaz      String  @default("")
+    chave               String  @default("")
+    protocolo           String  @default("")
+    url_xml             String  @default("")
+    url_pdf             String  @default("")
+
+}

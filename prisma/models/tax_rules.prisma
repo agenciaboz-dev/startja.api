@@ -1,0 +1,22 @@
+model Natureza {
+
+    id                          Int                 @id @default(autoincrement())
+    operation                   String
+    type                        String
+    finality                    String
+    motive                      String
+    emissionFinality            String
+
+}
+
+model regraTributacao {
+    id                              Int                     @id @default(autoincrement())
+    aliquota                        Int
+    cfop                            Int
+    cofins_situacao_tributaria      String
+    icms_modalidade_base_calculo    Int
+    icms_origem                     Int
+    icms_situacao_tributaria        String
+    pis_situacao_tributaria         String
+
+}

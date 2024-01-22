@@ -1,0 +1,16 @@
+{
+    "mixers": [
+        {
+            "input": [
+                "prisma/base.prisma",
+                "prisma/models/user.prisma",
+                "prisma/models/product.prisma",
+                "prisma/models/company.prisma",
+                "prisma/models/tax_rules.prisma",
+                "prisma/models/property.prisma",
+                "prisma/models/invoice.prisma"
+            ],
+            "output": "prisma/schema.prisma"
+        }
+    ]
+}

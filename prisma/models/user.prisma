@@ -1,0 +1,90 @@
+datasource db {
+    provider = "mysql"
+    url      = env("DATABASE_URL")
+}
+
+model Admin {
+
+    id                          Int                 @id @default(autoincrement())
+    name                        String
+    email                       String              @unique
+    password                    String
+
+}
+
+model Customer {
+
+    id                          Int                 @id @default(autoincrement())
+    name                        String
+    email                       String              @unique
+    password                    String
+    register_date               String
+    phone                       String
+    document                    String              @unique
+    city                        String
+    state                       String
+    district                    String              
+    number                      Int              
+    adjunct                     String              
+    street                      String              
+    cep                         String         
+    regimeTributario            Int              
+    inscricaoEstadual           String              
+    isento                      Boolean        
+
+    businessName                String              @default("")
+    discrimina_impostos         Boolean             @default(true)     
+    enviar_email_destinatario   Boolean             @default(true)   
+    inscricao_municipal         String              @default("")
+    habilita_nfe                Boolean             @default(true)   
+    habilita_nfce               Boolean             @default(true)   
+    proximo_numero_nfe          Int                 @default(1)
+    serie_nfe                   Int                 @default(1)
+    
+
+    
+    certificateId               Int                 @unique
+    certificate                 DigitalCertificate  @relation(fields: [certificateId], references: [id])
+    companies                   Company[]
+    notas                       notaFiscal[]
+    properties                  Property[]
+
+}
+
+model Accounts {
+
+    id                          Int                     @id @default (autoincrement())
+    internal                    Boolean                 @default(false)
+    name                        String
+    agency                      String
+    accNumber                   String
+    bankName                    String
+
+}
+
+model DigitalCertificate {
+    id      Int     @id @default(autoincrement())
+    expiry                      String
+    certificate                 String              @db.Text
+    password                    String              @db.Text @default("")
+
+    customer                    Customer?
+}
+
+model Company {
+    id         Int         @id @default(autoincrement())
+    customerId                  Int
+    customer                    Customer            @relation(fields: [customerId], references: [id])
+}
+
+model notaFiscal {
+    id         Int         @id @default(autoincrement())
+    emitente_id                 Int
+    emitente                    Customer        @relation(fields: [emitente_id], references: [id])
+}
+
+model Property {
+    id         Int         @id @default(autoincrement())
+    user_id                     Int
+    user                        Customer                 @relation(fields: [user_id], references: [id])
+}

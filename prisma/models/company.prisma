@@ -1,0 +1,32 @@
+model Company {
+
+    id                          Int                 @id @default(autoincrement())
+    type                        String
+    name                        String
+    businessName                String              
+    document                    String              @unique
+    inscricaoEstadual           String
+    indicadorEstadual           String
+    city                        String
+    state                       String
+    district                    String
+    street                      String
+    adjunct                     String?
+    number                      String
+    cep                         String
+    email                       String
+    phone                       String
+    final_consumer              Boolean             @default(false)
+    
+    
+
+    notas                       notaFiscal[]
+
+}
+
+model notaFiscal {
+    id         Int         @id @default(autoincrement())
+    
+    destinatario_id             Int
+    destinatario                Company         @relation(fields: [destinatario_id], references: [id])
+}
