@@ -1,26 +1,38 @@
 import { Natureza, PrismaClient } from "@prisma/client";
-import { NewNature } from "../definitions/userOperations";
+import { NatureForm } from "../definitions/userOperations"
 
-const prisma = new PrismaClient();
+const prisma = new PrismaClient()
+
+const include = { rules: { include: { product: true } } }
 
 // Funções relacionadas as naturezas ⬇️
 
-  // Função para listar todas as naturezas
-  const list = async () => await prisma.natureza.findMany({})
-  // Função para criar uma nova natureza
-  const create = async (data: NewNature) => {
-      const { rules, ...naturezaData } = data
+// Função para listar todas as naturezas
+const list = async () => await prisma.natureza.findMany({ include })
 
-      const createData = {
-          ...naturezaData,
-          rules: {
-              connect: rules.map((rule: { id: number }) => ({ id: rule.id }))
-          }
-      }
+const create = async (data: NatureForm) =>
+    await prisma.natureza.create({
+        data: {
+            emissionFinality: data.emissionFinality,
+            finality: data.finality,
+            motive: data.motive,
+            operation: data.operation,
+            type: data.type,
+            rules: {
+                create: data.rules.map((rule) => ({
+                    aliquota: rule.aliquota,
+                    cfop: rule.cfop,
+                    cofins_situacao_tributaria: rule.cofins_situacao_tributaria,
+                    destino: rule.destino,
+                    icms_modalidade_base_calculo: rule.icms_modalidade_base_calculo,
+                    icms_situacao_tributaria: rule.icms_situacao_tributaria,
+                    origem: rule.origem,
+                    pis_situacao_tributaria: rule.pis_situacao_tributaria,
+                    product_id: rule.product_id
+                }))
+            }
+        },
+        include
+    })
 
-      return await prisma.natureza.create({
-          data: createData
-      })
-  }
-
-export default { list, create }
+export default { include, list, create }

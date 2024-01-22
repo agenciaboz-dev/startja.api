@@ -71,25 +71,27 @@ export declare interface NewProduct {
     rules?: regraTributacao[]
 }
 
-export declare interface NewNature {
-  operation: string;
-  type: string;
-  finality: string;
-  motive: string;
-  emissionFinality: string;
-  rules: { id: number }[];
+export declare interface NatureForm {
+    operation: string
+    type: number
+    finality: string
+    motive: string
+    emissionFinality: number
+
+    rules: TaxRuleForm[]
 }
 
-export declare interface NewRule {
+export declare interface TaxRuleForm {
     aliquota: number
     cfop: number
     cofins_situacao_tributaria: string
     icms_modalidade_base_calculo: number
-    icms_origem: number
     icms_situacao_tributaria: string
     pis_situacao_tributaria: string
 
-    products: ProdutoNotaFiscal[]
+    product_id: number
+    origem: string
+    destino: string
 }
 
 export declare interface NewProperty {

@@ -1,7 +1,7 @@
 import { Product, PrismaClient, regraTributacao } from "@prisma/client"
 import promptObj from "prompt-sync"
 import databaseHandler from "../src/databaseHandler"
-import { NewRule } from "../src/definitions/userOperations"
+import { TaxRuleForm } from "../src/definitions/userOperations"
 
 const prisma = new PrismaClient()
 const prompt = promptObj()

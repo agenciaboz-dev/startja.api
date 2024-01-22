@@ -147,38 +147,41 @@ model Product {
   codigo_externo String              @default("")
   icmsOrigin     Int                 @default(0)
   produtosNota   ProdutoNotaFiscal[] @relation(name: "ProductToProdutoNotaFiscal")
+  tax_rules      regraTributacao[]   @relation(name: "ProductToregraTributacao")
 }
 
 model ProdutoNotaFiscal {
-  id           Int              @id @default(autoincrement())
+  id           Int        @id @default(autoincrement())
   unidade      String
   unitaryValue Float
   productQnty  Int
-  nota         notaFiscal       @relation(name: "ProdutoNotaFiscalTonotaFiscal", fields: [notaId], references: [id])
+  nota         notaFiscal @relation(name: "ProdutoNotaFiscalTonotaFiscal", fields: [notaId], references: [id])
   notaId       Int
-  rule         regraTributacao? @relation(name: "ProdutoNotaFiscalToregraTributacao", fields: [rule_id], references: [id])
-  rule_id      Int?
   produtoId    Int
-  produto      Product          @relation(name: "ProductToProdutoNotaFiscal", fields: [produtoId], references: [id])
-}
-
-model regraTributacao {
-  id                           Int                 @id @default(autoincrement())
-  products                     ProdutoNotaFiscal[] @relation(name: "ProdutoNotaFiscalToregraTributacao")
-  aliquota                     Int
-  cfop                         Int
-  cofins_situacao_tributaria   String
-  icms_modalidade_base_calculo Int
-  icms_origem                  Int
-  icms_situacao_tributaria     String
-  pis_situacao_tributaria      String
+  produto      Product    @relation(name: "ProductToProdutoNotaFiscal", fields: [produtoId], references: [id])
 }
 
 model Natureza {
-  id               Int    @id @default(autoincrement())
+  id               Int               @id @default(autoincrement())
   operation        String
-  type             String
+  type             Int
   finality         String
   motive           String
-  emissionFinality String
+  emissionFinality Int
+  rules            regraTributacao[] @relation(name: "NaturezaToregraTributacao")
+}
+
+model regraTributacao {
+  id                           Int        @id @default(autoincrement())
+  aliquota                     Int
+  cfop                         Int
+  icms_modalidade_base_calculo Int
+  cofins_situacao_tributaria   String
+  icms_situacao_tributaria     String
+  pis_situacao_tributaria      String
+  origem                       String
+  destino                      String
+  product_id                   Int
+  product                      Product    @relation(name: "ProductToregraTributacao", fields: [product_id], references: [id], onDelete: Cascade)
+  naturezas                    Natureza[] @relation(name: "NaturezaToregraTributacao")
 }

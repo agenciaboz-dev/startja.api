@@ -20,8 +20,6 @@ model ProdutoNotaFiscal {
     nota                        notaFiscal @relation(fields: [notaId], references: [id])
     notaId                      Int
 
-    rule                        regraTributacao?        @relation(fields: [rule_id], references: [id])
-    rule_id                     Int?
     produtoId                   Int
     produto                     Product @relation(fields: [produtoId], references: [id])
 }
@@ -29,9 +27,4 @@ model ProdutoNotaFiscal {
 model notaFiscal {
     id         Int         @id @default(autoincrement())
     products                    ProdutoNotaFiscal[]     
-}
-
-model regraTributacao {
-    id         Int         @id @default(autoincrement())
-    products                        ProdutoNotaFiscal[]
 }

@@ -10,16 +10,7 @@ import company from "./company";
 import nature from "./nature";
 import property from "./property";
 import rule from "./rule";
-import {
-  LoginForm,
-  NewCompany,
-  NewNature,
-  NewNota,
-  NewProduct,
-  NewProperty,
-  NewRule,
-  NewUser,
-} from "../definitions/userOperations";
+import { LoginForm, NewCompany, NatureForm, NewNota, NewProduct, NewProperty, TaxRuleForm, NewUser } from "../definitions/userOperations"
 import focusNFe from "../api/focusNFe"
 import { AxiosError } from "axios"
 
@@ -61,10 +52,10 @@ export const handleSocket = (socket: Socket) => {
     socket.on("company:update", (data: NewCompany, id: number) => company.update(socket, data, id))
 
     socket.on("nature:list", () => nature.natureList(socket))
-    socket.on("nature:create", (data: NewNature) => nature.natureCreate(socket, data))
+    socket.on("nature:create", (data: NatureForm) => nature.natureCreate(socket, data))
 
     socket.on("rule:list", () => rule.ruleList(socket))
-    socket.on("rule:create", (data: NewRule) => rule.ruleCreate(socket, data))
+    socket.on("rule:create", (data: TaxRuleForm) => rule.ruleCreate(socket, data))
 
     socket.on("property:list", () => property.propertyList(socket))
     socket.on("property:create", (data: NewProperty) => property.propertyCreate(socket, data))

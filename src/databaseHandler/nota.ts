@@ -3,7 +3,7 @@ import { NewNota } from "../definitions/userOperations";
 
 const prisma = new PrismaClient();
 
-const include = { destinatario: true, emitente: true, products: { include: { produto: true, rule: true } }, propriedade: true }
+const include = { destinatario: true, emitente: true, products: { include: { produto: true } }, propriedade: true }
 
 const list = async () => {
     return await prisma.notaFiscal.findMany()
