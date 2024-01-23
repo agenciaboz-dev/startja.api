@@ -6,6 +6,7 @@ model Natureza {
     finality                    String
     motive                      String
     emissionFinality            Int
+    active                      Boolean             @default(true)
 
     rules                       regraTributacao[]
 

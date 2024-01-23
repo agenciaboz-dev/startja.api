@@ -35,4 +35,9 @@ const create = async (data: NatureForm) =>
         include
     })
 
-export default { include, list, create }
+const toggle = async (id: number) => {
+    const current_value = await prisma.natureza.findUnique({ where: { id }, select: { active: true } })
+    return await prisma.natureza.update({ where: { id }, data: { active: !current_value?.active }, include })
+}
+
+export default { include, list, create, toggle }

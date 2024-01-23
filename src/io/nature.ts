@@ -24,4 +24,15 @@ const natureCreate = async (socket: Socket, data: NatureForm) => {
     }
 }
 
-export default { natureCreate, natureList };
+const toggle = async (socket: Socket, id: number) => {
+    try {
+        const natureza = await databaseHandler.nature.toggle(id)
+        socket.emit("nature:toggle:success", natureza)
+        socket.broadcast.emit("nature:update", natureza)
+    } catch (error) {
+        socket.emit("nature:update:error", error?.toString())
+        console.error("Error updating nature:", error)
+    }
+}
+
+export default { natureCreate, natureList, toggle }
