@@ -26,6 +26,7 @@ router.post("/nfe/webhook", async (request: Request, response: Response) => {
     }
 
     response.status(200)
+    response.send()
 })
 
 export default router
