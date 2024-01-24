@@ -173,7 +173,7 @@ model Natureza {
 }
 
 model regraTributacao {
-  id                           Int        @id @default(autoincrement())
+  id                           Int      @id @default(autoincrement())
   aliquota                     Int
   cfop                         Int
   icms_modalidade_base_calculo Int
@@ -183,6 +183,7 @@ model regraTributacao {
   origem                       String
   destino                      String
   product_id                   Int
-  product                      Product    @relation(name: "ProductToregraTributacao", fields: [product_id], references: [id], onDelete: Cascade)
-  naturezas                    Natureza[] @relation(name: "NaturezaToregraTributacao")
+  product                      Product  @relation(name: "ProductToregraTributacao", fields: [product_id], references: [id], onDelete: Cascade)
+  natureza_id                  Int
+  natureza                     Natureza @relation(name: "NaturezaToregraTributacao", fields: [natureza_id], references: [id], onDelete: Cascade)
 }

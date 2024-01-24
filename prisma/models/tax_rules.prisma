@@ -28,7 +28,8 @@ model regraTributacao {
     product_id                      Int
     product                         Product             @relation(fields: [product_id], references: [id], onDelete: Cascade)
     
-    naturezas                       Natureza[]
+    natureza_id                     Int
+    natureza                        Natureza            @relation(fields: [natureza_id], references: [id], onDelete: Cascade)
 }
 
 model Product {

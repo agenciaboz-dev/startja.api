@@ -20,7 +20,7 @@ const natureCreate = async (socket: Socket, data: NatureForm) => {
         socket.broadcast.emit("nature:update", natureza)
     } catch (error) {
         console.error("Error creating nature:", error)
-        socket.emit("nature:error", error)
+        socket.emit("nature:create:error", error)
     }
 }
 
@@ -35,4 +35,15 @@ const toggle = async (socket: Socket, id: number) => {
     }
 }
 
-export default { natureCreate, natureList, toggle }
+const update = async (socket: Socket, id: number, data: NatureForm) => {
+    try {
+        const natureza = await databaseHandler.nature.update(id, data)
+        socket.emit("nature:update:success", natureza)
+        socket.broadcast.emit("nature:update", natureza)
+    } catch (error) {
+        socket.emit("nature:update:error", error?.toString())
+        console.error("Error updating nature:", error)
+    }
+}
+
+export default { natureCreate, natureList, toggle, update }
