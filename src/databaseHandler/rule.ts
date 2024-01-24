@@ -13,22 +13,5 @@ const list = async () => {
         include
     })
 }
-// função para criar uma nova regra de tributação
-const create = async (data: TaxRuleForm) => {
-    return await prisma.regraTributacao.create({
-        data: {
-            aliquota: data.aliquota,
-            cfop: data.cfop,
-            cofins_situacao_tributaria: data.cofins_situacao_tributaria,
-            icms_modalidade_base_calculo: data.icms_modalidade_base_calculo,
-            icms_situacao_tributaria: data.icms_situacao_tributaria,
-            pis_situacao_tributaria: data.pis_situacao_tributaria,
-            destino: data.destino,
-            origem: data.origem,
-            product_id: data.product_id
-        },
-        include
-    })
-}
 
-export default { list, create };
+export default { list }

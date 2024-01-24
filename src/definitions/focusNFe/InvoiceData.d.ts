@@ -57,8 +57,16 @@ declare interface FocusNFeInvoiceData {
         cofins_situacao_tributaria: string
         pis_situacao_tributaria: string
         icms_base_calculo: number
-        icms_aliquota: number
         icms_valor: number
         icms_modalidade_base_calculo: number
+
+        icms_aliquota?: number
+        cest?: number
+        codigo_beneficio_fiscal?: string
+        icms_aliquota_st?: number
+        icms_reducao_base_calculo?: number
+        icms_valor_desonerado?: number
+        icms_origem?: number
+        icms_percentual_diferimento?: number
     }[]
 }

@@ -57,7 +57,6 @@ export const handleSocket = (socket: Socket) => {
     socket.on("nature:update", (data: NatureForm, id: number) => nature.update(socket, id, data))
 
     socket.on("rule:list", () => rule.ruleList(socket))
-    socket.on("rule:create", (data: TaxRuleForm) => rule.ruleCreate(socket, data))
 
     socket.on("property:list", () => property.propertyList(socket))
     socket.on("property:create", (data: NewProperty) => property.propertyCreate(socket, data))

@@ -28,7 +28,14 @@ const create = async (data: NatureForm) =>
                     icms_situacao_tributaria: rule.icms_situacao_tributaria,
                     origem: rule.origem,
                     pis_situacao_tributaria: rule.pis_situacao_tributaria,
-                    product_id: rule.product_id
+                    product_id: rule.product_id,
+                    cest: rule.cest,
+                    codigo_beneficio_fiscal: rule.codigo_beneficio_fiscal,
+                    icms_aliquota_st: rule.icms_aliquota_st,
+                    icms_origem: rule.icms_origem,
+                    icms_percentual_diferimento: rule.icms_percentual_diferimento,
+                    icms_reducao_base_calculo: rule.icms_reducao_base_calculo,
+                    icms_valor_desonerado: rule.icms_valor_desonerado
                 }))
             }
         },
@@ -55,7 +62,14 @@ const update = async (id: number, data: NatureForm) => {
                     icms_situacao_tributaria: rule.icms_situacao_tributaria,
                     origem: rule.origem,
                     pis_situacao_tributaria: rule.pis_situacao_tributaria,
-                    product_id: rule.product_id
+                    product_id: rule.product_id,
+                    cest: rule.cest,
+                    codigo_beneficio_fiscal: rule.codigo_beneficio_fiscal,
+                    icms_aliquota_st: rule.icms_aliquota_st,
+                    icms_origem: rule.icms_origem,
+                    icms_percentual_diferimento: rule.icms_percentual_diferimento,
+                    icms_reducao_base_calculo: rule.icms_reducao_base_calculo,
+                    icms_valor_desonerado: rule.icms_valor_desonerado
                 }))
             }
         },

@@ -15,12 +15,20 @@ model Natureza {
 model regraTributacao {
     id                              Int                     @id @default(autoincrement())
     
-    aliquota                        Int
+    aliquota                        Float?
     cfop                            Int
     icms_modalidade_base_calculo    Int
     cofins_situacao_tributaria      String
     icms_situacao_tributaria        String
     pis_situacao_tributaria         String
+
+    cest                            Int?
+    codigo_beneficio_fiscal         String?
+    icms_aliquota_st                Float?
+    icms_reducao_base_calculo       Float?
+    icms_valor_desonerado           Float?
+    icms_origem                     Int?
+    icms_percentual_diferimento     Float?
 
     origem                          String
     destino                         String
