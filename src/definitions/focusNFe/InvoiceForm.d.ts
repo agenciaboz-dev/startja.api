@@ -7,6 +7,8 @@ declare interface FocusNFeInvoiceForm {
     finalidade_emissao: number
     consumidor_final: number
     presenca_comprador: number
+    informacoes_adicionais_contribuinte: string
+
     emitente: {
         cnpj?: string
         cpf?: string

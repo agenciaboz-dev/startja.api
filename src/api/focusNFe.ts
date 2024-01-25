@@ -80,6 +80,7 @@ const buildInvoice = (data: FocusNFeInvoiceForm) => {
         pis_valor: data.valor.produtos * (0.65 / 100),
         cofins_valor: data.valor.produtos * (3 / 100),
         modalidade_frete: 0,
+        informacoes_adicionais_contribuinte: data.informacoes_adicionais_contribuinte,
 
         items: data.produtos.map((item, index) => ({
             numero_item: index + 1,

@@ -92,35 +92,36 @@ model Company {
 }
 
 model notaFiscal {
-  id                 Int                 @id @default(autoincrement())
-  emitente_id        Int
-  emitente           Customer            @relation(name: "CustomerTonotaFiscal", fields: [emitente_id], references: [id])
-  products           ProdutoNotaFiscal[] @relation(name: "ProdutoNotaFiscalTonotaFiscal")
-  destinatario_id    Int
-  destinatario       Company             @relation(name: "CompanyTonotaFiscal", fields: [destinatario_id], references: [id])
-  nature_id          Int
-  nature             Natureza            @relation(name: "NaturezaTonotaFiscal", fields: [nature_id], references: [id])
-  propriedade_id     Int
-  propriedade        Property            @relation(name: "PropertyTonotaFiscal", fields: [propriedade_id], references: [id])
-  emissionDatetime   String?             @db.Text
-  numero             Int
-  serie              Int
-  natureza_operacao  String
-  tipo_documento     Int
-  local_destino      Int
-  finalidade_emissao Int
-  consumidor_final   Int
-  presenca_comprador Int
-  valor_frete        Float
-  valor_seguro       Float
-  valor_produtos     Float
-  valor_total        Float
-  status             String              @default("")
-  mensagem_sefaz     String              @default("")
-  chave              String              @default("")
-  protocolo          String              @default("")
-  url_xml            String              @default("")
-  url_pdf            String              @default("")
+  id                                  Int                 @id @default(autoincrement())
+  emitente_id                         Int
+  emitente                            Customer            @relation(name: "CustomerTonotaFiscal", fields: [emitente_id], references: [id])
+  products                            ProdutoNotaFiscal[] @relation(name: "ProdutoNotaFiscalTonotaFiscal")
+  destinatario_id                     Int
+  destinatario                        Company             @relation(name: "CompanyTonotaFiscal", fields: [destinatario_id], references: [id])
+  nature_id                           Int
+  nature                              Natureza            @relation(name: "NaturezaTonotaFiscal", fields: [nature_id], references: [id])
+  propriedade_id                      Int
+  propriedade                         Property            @relation(name: "PropertyTonotaFiscal", fields: [propriedade_id], references: [id])
+  emissionDatetime                    String?             @db.Text
+  numero                              Int
+  serie                               Int
+  natureza_operacao                   String
+  tipo_documento                      Int
+  local_destino                       Int
+  finalidade_emissao                  Int
+  consumidor_final                    Int
+  presenca_comprador                  Int
+  informacoes_adicionais_contribuinte String              @default("") @db.Text
+  valor_frete                         Float
+  valor_seguro                        Float
+  valor_produtos                      Float
+  valor_total                         Float
+  status                              String              @default("")
+  mensagem_sefaz                      String              @default("")
+  chave                               String              @default("")
+  protocolo                           String              @default("")
+  url_xml                             String              @default("")
+  url_pdf                             String              @default("")
 }
 
 model Property {

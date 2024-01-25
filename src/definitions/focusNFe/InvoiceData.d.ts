@@ -38,6 +38,7 @@ declare interface FocusNFeInvoiceData {
     pis_valor: number
     cofins_valor: number
     modalidade_frete: number
+    informacoes_adicionais_contribuinte: string
 
     items: {
         numero_item: number

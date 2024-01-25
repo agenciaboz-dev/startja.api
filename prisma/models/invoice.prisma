@@ -15,6 +15,7 @@ model notaFiscal {
     finalidade_emissao                  Int
     consumidor_final                    Int
     presenca_comprador                  Int
+    informacoes_adicionais_contribuinte String          @db.Text @default("")
 
     valor_frete         Float
     valor_seguro            Float
