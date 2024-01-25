@@ -35,7 +35,17 @@ const create = async (data: NatureForm) =>
                     icms_origem: rule.icms_origem,
                     icms_percentual_diferimento: rule.icms_percentual_diferimento,
                     icms_reducao_base_calculo: rule.icms_reducao_base_calculo,
-                    icms_valor_desonerado: rule.icms_valor_desonerado
+                    icms_valor_desonerado: rule.icms_valor_desonerado,
+                    pis_base_calculo: rule.pis_base_calculo,
+                    pis_aliquota_porcentual: rule.pis_aliquota_porcentual,
+                    pis_aliquota_valor: rule.pis_aliquota_valor,
+                    pis_valor: rule.pis_valor,
+                    pis_quantidade_vendida: rule.pis_quantidade_vendida,
+                    cofins_base_calculo: rule.cofins_base_calculo,
+                    cofins_aliquota_porcentual: rule.cofins_aliquota_porcentual,
+                    cofins_aliquota_valor: rule.cofins_aliquota_valor,
+                    cofins_valor: rule.cofins_valor,
+                    cofins_quantidade_vendida: rule.cofins_quantidade_vendida
                 }))
             }
         },
@@ -69,7 +79,17 @@ const update = async (id: number, data: NatureForm) => {
                     icms_origem: rule.icms_origem,
                     icms_percentual_diferimento: rule.icms_percentual_diferimento,
                     icms_reducao_base_calculo: rule.icms_reducao_base_calculo,
-                    icms_valor_desonerado: rule.icms_valor_desonerado
+                    icms_valor_desonerado: rule.icms_valor_desonerado,
+                    pis_base_calculo: rule.pis_base_calculo,
+                    pis_aliquota_porcentual: rule.pis_aliquota_porcentual,
+                    pis_aliquota_valor: rule.pis_aliquota_valor,
+                    pis_valor: rule.pis_valor,
+                    pis_quantidade_vendida: rule.pis_quantidade_vendida,
+                    cofins_base_calculo: rule.cofins_base_calculo,
+                    cofins_aliquota_porcentual: rule.cofins_aliquota_porcentual,
+                    cofins_aliquota_valor: rule.cofins_aliquota_valor,
+                    cofins_valor: rule.cofins_valor,
+                    cofins_quantidade_vendida: rule.cofins_quantidade_vendida
                 }))
             }
         },

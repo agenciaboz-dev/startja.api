@@ -183,6 +183,16 @@ model regraTributacao {
   icms_valor_desonerado        Float?
   icms_origem                  Int?
   icms_percentual_diferimento  Float?
+  pis_base_calculo             Float?
+  pis_aliquota_porcentual      Float?
+  pis_aliquota_valor           Float?
+  pis_valor                    Float?
+  pis_quantidade_vendida       Int?
+  cofins_base_calculo          Float?
+  cofins_aliquota_porcentual   Float?
+  cofins_aliquota_valor        Float?
+  cofins_valor                 Float?
+  cofins_quantidade_vendida    Int?
   origem                       String
   destino                      String
   product_id                   Int

@@ -97,6 +97,18 @@ export declare interface TaxRuleForm {
     icms_origem?: number
     icms_percentual_diferimento?: number
 
+    pis_base_calculo?: number
+    pis_aliquota_porcentual?: number
+    pis_aliquota_valor?: number
+    pis_valor?: number
+    pis_quantidade_vendida?: number
+
+    cofins_base_calculo?: number
+    cofins_aliquota_porcentual?: number
+    cofins_aliquota_valor?: number
+    cofins_valor?: number
+    cofins_quantidade_vendida?: number
+
     product_id: number
     origem: string
     destino: string

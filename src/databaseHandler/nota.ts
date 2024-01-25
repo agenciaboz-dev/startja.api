@@ -75,6 +75,16 @@ const create = async (data: FocusNFeInvoiceForm, emitente_id: number, destinatar
                             icms_percentual_diferimento: product.icms_percentual_diferimento,
                             icms_reducao_base_calculo: product.icms_reducao_base_calculo,
                             icms_valor_desonerado: product.icms_valor_desonerado,
+                            pis_base_calculo: product.pis_base_calculo,
+                            pis_aliquota_porcentual: product.pis_aliquota_porcentual,
+                            pis_aliquota_valor: product.pis_aliquota_valor,
+                            pis_valor: product.pis_valor,
+                            pis_quantidade_vendida: product.pis_quantidade_vendida,
+                            cofins_base_calculo: product.cofins_base_calculo,
+                            cofins_aliquota_porcentual: product.cofins_aliquota_porcentual,
+                            cofins_aliquota_valor: product.cofins_aliquota_valor,
+                            cofins_valor: product.cofins_valor,
+                            cofins_quantidade_vendida: product.cofins_quantidade_vendida,
                             product_id: Number(product.id),
                             natureza_id: nature_id
                         }
