@@ -4,6 +4,7 @@ declare interface FocusNFECustomerData {
     bairro: string
     cep: number
     cnpj: string
+    cpf: string
     complemento: string
     discrimina_impostos: boolean
     email: string

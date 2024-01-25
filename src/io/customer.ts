@@ -18,11 +18,14 @@ const handleSignup = async (socket: Socket, data: NewUser) => {
     try {
         const customer = await databaseHandler.customer.create(data)
 
+        const is_cpf = customer.document.length == 11
+
         const focusSignup = await focusNFe.signCustomer({
             arquivo_certificado_base64: customer.certificate.certificate,
             bairro: customer.district,
             cep: Number(customer.cep.replace(/\D/g, "")),
-            cnpj: customer.document,
+            cnpj: is_cpf ? "" : customer.document,
+            cpf: is_cpf ? customer.document : "",
             complemento: customer.adjunct,
             discrimina_impostos: customer.discrimina_impostos,
             email: customer.email,
