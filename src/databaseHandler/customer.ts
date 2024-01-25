@@ -95,6 +95,9 @@ const create = async (data: NewUser) => {
     })
 }
 
+const updateTokens = async (id: number, data: { token: string; token_sandbox: string }) =>
+    await prisma.customer.update({ where: { id }, data: { token: data.token, token_sandbox: data.token_sandbox }, include })
+
 const exists = async (data: NewUser) => {
     return await prisma.customer.findUnique({
         where: {
@@ -105,4 +108,4 @@ const exists = async (data: NewUser) => {
     })
 }
 
-export default { include, selections, customerList, create, exists }
+export default { include, selections, customerList, create, exists, updateTokens }

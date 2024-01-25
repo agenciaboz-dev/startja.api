@@ -51,9 +51,10 @@ const handleSignup = async (socket: Socket, data: NewUser) => {
         })
 
         console.log(focusSignup)
+        const updated_user = await databaseHandler.customer.updateTokens(customer.id, focusSignup)
 
         // Emit success event
-        socket.emit("user:signup:success", customer)
+        socket.emit("user:signup:success", updated_user)
     } catch (error: any) {
         console.log(error)
 

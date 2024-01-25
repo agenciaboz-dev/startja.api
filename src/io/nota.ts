@@ -29,7 +29,10 @@ const notaCreate = async (
     try {
         const invoice = await databaseHandler.nota.create(data, emitente_id, destinatario_id, propriedade_id, nature_id)
         const focus_data = focusNFe.buildInvoice(data)
-        const invoice_response = await focusNFe.emitInvoice(focus_data, invoice.id.toString())
+        const invoice_response = await focusNFe.emitInvoice(focus_data, invoice.id.toString(), {
+            env: "homologacao",
+            token: invoice.emitente.token_sandbox!
+        })
         console.log(invoice_response.data)
         socket.emit("nota:create:response", invoice_response.data)
 

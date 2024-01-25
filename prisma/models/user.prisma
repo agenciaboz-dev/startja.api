@@ -40,8 +40,9 @@ model Customer {
     habilita_nfce               Boolean             @default(true)   
     proximo_numero_nfe          Int                 @default(1)
     serie_nfe                   Int                 @default(1)
-    
 
+    token                       String?
+    token_sandbox               String?
     
     certificateId               Int                 @unique
     certificate                 DigitalCertificate  @relation(fields: [certificateId], references: [id])

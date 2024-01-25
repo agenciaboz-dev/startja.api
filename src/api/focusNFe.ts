@@ -1,7 +1,5 @@
 import axios from "axios"
 
-const api = axios.create({ baseURL: "https://homologacao.focusnfe.com.br", auth: { username: "aOfbGj1AgNrGv9Zty5dfhPCmV3SEqDqY", password: "" } })
-
 const signCustomer = async (data: FocusNFECustomerData) => {
     const response = await axios.post("https://api.focusnfe.com.br/v2/empresas", data, {
         auth: { username: "Jb5xcx5U8TDbgB9T8CxqqeGtfcemCWVI", password: "" }
@@ -10,14 +8,17 @@ const signCustomer = async (data: FocusNFECustomerData) => {
     return response.data
 }
 
-const emitInvoice = async (data: FocusNFeInvoiceData, reference: string) => {
-    const response = await api.post(`/v2/nfe?ref=${reference}`, data)
+const emitInvoice = async (data: FocusNFeInvoiceData, reference: string, env: FocusEnviroment) => {
+    console.log(data)
+    const response = await axios.post(`https://${env.env}.focusnfe.com.br/v2/nfe?ref=${reference}`, data, {
+        auth: { username: env.token, password: "" }
+    })
 
     return response
 }
 
 const consultInvoice = async (reference: string) => {
-    const response = await api.get(`https://homologacao.focusnfe.com.br/v2/nfe/${reference}?completa=0`)
+    const response = await axios.get(`https://homologacao.focusnfe.com.br/v2/nfe/${reference}?completa=0`)
     console.log(response.data)
 }
 
