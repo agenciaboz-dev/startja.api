@@ -8,6 +8,15 @@ const signCustomer = async (data: FocusNFECustomerData) => {
     return response.data
 }
 
+const createNfeWebhook = async (env: FocusEnviroment) => {
+    const data: FocusWebhookData = { event: "nfe", url: "https://agencyboz.com:4109/api/nfefocus/nfe/webhook" }
+    const response = await axios.post(`https://${env.env}.focusnfe.com.br/v2/hooks`, data, {
+        auth: { username: env.token, password: "" }
+    })
+
+    return response.data
+}
+
 const emitInvoice = async (data: FocusNFeInvoiceData, reference: string, env: FocusEnviroment) => {
     console.log(data)
     const response = await axios.post(`https://${env.env}.focusnfe.com.br/v2/nfe?ref=${reference}`, data, {
@@ -17,8 +26,10 @@ const emitInvoice = async (data: FocusNFeInvoiceData, reference: string, env: Fo
     return response
 }
 
-const consultInvoice = async (reference: string) => {
-    const response = await axios.get(`https://homologacao.focusnfe.com.br/v2/nfe/${reference}?completa=0`)
+const consultInvoice = async (reference: string, env: FocusEnviroment) => {
+    const response = await axios.get(`https://${env.env}.focusnfe.com.br/v2/nfe/${reference}?completa=0`, {
+        auth: { username: env.token, password: "" }
+    })
     console.log(response.data)
 }
 
@@ -104,4 +115,4 @@ const buildInvoice = (data: FocusNFeInvoiceForm) => {
     return new_data
 }
 
-export default { emitInvoice, buildInvoice, consultInvoice, signCustomer }
+export default { emitInvoice, buildInvoice, consultInvoice, signCustomer, createNfeWebhook }
