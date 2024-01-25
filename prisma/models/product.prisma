@@ -17,6 +17,9 @@ model ProdutoNotaFiscal {
     unitaryValue                Float
     productQnty                 Int
 
+    tax_rules                   regraTributacao @relation(fields: [tax_rules_id], references: [id])
+    tax_rules_id                Int
+
     nota                        notaFiscal @relation(fields: [notaId], references: [id])
     notaId                      Int
 
@@ -27,4 +30,9 @@ model ProdutoNotaFiscal {
 model notaFiscal {
     id         Int         @id @default(autoincrement())
     products                    ProdutoNotaFiscal[]     
+}
+
+model regraTributacao {
+    id         Int         @id @default(autoincrement())
+    invoice_products    ProdutoNotaFiscal[]
 }

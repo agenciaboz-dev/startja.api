@@ -7,7 +7,7 @@ const prisma = new PrismaClient();
 const include = {
     destinatario: true,
     emitente: true,
-    products: { include: { produto: true } },
+    products: { include: { produto: true, tax_rules: true } },
     propriedade: true,
     nature: { include: nature.include }
 }
@@ -58,6 +58,27 @@ const create = async (data: FocusNFeInvoiceForm, emitente_id: number, destinatar
                     productQnty: product.quantidade,
                     unidade: product.unidade_comercial,
                     unitaryValue: Number(product.valor_unitario_comercial),
+                    tax_rules: {
+                        create: {
+                            cfop: product.cfop,
+                            destino: data.destinatario.uf,
+                            origem: data.emitente.uf,
+                            cofins_situacao_tributaria: product.cofins_situacao_tributaria,
+                            icms_modalidade_base_calculo: product.icms_modalidade_base_calculo,
+                            icms_situacao_tributaria: product.icms_situacao_tributaria,
+                            pis_situacao_tributaria: product.pis_situacao_tributaria,
+                            aliquota: product.aliquota,
+                            cest: product.cest,
+                            codigo_beneficio_fiscal: product.codigo_beneficio_fiscal,
+                            icms_aliquota_st: product.icms_aliquota_st,
+                            icms_origem: product.icms_origem,
+                            icms_percentual_diferimento: product.icms_percentual_diferimento,
+                            icms_reducao_base_calculo: product.icms_reducao_base_calculo,
+                            icms_valor_desonerado: product.icms_valor_desonerado,
+                            product_id: Number(product.id),
+                            natureza_id: nature_id
+                        }
+                    },
                     produto: { connect: { id: Number(product.id) } }
                 }))
             }

@@ -155,30 +155,21 @@ model Product {
 }
 
 model ProdutoNotaFiscal {
-  id           Int        @id @default(autoincrement())
+  id           Int             @id @default(autoincrement())
   unidade      String
   unitaryValue Float
   productQnty  Int
-  nota         notaFiscal @relation(name: "ProdutoNotaFiscalTonotaFiscal", fields: [notaId], references: [id])
+  tax_rules    regraTributacao @relation(name: "ProdutoNotaFiscalToregraTributacao", fields: [tax_rules_id], references: [id])
+  tax_rules_id Int
+  nota         notaFiscal      @relation(name: "ProdutoNotaFiscalTonotaFiscal", fields: [notaId], references: [id])
   notaId       Int
   produtoId    Int
-  produto      Product    @relation(name: "ProductToProdutoNotaFiscal", fields: [produtoId], references: [id])
-}
-
-model Natureza {
-  id               Int               @id @default(autoincrement())
-  operation        String
-  type             Int
-  finality         String
-  motive           String
-  emissionFinality Int
-  active           Boolean           @default(true)
-  rules            regraTributacao[] @relation(name: "NaturezaToregraTributacao")
-  invoices         notaFiscal[]      @relation(name: "NaturezaTonotaFiscal")
+  produto      Product         @relation(name: "ProductToProdutoNotaFiscal", fields: [produtoId], references: [id])
 }
 
 model regraTributacao {
-  id                           Int      @id @default(autoincrement())
+  id                           Int                 @id @default(autoincrement())
+  invoice_products             ProdutoNotaFiscal[] @relation(name: "ProdutoNotaFiscalToregraTributacao")
   aliquota                     Float?
   cfop                         Int
   icms_modalidade_base_calculo Int
@@ -195,7 +186,19 @@ model regraTributacao {
   origem                       String
   destino                      String
   product_id                   Int
-  product                      Product  @relation(name: "ProductToregraTributacao", fields: [product_id], references: [id], onDelete: Cascade)
+  product                      Product             @relation(name: "ProductToregraTributacao", fields: [product_id], references: [id], onDelete: Cascade)
   natureza_id                  Int
-  natureza                     Natureza @relation(name: "NaturezaToregraTributacao", fields: [natureza_id], references: [id], onDelete: Cascade)
+  natureza                     Natureza            @relation(name: "NaturezaToregraTributacao", fields: [natureza_id], references: [id], onDelete: Cascade)
+}
+
+model Natureza {
+  id               Int               @id @default(autoincrement())
+  operation        String
+  type             Int
+  finality         String
+  motive           String
+  emissionFinality Int
+  active           Boolean           @default(true)
+  rules            regraTributacao[] @relation(name: "NaturezaToregraTributacao")
+  invoices         notaFiscal[]      @relation(name: "NaturezaTonotaFiscal")
 }
