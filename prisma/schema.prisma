@@ -155,16 +155,17 @@ model Product {
 }
 
 model ProdutoNotaFiscal {
-  id           Int             @id @default(autoincrement())
-  unidade      String
-  unitaryValue Float
-  productQnty  Int
-  tax_rules    regraTributacao @relation(name: "ProdutoNotaFiscalToregraTributacao", fields: [tax_rules_id], references: [id])
-  tax_rules_id Int
-  nota         notaFiscal      @relation(name: "ProdutoNotaFiscalTonotaFiscal", fields: [notaId], references: [id])
-  notaId       Int
-  produtoId    Int
-  produto      Product         @relation(name: "ProductToProdutoNotaFiscal", fields: [produtoId], references: [id])
+  id                          Int             @id @default(autoincrement())
+  unidade                     String
+  unitaryValue                Float
+  productQnty                 Int
+  informacoes_adicionais_item String          @default("")
+  tax_rules                   regraTributacao @relation(name: "ProdutoNotaFiscalToregraTributacao", fields: [tax_rules_id], references: [id])
+  tax_rules_id                Int
+  nota                        notaFiscal      @relation(name: "ProdutoNotaFiscalTonotaFiscal", fields: [notaId], references: [id])
+  notaId                      Int
+  produtoId                   Int
+  produto                     Product         @relation(name: "ProductToProdutoNotaFiscal", fields: [produtoId], references: [id])
 }
 
 model regraTributacao {

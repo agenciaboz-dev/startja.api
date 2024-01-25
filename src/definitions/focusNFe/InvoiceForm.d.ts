@@ -58,6 +58,7 @@ declare interface FocusNFeInvoiceForm {
         cofins_situacao_tributaria: string
         pis_situacao_tributaria: string
         icms_modalidade_base_calculo: number
+        informacoes_adicionais_item: string
 
         aliquota?: number
         cest?: number

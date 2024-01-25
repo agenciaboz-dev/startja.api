@@ -53,6 +53,9 @@ declare interface FocusNFeInvoiceData {
         quantidade_tributavel: number
         valor_bruto: number
         icms_origem: number
+
+        informacoes_adicionais_item: string
+
         icms_situacao_tributaria: string
         cofins_situacao_tributaria: string
         pis_situacao_tributaria: string

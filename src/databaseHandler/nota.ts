@@ -58,6 +58,7 @@ const create = async (data: FocusNFeInvoiceForm, emitente_id: number, destinatar
                     productQnty: product.quantidade,
                     unidade: product.unidade_comercial,
                     unitaryValue: Number(product.valor_unitario_comercial),
+                    informacoes_adicionais_item: product.informacoes_adicionais_item,
                     tax_rules: {
                         create: {
                             cfop: product.cfop,

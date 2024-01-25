@@ -16,6 +16,7 @@ model ProdutoNotaFiscal {
     unidade                     String
     unitaryValue                Float
     productQnty                 Int
+    informacoes_adicionais_item String  @default("")
 
     tax_rules                   regraTributacao @relation(fields: [tax_rules_id], references: [id])
     tax_rules_id                Int

@@ -95,6 +95,7 @@ const buildInvoice = (data: FocusNFeInvoiceForm) => {
             quantidade_tributavel: item.quantidade,
             valor_bruto: item.valor_unitario_comercial * item.quantidade,
             icms_origem: item.icms_origem,
+            informacoes_adicionais_item: item.informacoes_adicionais_item,
             icms_situacao_tributaria: item.icms_situacao_tributaria,
             cofins_situacao_tributaria: item.cofins_situacao_tributaria,
             pis_situacao_tributaria: item.pis_situacao_tributaria,
