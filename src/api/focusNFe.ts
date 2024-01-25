@@ -100,7 +100,7 @@ const buildInvoice = (data: FocusNFeInvoiceForm) => {
             pis_situacao_tributaria: item.pis_situacao_tributaria,
             icms_base_calculo: item.valor_unitario_comercial * item.quantidade,
             icms_aliquota: item.aliquota,
-            icms_valor: item.valor_unitario_comercial * item.quantidade * (item.aliquota || 100 / 100),
+            icms_valor: item.valor_unitario_comercial * item.quantidade * ((item.aliquota || 100) / 100),
             icms_modalidade_base_calculo: item.icms_modalidade_base_calculo,
             cest: item.cest,
             codigo_beneficio_fiscal: item.codigo_beneficio_fiscal,
