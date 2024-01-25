@@ -1,9 +1,16 @@
 import { PrismaClient } from "@prisma/client";
 import { NewNota } from "../definitions/userOperations";
+import nature from "./nature"
 
 const prisma = new PrismaClient();
 
-const include = { destinatario: true, emitente: true, products: { include: { produto: true } }, propriedade: true }
+const include = {
+    destinatario: true,
+    emitente: true,
+    products: { include: { produto: true } },
+    propriedade: true,
+    nature: { include: nature.include }
+}
 
 const list = async () => {
     return await prisma.notaFiscal.findMany()
@@ -24,12 +31,13 @@ const authorizedUpdate = async (data: NfeWebhook) =>
         include
     })
 
-const create = async (data: FocusNFeInvoiceForm, emitente_id: number, destinatario_id: number, propriedade_id: number) => {
+const create = async (data: FocusNFeInvoiceForm, emitente_id: number, destinatario_id: number, propriedade_id: number, nature_id: number) => {
     return await prisma.notaFiscal.create({
         data: {
             destinatario_id,
             emitente_id,
             propriedade_id,
+            nature_id,
             consumidor_final: data.consumidor_final,
             finalidade_emissao: data.finalidade_emissao,
             local_destino: data.local_destino,

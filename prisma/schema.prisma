@@ -96,6 +96,8 @@ model notaFiscal {
   products           ProdutoNotaFiscal[] @relation(name: "ProdutoNotaFiscalTonotaFiscal")
   destinatario_id    Int
   destinatario       Company             @relation(name: "CompanyTonotaFiscal", fields: [destinatario_id], references: [id])
+  nature_id          Int
+  nature             Natureza            @relation(name: "NaturezaTonotaFiscal", fields: [nature_id], references: [id])
   propriedade_id     Int
   propriedade        Property            @relation(name: "PropertyTonotaFiscal", fields: [propriedade_id], references: [id])
   emissionDatetime   String?             @db.Text
@@ -170,6 +172,7 @@ model Natureza {
   emissionFinality Int
   active           Boolean           @default(true)
   rules            regraTributacao[] @relation(name: "NaturezaToregraTributacao")
+  invoices         notaFiscal[]      @relation(name: "NaturezaTonotaFiscal")
 }
 
 model regraTributacao {

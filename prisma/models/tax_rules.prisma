@@ -9,6 +9,7 @@ model Natureza {
     active                      Boolean             @default(true)
 
     rules                       regraTributacao[]
+    invoices                    notaFiscal[]
 
 }
 
@@ -43,4 +44,10 @@ model regraTributacao {
 model Product {
     id              Int         @id @default(autoincrement())
     tax_rules       regraTributacao[]
+}
+
+model notaFiscal {
+    id         Int         @id @default(autoincrement())
+    nature_id   Int
+    nature      Natureza   @relation(fields: [nature_id], references: [id])
 }
