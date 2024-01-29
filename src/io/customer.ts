@@ -9,7 +9,7 @@ const list = async (socket: Socket) => {
         const customer = await databaseHandler.customer.customerList()
         socket.emit("user:list", customer)
     } catch (error) {
-        console.error(`Error fetching customer list`)
+        console.error(error)
         socket.emit("user:list:error", { error })
     }
 }

@@ -74,9 +74,8 @@ export declare interface NewProduct {
 export declare interface NatureForm {
     operation: string
     type: number
-    finality: string
+    finality: number
     motive: string
-    emissionFinality: number
 
     rules: TaxRuleForm[]
 }

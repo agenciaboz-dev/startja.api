@@ -13,7 +13,6 @@ const list = async () => await prisma.natureza.findMany({ include })
 const create = async (data: NatureForm) =>
     await prisma.natureza.create({
         data: {
-            emissionFinality: data.emissionFinality,
             finality: data.finality,
             motive: data.motive,
             operation: data.operation,
@@ -57,7 +56,6 @@ const update = async (id: number, data: NatureForm) => {
     return await prisma.natureza.update({
         where: { id },
         data: {
-            emissionFinality: data.emissionFinality,
             finality: data.finality,
             motive: data.motive,
             operation: data.operation,

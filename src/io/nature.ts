@@ -8,7 +8,7 @@ const natureList = async (socket: Socket) => {
         console.log(natures)
         socket.emit("nature:list", natures) // manda só a lista
     } catch (error) {
-        console.error(`Error fetching nature list`)
+        console.error(error)
         socket.emit("nature:list:error", { error })
     }
 }

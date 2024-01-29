@@ -3,9 +3,8 @@ model Natureza {
     id                          Int                 @id @default(autoincrement())
     operation                   String
     type                        Int
-    finality                    String
+    finality                    Int
     motive                      String
-    emissionFinality            Int
     active                      Boolean             @default(true)
 
     rules                       regraTributacao[]
