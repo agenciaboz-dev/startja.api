@@ -26,9 +26,9 @@ const authorizedUpdate = async (data: NfeWebhook) =>
             chave: data.chave_nfe,
             protocolo: data.protocolo,
             url_pdf: data.caminho_danfe,
-            url_xml: data.caminho_xml_nota_fiscal
+            url_xml: data.caminho_xml_nota_fiscal,
         },
-        include
+        include,
     })
 
 const create = async (data: FocusNFeInvoiceForm, emitente_id: number, destinatario_id: number, propriedade_id: number, nature_id: number) => {
@@ -87,15 +87,15 @@ const create = async (data: FocusNFeInvoiceForm, emitente_id: number, destinatar
                             cofins_aliquota_valor: product.cofins_aliquota_valor,
                             cofins_valor: product.cofins_valor,
                             cofins_quantidade_vendida: product.cofins_quantidade_vendida,
+                            natureza_id: nature_id,
                             product_id: Number(product.id),
-                            natureza_id: nature_id
-                        }
+                        },
                     },
-                    produto: { connect: { id: Number(product.id) } }
-                }))
-            }
+                    produto: { connect: { id: Number(product.id) } },
+                })),
+            },
         },
-        include
+        include,
     })
 }
 
