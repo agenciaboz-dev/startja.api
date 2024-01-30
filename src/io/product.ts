@@ -9,7 +9,7 @@ const prismaError = (error: unknown) => {
         // The .code property can be accessed in a type-safe manner
         if (error.code === "P2002") {
             if (error.meta?.target == "Product_codigo_externo_key") {
-                return { error: "já existe um produto cadastrado com esse código." }
+                return "já existe um produto cadastrado com esse código." 
             }
         }
     }
