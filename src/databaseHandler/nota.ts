@@ -13,7 +13,7 @@ const include = {
 }
 
 const list = async () => {
-    return await prisma.notaFiscal.findMany()
+    return await prisma.notaFiscal.findMany({ include })
 }
 
 const updateStatus = async (id: number, status: string, message?: string) =>

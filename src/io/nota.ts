@@ -10,7 +10,7 @@ import user from "../databaseHandler/user"
 const notaList = async (socket: Socket) => {
     try {
         const nota = await databaseHandler.nota.list()
-        socket.emit("nota:list:success", nota)
+        socket.emit("nota:list", nota)
     } catch (error) {
         console.error("Error retrieving nota list", error)
         socket.emit("nota:list:error")
