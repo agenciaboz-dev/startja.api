@@ -3,7 +3,7 @@ model Product {
     id                          Int                    @id @default(autoincrement())
     name                        String              
     ncm                         String  
-    codigo_externo              String                  @default("")     
+    codigo_externo              String                  @unique     
     icmsOrigin                  Int                     @default(0)
 
     produtosNota                ProdutoNotaFiscal[]
