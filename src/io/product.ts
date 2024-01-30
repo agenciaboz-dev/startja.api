@@ -29,13 +29,13 @@ const productCreate = async (socket: Socket, data: NewProduct) => {
 const update = async (socket: Socket, data: NewProduct, id: number) => {
     try {
         const product = await databaseHandler.product.update(data, id)
-        socket.emit("product:creation:successful", product)
+        socket.emit("product:update:successful", product)
 
         const io = getIoInstance()
         io.emit("product:new", product)
     } catch (error) {
-        console.error(`Error creating product`, error)
-        socket.emit("product:creation:error", { error })
+        console.error(`Error updating the product`, error)
+        socket.emit("product:update:error", { error })
     }
 }
 
