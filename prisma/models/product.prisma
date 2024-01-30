@@ -5,6 +5,7 @@ model Product {
     ncm                         String  
     codigo_externo              String                  @unique     
     icmsOrigin                  Int                     @default(0)
+    active                      Boolean                 @default(true)
 
     produtosNota                ProdutoNotaFiscal[]
 

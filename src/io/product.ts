@@ -53,4 +53,43 @@ const update = async (socket: Socket, data: NewProduct, id: number) => {
     }
 }
 
-export default { productList, productCreate, update }
+const remove = async (socket: Socket, id: number) => {
+    try {
+        const deleted_product = await databaseHandler.product.remove(id)
+        socket.emit("product:delete:success", deleted_product)
+
+        const io = getIoInstance()
+        io.emit("product:delete", deleted_product)
+    } catch (error) {
+        console.log(error)
+        socket.emit("product:delete:error", error?.toString())
+    }
+}
+
+const disable = async (socket: Socket, id: number) => {
+    try {
+        const disabled_product = await databaseHandler.product.update({ active: false }, id)
+        socket.emit("product:delete:success", disabled_product)
+
+        const io = getIoInstance()
+        io.emit("product:update", disabled_product)
+    } catch (error) {
+        console.log(error)
+        socket.emit("product:delete:error", error?.toString())
+    }
+}
+
+const enable = async (socket: Socket, id: number) => {
+    try {
+        const product = await databaseHandler.product.update({ active: true }, id)
+        socket.emit("product:update:success", product)
+
+        const io = getIoInstance()
+        io.emit("product:update", product)
+    } catch (error) {
+        console.log(error)
+        socket.emit("product:update:error", error?.toString())
+    }
+}
+
+export default { productList, productCreate, update, remove, disable, enable }

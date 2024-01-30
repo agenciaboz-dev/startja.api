@@ -24,14 +24,15 @@ const create = async (data: NewProduct) => {
   })
 };
 
-const update = async (data: NewProduct, id: number) =>
+const update = async (data: Partial<NewProduct>, id: number) =>
     await prisma.product.update({
         where: { id },
         data: {
-            name: data.name,
-            ncm: normalize(data.ncm),
-            codigo_externo: data.codigo_externo
-        }
+            ...data,
+            ncm: data.ncm ? normalize(data.ncm) : undefined,
+        },
     })
 
-export default { list, create, update }
+const remove = async (id: number) => await prisma.product.delete({ where: { id } })
+
+export default { list, create, update, remove }
