@@ -99,4 +99,6 @@ const create = async (data: FocusNFeInvoiceForm, emitente_id: number, destinatar
     })
 }
 
-export default { include, list, create, updateStatus, authorizedUpdate }
+const find = async (id: number) => await prisma.notaFiscal.findUnique({ where: { id }, include })
+
+export default { include, list, create, updateStatus, authorizedUpdate, find }
