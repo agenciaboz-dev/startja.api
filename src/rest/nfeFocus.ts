@@ -37,11 +37,12 @@ router.get("/xml", async (request: Request, response: Response) => {
         return response.status(400).send("Invalid URL parameter")
     }
 
-    const url = new URL(`https://homologacao.focusnfe.com.br/${request.query.url}`)
+    const url = new URL(`https://homologacao.focusnfe.com.br${request.query.url}`)
+    console.log(url)
     https
         .get(url, (xml_response) => {
             console.log()
-            response.setHeader("Content-Disposition", "attachment; filename=teste.xml")
+            response.setHeader("Content-Disposition", `attachment; filename=teste.xml`)
             response.setHeader("Content-Type", "application/xml")
 
             xml_response.pipe(response)
