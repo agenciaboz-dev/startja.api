@@ -1,3 +1,7 @@
+datasource db {
+    provider = "mysql"
+    url      = env("DATABASE_URL")
+}
 model Natureza {
 
     id                          Int                 @id @default(autoincrement())
@@ -45,10 +49,9 @@ model regraTributacao {
 
 
     origem                          String
-    destino                         String
+    destino                         String              @db.Text
 
-    product_id                      Int
-    product                         Product             @relation(fields: [product_id], references: [id], onDelete: Cascade)
+    products                        Product[]
     
     natureza_id                     Int
     natureza                        Natureza            @relation(fields: [natureza_id], references: [id], onDelete: Cascade)

@@ -162,12 +162,12 @@ model ProdutoNotaFiscal {
   unitaryValue                Float
   productQnty                 Int
   informacoes_adicionais_item String          @default("")
-  tax_rules                   regraTributacao @relation(name: "ProdutoNotaFiscalToregraTributacao", fields: [tax_rules_id], references: [id])
+  tax_rules                   regraTributacao @relation(name: "ProdutoNotaFiscalToregraTributacao", fields: [tax_rules_id], references: [id], onDelete: Cascade)
   tax_rules_id                Int
-  nota                        notaFiscal      @relation(name: "ProdutoNotaFiscalTonotaFiscal", fields: [notaId], references: [id])
+  nota                        notaFiscal      @relation(name: "ProdutoNotaFiscalTonotaFiscal", fields: [notaId], references: [id], onDelete: Cascade)
   notaId                      Int
   produtoId                   Int
-  produto                     Product         @relation(name: "ProductToProdutoNotaFiscal", fields: [produtoId], references: [id])
+  produto                     Product         @relation(name: "ProductToProdutoNotaFiscal", fields: [produtoId], references: [id], onDelete: Cascade)
 }
 
 model regraTributacao {
@@ -197,9 +197,8 @@ model regraTributacao {
   cofins_valor                 Float?
   cofins_quantidade_vendida    Int?
   origem                       String
-  destino                      String
-  product_id                   Int
-  product                      Product             @relation(name: "ProductToregraTributacao", fields: [product_id], references: [id], onDelete: Cascade)
+  destino                      String              @db.Text
+  products                     Product[]           @relation(name: "ProductToregraTributacao")
   natureza_id                  Int
   natureza                     Natureza            @relation(name: "NaturezaToregraTributacao", fields: [natureza_id], references: [id], onDelete: Cascade)
 }

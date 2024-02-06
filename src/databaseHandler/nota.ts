@@ -88,7 +88,7 @@ const create = async (data: FocusNFeInvoiceForm, emitente_id: number, destinatar
                             cofins_valor: product.cofins_valor,
                             cofins_quantidade_vendida: product.cofins_quantidade_vendida,
                             natureza_id: nature_id,
-                            product_id: Number(product.id),
+                            products: { connect: { id: Number(product.id) } },
                         },
                     },
                     produto: { connect: { id: Number(product.id) } },

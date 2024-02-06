@@ -5,7 +5,7 @@ import { TaxRuleForm } from "../definitions/userOperations"
 const prisma = new PrismaClient()
 
 // Funções relacionadas as regras de tributação ⬇️
-const include = { product: true }
+const include = { products: true }
 
 // Função para listar todas as regras de tributação
 const list = async () => {

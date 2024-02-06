@@ -3,7 +3,7 @@ import { NatureForm } from "../definitions/userOperations"
 
 const prisma = new PrismaClient()
 
-const include = { rules: { include: { product: true } } }
+const include = { rules: { include: { products: true } } }
 
 // Funções relacionadas as naturezas ⬇️
 
@@ -27,7 +27,6 @@ const create = async (data: NatureForm) =>
                     icms_situacao_tributaria: rule.icms_situacao_tributaria,
                     origem: rule.origem,
                     pis_situacao_tributaria: rule.pis_situacao_tributaria,
-                    product_id: rule.product_id,
                     cest: rule.cest,
                     codigo_beneficio_fiscal: rule.codigo_beneficio_fiscal,
                     icms_aliquota_st: rule.icms_aliquota_st,
@@ -44,15 +43,16 @@ const create = async (data: NatureForm) =>
                     cofins_aliquota_porcentual: rule.cofins_aliquota_porcentual,
                     cofins_aliquota_valor: rule.cofins_aliquota_valor,
                     cofins_valor: rule.cofins_valor,
-                    cofins_quantidade_vendida: rule.cofins_quantidade_vendida
-                }))
-            }
+                    cofins_quantidade_vendida: rule.cofins_quantidade_vendida,
+
+                    products: { connect: rule.products.map((product) => ({ id: product.id })) },
+                })),
+            },
         },
-        include
+        include,
     })
 
 const update = async (id: number, data: NatureForm) => {
-    const old_rules = await prisma.regraTributacao.deleteMany({ where: { natureza_id: id } })
     return await prisma.natureza.update({
         where: { id },
         data: {
@@ -61,6 +61,7 @@ const update = async (id: number, data: NatureForm) => {
             operation: data.operation,
             type: data.type,
             rules: {
+                deleteMany: { natureza_id: id },
                 create: data.rules.map((rule) => ({
                     aliquota: rule.aliquota,
                     cfop: rule.cfop,
@@ -70,7 +71,6 @@ const update = async (id: number, data: NatureForm) => {
                     icms_situacao_tributaria: rule.icms_situacao_tributaria,
                     origem: rule.origem,
                     pis_situacao_tributaria: rule.pis_situacao_tributaria,
-                    product_id: rule.product_id,
                     cest: rule.cest,
                     codigo_beneficio_fiscal: rule.codigo_beneficio_fiscal,
                     icms_aliquota_st: rule.icms_aliquota_st,
@@ -87,11 +87,13 @@ const update = async (id: number, data: NatureForm) => {
                     cofins_aliquota_porcentual: rule.cofins_aliquota_porcentual,
                     cofins_aliquota_valor: rule.cofins_aliquota_valor,
                     cofins_valor: rule.cofins_valor,
-                    cofins_quantidade_vendida: rule.cofins_quantidade_vendida
-                }))
-            }
+                    cofins_quantidade_vendida: rule.cofins_quantidade_vendida,
+
+                    products: { connect: rule.products.map((product) => ({ id: product.id })) },
+                })),
+            },
         },
-        include
+        include,
     })
 }
 
