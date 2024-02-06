@@ -9,6 +9,9 @@ path="~/${api}/"
 echo 'compiling server files locally'
 yarn build
 
+echo 'stopping api and deleting server files'
+ssh ${user}@agencyboz "source ~/.nvm/nvm.sh; cd ${path}; pm2 stop ${api}; rm -rf dist prisma"
+
 echo 'Uploading build to server'
 scp -r dist ${user}@agencyboz:${path}/
 
@@ -19,7 +22,7 @@ echo 'uploading package.json to server'
 scp package.json ${user}@agencyboz:${path}/
 
 echo 'syncing dependencies'
-ssh ${user}@agencyboz "source ~/.nvm/nvm.sh; cd ${path}; yarn"
+ssh ${user}@agencyboz "source ~/.nvm/nvm.sh; cd ${path}; yarn install --production --frozen-lockfile; yarn add prisma"
 
 echo 'Uploading prisma to server'
 scp -r prisma ${user}@agencyboz:${path}/
