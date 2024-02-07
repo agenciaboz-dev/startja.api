@@ -51,6 +51,8 @@ const create = async (data: FocusNFeInvoiceForm, emitente_id: number, destinatar
             valor_seguro: data.valor.seguro,
             valor_total: data.valor.total,
             informacoes_adicionais_contribuinte: data.informacoes_adicionais_contribuinte,
+            pagamento_forma: data.formas_pagamento.forma_pagamento,
+            pagamento_indicador: data.formas_pagamento.indicador_pagamento,
 
             emissionDatetime: new Date().getTime().toString(),
 
