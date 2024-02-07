@@ -35,25 +35,13 @@ const create = async (data: NewProperty) => {
   })
 };
 
-const update = async (data: NewProperty, id: number) =>
+const update = async (data: Partial<NewProperty>, id: number) =>
     await prisma.property.update({
         where: { id },
         data: {
-            ie: data.ie,
-            nifr: data.nifr,
-            cep: normalize(data.cep),
-            city: data.city,
-            state: data.state,
-            street: data.street,
-            number: data.number,
-            adjunct: data.adjunct,
-            district: data.district,
-            exploration: data.exploration,
-            declarant: data.declarant,
-            nfe_number: data.nfe_number,
-            nfe_series: data.nfe_series,
-            name: data.name
-        }
+            ...data,
+            cep: data.cep ? normalize(data.cep) : undefined,
+        },
     })
 
 const get = async (id: number) => await prisma.property.findUnique({ where: { id } })
@@ -63,4 +51,6 @@ const advanceNfeNumber = async (id: number, authorized_number: string) => {
     return await prisma.property.update({ where: { id }, data: { nfe_number: next_number.toString() } })
 }
 
-export default { list, create, update, get, advanceNfeNumber }
+const remove = async (id: number) => await prisma.property.delete({ where: { id } })
+
+export default { list, create, update, get, advanceNfeNumber, remove }

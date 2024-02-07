@@ -133,6 +133,7 @@ export declare interface NewProperty {
     nfe_series: string
     nfe_number: string
     user_id: number
+    active?: boolean
 }
 
 export declare interface NewNota {

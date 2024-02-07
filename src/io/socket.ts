@@ -64,6 +64,8 @@ export const handleSocket = (socket: Socket) => {
     socket.on("property:list", () => property.propertyList(socket))
     socket.on("property:create", (data: NewProperty) => property.propertyCreate(socket, data))
     socket.on("property:update", (data: NewProperty, id: number) => property.update(socket, data, id))
+    socket.on("property:disable", (id: number) => property.disable(socket, id))
+    socket.on("property:delete", (id: number) => property.remove(socket, id))
 
     socket.on(
         "nota:create",

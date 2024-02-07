@@ -15,6 +15,7 @@ model Property {
     declarant                   String
     nfe_series                  String
     nfe_number                  String
+    active                      Boolean                 @default(true)
 
     
     notas                       notaFiscal[]

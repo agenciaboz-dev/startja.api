@@ -37,4 +37,28 @@ const update = async (socket: Socket, data: NewProperty, id: number) => {
     }
 }
 
-export default { propertyCreate, propertyList, update }
+const disable = async (socket: Socket, id: number) => {
+    try {
+        const property = await databaseHandler.property.update({ active: false }, id)
+        const user = await databaseHandler.user.get(property.user_id)
+        socket.emit("property:disable:success", property)
+        socket.emit("user:update", user)
+    } catch (error) {
+        console.log(error)
+        socket.emit("property:disable:error", error?.toString())
+    }
+}
+
+const remove = async (socket: Socket, id: number) => {
+    try {
+        const property = await databaseHandler.property.remove(id)
+        const user = await databaseHandler.user.get(property.user_id)
+        socket.emit("property:disable:success", property)
+        socket.emit("user:update", user)
+    } catch (error) {
+        console.log(error)
+        socket.emit("property:disable:error", error?.toString())
+    }
+}
+
+export default { propertyCreate, propertyList, update, disable, remove }
