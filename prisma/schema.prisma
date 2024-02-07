@@ -212,4 +212,11 @@ model Natureza {
   active    Boolean           @default(true)
   rules     regraTributacao[] @relation(name: "NaturezaToregraTributacao")
   invoices  notaFiscal[]      @relation(name: "NaturezaTonotaFiscal")
+  user_id   Int?
+  user      User?             @relation(name: "NaturezaToUser", fields: [user_id], references: [id], onDelete: Cascade)
+}
+
+model User {
+  id      Int        @id @default(autoincrement())
+  natures Natureza[] @relation(name: "NaturezaToUser")
 }
