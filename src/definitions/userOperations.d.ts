@@ -78,6 +78,8 @@ export declare interface NatureForm {
     finality: number
     motive: string
 
+    user_id?: number
+
     rules: TaxRuleForm[]
 }
 

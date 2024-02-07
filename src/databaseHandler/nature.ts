@@ -17,6 +17,7 @@ const create = async (data: NatureForm) =>
             motive: data.motive,
             operation: data.operation,
             type: data.type,
+            user_id: data.user_id,
             rules: {
                 create: data.rules.map((rule) => ({
                     aliquota: rule.aliquota,
