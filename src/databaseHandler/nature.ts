@@ -3,7 +3,7 @@ import { NatureForm } from "../definitions/userOperations"
 
 const prisma = new PrismaClient()
 
-const include = { rules: { include: { products: true } } }
+const include = { rules: { include: { products: true } }, user: true }
 
 // Funções relacionadas as naturezas ⬇️
 
