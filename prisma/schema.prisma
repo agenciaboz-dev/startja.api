@@ -122,6 +122,8 @@ model notaFiscal {
   protocolo                           String              @default("")
   url_xml                             String              @default("")
   url_pdf                             String              @default("")
+  pagamento_indicador                 Int?
+  pagamento_forma                     String?
 }
 
 model Property {
