@@ -49,6 +49,7 @@ model Customer {
   companies                 Company[]          @relation(name: "CompanyToCustomer")
   notas                     notaFiscal[]       @relation(name: "CustomerTonotaFiscal")
   properties                Property[]         @relation(name: "CustomerToProperty")
+  natures                   Natureza[]         @relation(name: "CustomerToNatureza")
 }
 
 model Accounts {
@@ -213,10 +214,5 @@ model Natureza {
   rules     regraTributacao[] @relation(name: "NaturezaToregraTributacao")
   invoices  notaFiscal[]      @relation(name: "NaturezaTonotaFiscal")
   user_id   Int?
-  user      User?             @relation(name: "NaturezaToUser", fields: [user_id], references: [id], onDelete: Cascade)
-}
-
-model User {
-  id      Int        @id @default(autoincrement())
-  natures Natureza[] @relation(name: "NaturezaToUser")
+  user      Customer?         @relation(name: "CustomerToNatureza", fields: [user_id], references: [id], onDelete: Cascade)
 }
