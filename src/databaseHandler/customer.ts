@@ -108,4 +108,5 @@ const exists = async (data: NewUser) => {
     })
 }
 
+
 export default { include, selections, customerList, create, exists, updateTokens }

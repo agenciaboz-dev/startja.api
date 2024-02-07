@@ -38,4 +38,6 @@ const get = async (id: number) =>
         include
     })
 
-export default { include, loginAdmin, loginCustomer, list, get }
+const update = async (id: number, data: Partial<Customer>) => await prisma.customer.update({ where: { id }, data: { ...data }, include })
+
+export default { include, loginAdmin, loginCustomer, list, get, update }

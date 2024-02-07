@@ -13,6 +13,7 @@ import rule from "./rule";
 import { LoginForm, NewCompany, NatureForm, NewNota, NewProduct, NewProperty, TaxRuleForm, NewUser } from "../definitions/userOperations"
 import focusNFe from "../api/focusNFe"
 import { AxiosError } from "axios"
+import { Customer } from "@prisma/client"
 
 let io: SocketIoServer | null = null
 
@@ -39,6 +40,7 @@ export const handleSocket = (socket: Socket) => {
 
     socket.on("user:login", (data: LoginForm) => user.handleLogin(socket, data))
     socket.on("user:list:all", () => user.list(socket))
+    socket.on("user:update", (id: number, data: Partial<Customer>) => user.update(socket, id, data))
 
     socket.on("product:list", () => product.productList(socket))
     socket.on("product:create", (data: NewProduct) => product.productCreate(socket, data))

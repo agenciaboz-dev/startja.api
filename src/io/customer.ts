@@ -3,6 +3,7 @@ import databaseHandler from "../databaseHandler";
 import { NewUser } from "../definitions/userOperations";
 import focusNFe from "../api/focusNFe"
 import { AxiosError } from "axios"
+import { Customer } from "@prisma/client"
 
 const list = async (socket: Socket) => {
     try {
@@ -84,4 +85,6 @@ const handleSignup = async (socket: Socket, data: NewUser) => {
     }
 }
 
-export default { list, handleSignup };
+
+
+export default { list, handleSignup }

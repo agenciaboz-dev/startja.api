@@ -43,6 +43,10 @@ model Customer {
 
     token                       String?
     token_sandbox               String?
+
+    observations                String              @default("") @db.Text
+    show_funrural_on_invoices   Boolean             @default(true)
+    recolhimento                Int                 @default(1)
     
     certificateId               Int                 @unique
     certificate                 DigitalCertificate  @relation(fields: [certificateId], references: [id])
