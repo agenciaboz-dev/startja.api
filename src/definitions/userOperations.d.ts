@@ -41,6 +41,9 @@ export declare interface NewUser {
 
     certificate: ArrayBuffer
     certificate_password: string
+
+    show_funrural_on_invoices: boolean
+    recolhimento: number
 }
 
 export declare interface NewCompany {

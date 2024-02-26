@@ -89,9 +89,12 @@ const create = async (data: NewUser) => {
             habilita_nfe: data.habilita_nfe,
             inscricao_municipal: data.inscricao_municipal,
             proximo_numero_nfe: data.proximo_numero_nfe,
-            serie_nfe: data.serie_nfe
+            serie_nfe: data.serie_nfe,
+
+            recolhimento: data.recolhimento,
+            show_funrural_on_invoices: data.show_funrural_on_invoices,
         },
-        include
+        include,
     })
 }
 
