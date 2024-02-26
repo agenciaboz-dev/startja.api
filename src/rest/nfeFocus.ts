@@ -53,4 +53,26 @@ router.get("/xml", async (request: Request, response: Response) => {
         })
 })
 
+router.get("/pdf", async (request: Request, response: Response) => {
+    const data = request.body
+    if (typeof request.query.url !== "string") {
+        return response.status(400).send("Invalid URL parameter")
+    }
+
+    const url = new URL(`https://homologacao.focusnfe.com.br${request.query.url}`)
+    console.log(url)
+    https
+        .get(url, (pdf_response) => {
+            console.log()
+            response.setHeader("Content-Disposition", `attachment; filename=teste.pdf`)
+            response.setHeader("Content-Type", "application/pdf")
+
+            pdf_response.pipe(response)
+        })
+        .on("error", (err) => {
+            console.error("Error:", err)
+            response.status(500).send("Failed to fetch the PDF file")
+        })
+})
+
 export default router
