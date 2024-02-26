@@ -10,6 +10,7 @@ model Natureza {
     finality                    Int
     motive                      String
     active                      Boolean             @default(true)
+    observations                String              @default("")
 
     rules                       regraTributacao[]
     invoices                    notaFiscal[]

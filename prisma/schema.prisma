@@ -211,14 +211,15 @@ model regraTributacao {
 }
 
 model Natureza {
-  id        Int               @id @default(autoincrement())
-  operation String
-  type      Int
-  finality  Int
-  motive    String
-  active    Boolean           @default(true)
-  rules     regraTributacao[] @relation(name: "NaturezaToregraTributacao")
-  invoices  notaFiscal[]      @relation(name: "NaturezaTonotaFiscal")
-  user_id   Int?
-  user      Customer?         @relation(name: "CustomerToNatureza", fields: [user_id], references: [id], onDelete: Cascade)
+  id           Int               @id @default(autoincrement())
+  operation    String
+  type         Int
+  finality     Int
+  motive       String
+  active       Boolean           @default(true)
+  observations String            @default("")
+  rules        regraTributacao[] @relation(name: "NaturezaToregraTributacao")
+  invoices     notaFiscal[]      @relation(name: "NaturezaTonotaFiscal")
+  user_id      Int?
+  user         Customer?         @relation(name: "CustomerToNatureza", fields: [user_id], references: [id], onDelete: Cascade)
 }

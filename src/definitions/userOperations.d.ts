@@ -77,6 +77,7 @@ export declare interface NatureForm {
     type: number
     finality: number
     motive: string
+    observations: string
 
     user_id?: number
 
