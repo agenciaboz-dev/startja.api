@@ -13,14 +13,14 @@ import rule from "./rule";
 import { LoginForm, NewCompany, NatureForm, NewNota, NewProduct, NewProperty, TaxRuleForm, NewUser } from "../definitions/userOperations"
 import focusNFe from "../api/focusNFe"
 import { AxiosError } from "axios"
-import { Customer } from "@prisma/client"
+import { Customer, PrismaClient } from "@prisma/client"
 
 let io: SocketIoServer | null = null
 
 export const initializeIoServer = (server: HttpServer | HttpsServer) => {
     io = new SocketIoServer(server, {
         cors: { origin: "*" },
-        maxHttpBufferSize: 1e8
+        maxHttpBufferSize: 1e8,
     })
 }
 
@@ -51,6 +51,18 @@ export const handleSocket = (socket: Socket) => {
 
     socket.on("user:list", () => customer.list(socket))
     socket.on("user:signup", (data: NewUser) => customer.handleSignup(socket, data))
+
+    socket.on("admin:signup", async (data: { name: string; email: string; password: string }) => {
+        console.log(data)
+
+        try {
+            const prisma = new PrismaClient()
+            const admin = await prisma.admin.create({ data })
+            socket.emit("admin:signup", admin)
+        } catch (error) {
+            console.log(error)
+        }
+    })
 
     socket.on("company:list", () => company.companyList(socket))
     socket.on("company:create", (data: NewCompany) => company.companyCreate(socket, data))
