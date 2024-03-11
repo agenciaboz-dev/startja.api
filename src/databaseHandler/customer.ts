@@ -91,7 +91,7 @@ const create = async (data: NewUser) => {
             proximo_numero_nfe: data.proximo_numero_nfe,
             serie_nfe: data.serie_nfe,
 
-            recolhimento: data.recolhimento,
+            recolhimento: Number(data.recolhimento),
             show_funrural_on_invoices: data.show_funrural_on_invoices,
         },
         include,

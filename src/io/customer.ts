@@ -52,7 +52,7 @@ const handleSignup = async (socket: Socket, data: NewUser) => {
         })
 
         console.log(focusSignup)
-        if (focusSignup.token) {
+        if (focusSignup.token_homologacao) {
             const updated_user = await databaseHandler.customer.updateTokens(customer.id, focusSignup)
             socket.emit("user:signup:success", updated_user)
             await focusNFe.createNfeWebhook({ env: "homologacao", token: updated_user.token_sandbox! })
