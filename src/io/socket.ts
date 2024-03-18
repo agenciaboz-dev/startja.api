@@ -72,6 +72,7 @@ export const handleSocket = (socket: Socket) => {
     socket.on("nature:create", (data: NatureForm) => nature.natureCreate(socket, data))
     socket.on("nature:toggle", (id: number) => nature.toggle(socket, id))
     socket.on("nature:update", (data: NatureForm, id: number) => nature.update(socket, id, data))
+    socket.on("nature:usertoggle", (nature_id: number, user_id: number) => nature.userToggle(socket, nature_id, user_id))
 
     socket.on("rule:list", () => rule.ruleList(socket))
 

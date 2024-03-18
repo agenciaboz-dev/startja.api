@@ -1,6 +1,9 @@
 import { Socket } from "socket.io";
 import { NatureForm } from "../definitions/userOperations"
 import databaseHandler from "../databaseHandler"
+import { PrismaClient } from "@prisma/client"
+
+const prisma = new PrismaClient()
 
 const natureList = async (socket: Socket) => {
     try {
@@ -46,4 +49,34 @@ const update = async (socket: Socket, id: number, data: NatureForm) => {
     }
 }
 
-export default { natureCreate, natureList, toggle, update }
+const userToggle = async (socket: Socket, nature_id: number, user_id: number) => {
+    try {
+        const nature = await prisma.natureza.findUnique({ where: { id: nature_id } })
+        if (nature) {
+            const hidden_list = nature.hidden_by.split(",")
+            let updated
+            if (hidden_list.includes(user_id.toString())) {
+                const new_list = hidden_list.filter((id) => id != user_id.toString())
+                updated = await prisma.natureza.update({
+                    where: { id: nature_id },
+                    data: { hidden_by: new_list.join(",") },
+                    include: databaseHandler.nature.include,
+                })
+            } else {
+                hidden_list.push(user_id.toString())
+                updated = await prisma.natureza.update({
+                    where: { id: nature_id },
+                    data: { hidden_by: hidden_list.join(",") },
+                    include: databaseHandler.nature.include,
+                })
+            }
+
+            socket.emit("nature:usertoggle", updated)
+        }
+    } catch (error) {
+        console.log(error)
+        socket.emit("nature:usertoggle:error", error)
+    }
+}
+
+export default { natureCreate, natureList, toggle, update, userToggle }

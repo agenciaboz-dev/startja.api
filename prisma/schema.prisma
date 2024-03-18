@@ -222,4 +222,5 @@ model Natureza {
   invoices  notaFiscal[]      @relation(name: "NaturezaTonotaFiscal")
   user_id   Int?
   user      Customer?         @relation(name: "CustomerToNatureza", fields: [user_id], references: [id], onDelete: Cascade)
+  hidden_by String            @default("")
 }
