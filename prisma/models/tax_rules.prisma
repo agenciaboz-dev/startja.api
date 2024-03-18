@@ -10,7 +10,6 @@ model Natureza {
     finality                    Int
     motive                      String
     active                      Boolean             @default(true)
-    observations                String              @default("")
 
     rules                       regraTributacao[]
     invoices                    notaFiscal[]
@@ -23,6 +22,7 @@ model Natureza {
 model regraTributacao {
     id                              Int                     @id @default(autoincrement())
     
+    observations                    String                  @default("")
     aliquota                        Float?
     cfop                            Int
     icms_modalidade_base_calculo    Int

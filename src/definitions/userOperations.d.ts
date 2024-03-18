@@ -80,7 +80,6 @@ export declare interface NatureForm {
     type: number
     finality: number
     motive: string
-    observations: string
 
     user_id?: number
 
@@ -88,6 +87,7 @@ export declare interface NatureForm {
 }
 
 export declare interface TaxRuleForm {
+    observations: string
     cfop: number
     cofins_situacao_tributaria: string
     icms_modalidade_base_calculo: number

@@ -18,9 +18,9 @@ const create = async (data: NatureForm) =>
             operation: data.operation,
             type: data.type,
             user_id: data.user_id,
-            observations: data.observations,
             rules: {
                 create: data.rules.map((rule) => ({
+                    observations: rule.observations,
                     aliquota: rule.aliquota,
                     cfop: rule.cfop,
                     cofins_situacao_tributaria: rule.cofins_situacao_tributaria,
@@ -62,10 +62,10 @@ const update = async (id: number, data: NatureForm) => {
             motive: data.motive,
             operation: data.operation,
             type: data.type,
-            observations: data.observations,
             rules: {
                 deleteMany: { natureza_id: id },
                 create: data.rules.map((rule) => ({
+                    observations: rule.observations,
                     aliquota: rule.aliquota,
                     cfop: rule.cfop,
                     cofins_situacao_tributaria: rule.cofins_situacao_tributaria,
