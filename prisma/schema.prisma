@@ -52,6 +52,7 @@ model Customer {
   companies                 Company[]          @relation(name: "CompanyToCustomer")
   notas                     notaFiscal[]       @relation(name: "CustomerTonotaFiscal")
   properties                Property[]         @relation(name: "CustomerToProperty")
+  products_created          Product[]          @relation(name: "CustomerToProduct")
   natures                   Natureza[]         @relation(name: "CustomerToNatureza")
 }
 
@@ -159,6 +160,8 @@ model Product {
   codigo_externo String              @unique
   icmsOrigin     Int                 @default(0)
   active         Boolean             @default(true)
+  user_id        Int?
+  user           Customer?           @relation(name: "CustomerToProduct", fields: [user_id], references: [id], onDelete: Cascade)
   produtosNota   ProdutoNotaFiscal[] @relation(name: "ProductToProdutoNotaFiscal")
   tax_rules      regraTributacao[]   @relation(name: "ProductToregraTributacao")
 }

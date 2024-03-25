@@ -7,6 +7,9 @@ model Product {
     icmsOrigin                  Int                     @default(0)
     active                      Boolean                 @default(true)
 
+    user_id                     Int?
+    user                        Customer?           @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
     produtosNota                ProdutoNotaFiscal[]
 
 }
@@ -37,4 +40,9 @@ model notaFiscal {
 model regraTributacao {
     id         Int         @id @default(autoincrement())
     invoice_products    ProdutoNotaFiscal[]
+}
+
+model Customer {
+    id          Int         @id @default(autoincrement())
+    products_created    Product[]
 }

@@ -73,6 +73,7 @@ export declare interface NewProduct {
     icmsOrigin: number
     rules?: regraTributacao[]
     active?: boolean
+    user_id?: number
 }
 
 export declare interface NatureForm {
