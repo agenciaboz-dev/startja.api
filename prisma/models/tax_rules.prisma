@@ -40,13 +40,16 @@ model regraTributacao {
     icms_origem                     Int?
     icms_percentual_diferimento     Float?
 
+    interno_pis_percentual_base_calculo    Float?
+    interno_pis_quantidade_base_de_calculo    Float?
     pis_base_calculo                Float?
     pis_aliquota_porcentual         Float?
     pis_aliquota_valor              Float?
     pis_valor                       Float?
     pis_quantidade_vendida          Int?
     
-
+    interno_cofins_percentual_base_calculo Float?
+    interno_cofins_quantidade_base_de_calculo Float?
     cofins_base_calculo             Float?
     cofins_aliquota_porcentual      Float?
     cofins_aliquota_valor           Float?

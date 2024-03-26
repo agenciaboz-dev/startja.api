@@ -46,6 +46,10 @@ const create = async (data: NatureForm) =>
                     cofins_aliquota_valor: rule.cofins_aliquota_valor,
                     cofins_valor: rule.cofins_valor,
                     cofins_quantidade_vendida: rule.cofins_quantidade_vendida,
+                    interno_pis_percentual_base_calculo: rule.interno_pis_percentual_base_calculo,
+                    interno_pis_quantidade_base_de_calculo: rule.interno_pis_quantidade_base_de_calculo,
+                    interno_cofins_percentual_base_calculo: rule.interno_cofins_percentual_base_calculo,
+                    interno_cofins_quantidade_base_de_calculo: rule.interno_cofins_quantidade_base_de_calculo,
 
                     products: { connect: rule.products.map((product) => ({ id: product.id })) },
                 })),
@@ -91,6 +95,10 @@ const update = async (id: number, data: NatureForm) => {
                     cofins_aliquota_valor: rule.cofins_aliquota_valor,
                     cofins_valor: rule.cofins_valor,
                     cofins_quantidade_vendida: rule.cofins_quantidade_vendida,
+                    interno_pis_percentual_base_calculo: rule.interno_pis_percentual_base_calculo,
+                    interno_pis_quantidade_base_de_calculo: rule.interno_pis_quantidade_base_de_calculo,
+                    interno_cofins_percentual_base_calculo: rule.interno_cofins_percentual_base_calculo,
+                    interno_cofins_quantidade_base_de_calculo: rule.interno_cofins_quantidade_base_de_calculo,
 
                     products: { connect: rule.products.map((product) => ({ id: product.id })) },
                 })),

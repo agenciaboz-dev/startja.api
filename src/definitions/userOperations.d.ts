@@ -110,6 +110,11 @@ export declare interface TaxRuleForm {
     pis_valor?: number
     pis_quantidade_vendida?: number
 
+    interno_pis_percentual_base_calculo: number
+    interno_pis_quantidade_base_de_calculo: number
+    interno_cofins_percentual_base_calculo: number
+    interno_cofins_quantidade_base_de_calculo: number
+
     cofins_base_calculo?: number
     cofins_aliquota_porcentual?: number
     cofins_aliquota_valor?: number

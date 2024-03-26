@@ -181,37 +181,41 @@ model ProdutoNotaFiscal {
 }
 
 model regraTributacao {
-  id                           Int                 @id @default(autoincrement())
-  invoice_products             ProdutoNotaFiscal[] @relation(name: "ProdutoNotaFiscalToregraTributacao")
-  observations                 String              @default("")
-  aliquota                     Float?
-  cfop                         Int
-  icms_modalidade_base_calculo Int
-  cofins_situacao_tributaria   String
-  icms_situacao_tributaria     String
-  pis_situacao_tributaria      String
-  cest                         Int?
-  codigo_beneficio_fiscal      String?
-  icms_aliquota_st             Float?
-  icms_reducao_base_calculo    Float?
-  icms_valor_desonerado        Float?
-  icms_origem                  Int?
-  icms_percentual_diferimento  Float?
-  pis_base_calculo             Float?
-  pis_aliquota_porcentual      Float?
-  pis_aliquota_valor           Float?
-  pis_valor                    Float?
-  pis_quantidade_vendida       Int?
-  cofins_base_calculo          Float?
-  cofins_aliquota_porcentual   Float?
-  cofins_aliquota_valor        Float?
-  cofins_valor                 Float?
-  cofins_quantidade_vendida    Int?
-  origem                       String
-  destino                      String              @db.Text
-  products                     Product[]           @relation(name: "ProductToregraTributacao")
-  natureza_id                  Int
-  natureza                     Natureza            @relation(name: "NaturezaToregraTributacao", fields: [natureza_id], references: [id], onDelete: Cascade)
+  id                                        Int                 @id @default(autoincrement())
+  invoice_products                          ProdutoNotaFiscal[] @relation(name: "ProdutoNotaFiscalToregraTributacao")
+  observations                              String              @default("")
+  aliquota                                  Float?
+  cfop                                      Int
+  icms_modalidade_base_calculo              Int
+  cofins_situacao_tributaria                String
+  icms_situacao_tributaria                  String
+  pis_situacao_tributaria                   String
+  cest                                      Int?
+  codigo_beneficio_fiscal                   String?
+  icms_aliquota_st                          Float?
+  icms_reducao_base_calculo                 Float?
+  icms_valor_desonerado                     Float?
+  icms_origem                               Int?
+  icms_percentual_diferimento               Float?
+  interno_pis_percentual_base_calculo       Float?
+  interno_pis_quantidade_base_de_calculo    Float?
+  pis_base_calculo                          Float?
+  pis_aliquota_porcentual                   Float?
+  pis_aliquota_valor                        Float?
+  pis_valor                                 Float?
+  pis_quantidade_vendida                    Int?
+  interno_cofins_percentual_base_calculo    Float?
+  interno_cofins_quantidade_base_de_calculo Float?
+  cofins_base_calculo                       Float?
+  cofins_aliquota_porcentual                Float?
+  cofins_aliquota_valor                     Float?
+  cofins_valor                              Float?
+  cofins_quantidade_vendida                 Int?
+  origem                                    String
+  destino                                   String              @db.Text
+  products                                  Product[]           @relation(name: "ProductToregraTributacao")
+  natureza_id                               Int
+  natureza                                  Natureza            @relation(name: "NaturezaToregraTributacao", fields: [natureza_id], references: [id], onDelete: Cascade)
 }
 
 model Natureza {
