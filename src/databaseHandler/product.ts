@@ -36,4 +36,9 @@ const update = async (data: Partial<NewProduct>, id: number) =>
 
 const remove = async (id: number) => await prisma.product.delete({ where: { id } })
 
-export default { list, create, update, remove }
+const toggle = async (id: number) => {
+    const current_value = await prisma.product.findUnique({ where: { id }, select: { active: true } })
+    return await prisma.product.update({ where: { id }, data: { active: !current_value?.active } })
+}
+
+export default { list, create, update, remove, toggle }

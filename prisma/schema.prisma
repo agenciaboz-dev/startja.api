@@ -162,6 +162,7 @@ model Product {
   active         Boolean             @default(true)
   user_id        Int?
   user           Customer?           @relation(name: "CustomerToProduct", fields: [user_id], references: [id], onDelete: Cascade)
+  hidden_by      String              @default("")
   produtosNota   ProdutoNotaFiscal[] @relation(name: "ProductToProdutoNotaFiscal")
   tax_rules      regraTributacao[]   @relation(name: "ProductToregraTributacao")
 }

@@ -48,6 +48,8 @@ export const handleSocket = (socket: Socket) => {
     socket.on("product:enable", (id: number) => product.enable(socket, id))
     socket.on("product:disable", (id: number) => product.disable(socket, id))
     socket.on("product:delete", (id: number) => product.remove(socket, id))
+    socket.on("product:toggle", (id: number) => product.toggle(socket, id))
+    socket.on("product:usertoggle", (product_id: number, user_id: number) => product.userToggle(socket, product_id, user_id))
 
     socket.on("user:list", () => customer.list(socket))
     socket.on("user:signup", (data: NewUser) => customer.handleSignup(socket, data))
@@ -70,8 +72,8 @@ export const handleSocket = (socket: Socket) => {
 
     socket.on("nature:list", () => nature.natureList(socket))
     socket.on("nature:create", (data: NatureForm) => nature.natureCreate(socket, data))
-    socket.on("nature:toggle", (id: number) => nature.toggle(socket, id))
     socket.on("nature:update", (data: NatureForm, id: number) => nature.update(socket, id, data))
+    socket.on("nature:toggle", (id: number) => nature.toggle(socket, id))
     socket.on("nature:usertoggle", (nature_id: number, user_id: number) => nature.userToggle(socket, nature_id, user_id))
 
     socket.on("rule:list", () => rule.ruleList(socket))

@@ -9,6 +9,7 @@ model Product {
 
     user_id                     Int?
     user                        Customer?           @relation(fields: [user_id], references: [id], onDelete: Cascade)
+    hidden_by                   String              @default("")
 
     produtosNota                ProdutoNotaFiscal[]
 

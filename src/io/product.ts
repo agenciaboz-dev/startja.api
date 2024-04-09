@@ -3,13 +3,14 @@ import { NewProduct } from "../definitions/userOperations"
 import databaseHandler from "../databaseHandler"
 import { getIoInstance } from "./socket"
 import { Prisma } from "@prisma/client"
+import { prisma } from "../prisma"
 
 const prismaError = (error: unknown) => {
     if (error instanceof Prisma.PrismaClientKnownRequestError) {
         // The .code property can be accessed in a type-safe manner
         if (error.code === "P2002") {
             if (error.meta?.target == "Product_codigo_externo_key") {
-                return "já existe um produto cadastrado com esse código." 
+                return "já existe um produto cadastrado com esse código."
             }
         }
     }
@@ -92,4 +93,43 @@ const enable = async (socket: Socket, id: number) => {
     }
 }
 
-export default { productList, productCreate, update, remove, disable, enable }
+const toggle = async (socket: Socket, id: number) => {
+    try {
+        const product = await databaseHandler.product.toggle(id)
+        socket.emit("product:toggle:success", product)
+        socket.broadcast.emit("product:update", product)
+    } catch (error) {
+        socket.emit("product:update:error", error?.toString())
+        console.error("Error updating product:", error)
+    }
+}
+
+const userToggle = async (socket: Socket, product_id: number, user_id: number) => {
+    try {
+        const product = await prisma.product.findUnique({ where: { id: product_id } })
+        if (product) {
+            const hidden_list = product.hidden_by.split(",")
+            let updated
+            if (hidden_list.includes(user_id.toString())) {
+                const new_list = hidden_list.filter((id) => id != user_id.toString())
+                updated = await prisma.product.update({
+                    where: { id: product_id },
+                    data: { hidden_by: new_list.join(",") },
+                })
+            } else {
+                hidden_list.push(user_id.toString())
+                updated = await prisma.product.update({
+                    where: { id: product_id },
+                    data: { hidden_by: hidden_list.join(",") },
+                })
+            }
+
+            socket.emit("product:usertoggle", updated)
+        }
+    } catch (error) {
+        console.log(error)
+        socket.emit("product:usertoggle:error", error)
+    }
+}
+
+export default { productList, productCreate, update, remove, disable, enable, toggle, userToggle }
