@@ -103,6 +103,7 @@ export declare interface TaxRuleForm {
     icms_valor_desonerado?: number
     icms_origem?: number
     icms_percentual_diferimento?: number
+    icms_margem_valor_adicionado_st: rule.icms_margem_valor_adicionado_st
 
     pis_base_calculo?: number
     pis_aliquota_porcentual?: number
