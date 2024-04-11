@@ -20,6 +20,7 @@ const create = async (data: NewProduct) => {
           name: data.name,
           ncm: normalize(data.ncm),
           codigo_externo: data.codigo_externo,
+          icmsOrigin: data.icmsOrigin,
           user_id: data.user_id,
       },
   })
