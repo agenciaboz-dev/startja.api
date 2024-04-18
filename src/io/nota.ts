@@ -33,10 +33,10 @@ const notaCreate = async (
             env: "homologacao",
             token: invoice.emitente.token_sandbox!
         })
-        console.log(invoice_response.data)
-        socket.emit("nota:create:response", invoice_response.data)
+        console.log(invoice_response?.data)
+        socket.emit("nota:create:response", invoice_response?.data)
 
-        await databaseHandler.nota.updateStatus(invoice.id, invoice_response.data.status)
+        await databaseHandler.nota.updateStatus(invoice.id, invoice_response?.data.status)
         const customer = await user.get(invoice.emitente_id)
         socket.emit("user:update", customer)
     } catch (error) {
