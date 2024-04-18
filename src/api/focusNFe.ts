@@ -1,8 +1,8 @@
-import axios from "axios"
+import axios, { AxiosError } from "axios"
 
 const signCustomer = async (data: FocusNFECustomerData) => {
     const response = await axios.post("https://api.focusnfe.com.br/v2/empresas", data, {
-        auth: { username: "Jb5xcx5U8TDbgB9T8CxqqeGtfcemCWVI", password: "" }
+        auth: { username: "Jb5xcx5U8TDbgB9T8CxqqeGtfcemCWVI", password: "" },
     })
 
     return response.data
@@ -11,7 +11,7 @@ const signCustomer = async (data: FocusNFECustomerData) => {
 const createNfeWebhook = async (env: FocusEnviroment) => {
     const data: FocusWebhookData = { event: "nfe", url: "https://agencyboz.com:4109/api/nfefocus/nfe/webhook" }
     const response = await axios.post(`https://${env.env}.focusnfe.com.br/v2/hooks`, data, {
-        auth: { username: env.token, password: "" }
+        auth: { username: env.token, password: "" },
     })
 
     return response.data
@@ -19,16 +19,22 @@ const createNfeWebhook = async (env: FocusEnviroment) => {
 
 const emitInvoice = async (data: FocusNFeInvoiceData, reference: string, env: FocusEnviroment) => {
     console.log(data)
-    const response = await axios.post(`https://${env.env}.focusnfe.com.br/v2/nfe?ref=${reference}`, data, {
-        auth: { username: env.token, password: "" }
-    })
+    try {
+        const response = await axios.post(`https://${env.env}.focusnfe.com.br/v2/nfe?ref=${reference}`, data, {
+            auth: { username: env.token, password: "" },
+        })
 
-    return response
+        return response
+    } catch (error) {
+        if (error instanceof AxiosError) {
+            console.log(error.response?.data)
+        }
+    }
 }
 
 const consultInvoice = async (reference: string, env: FocusEnviroment) => {
     const response = await axios.get(`https://${env.env}.focusnfe.com.br/v2/nfe/${reference}?completa=0`, {
-        auth: { username: env.token, password: "" }
+        auth: { username: env.token, password: "" },
     })
     console.log(response.data)
 }
@@ -73,8 +79,8 @@ const buildInvoice = (data: FocusNFeInvoiceForm) => {
         indicador_inscricao_estadual_destinatario: data.destinatario.indicador_inscricao_estadual,
         // cep_destinatario: order.address?.cep || "02304-000",
 
-        valor_frete: data.valor.frete,
-        valor_seguro: data.valor.seguro,
+        valor_frete: data.transporte.valor_frete,
+        valor_seguro: data.transporte.valor_seguro,
         valor_total: data.valor.total,
         valor_produtos: data.valor.produtos,
         pis_valor: data.valor.produtos * (0.65 / 100),
@@ -104,13 +110,13 @@ const buildInvoice = (data: FocusNFeInvoiceForm) => {
             icms_aliquota: item.aliquota,
             icms_valor: item.valor_unitario_comercial * item.quantidade * ((item.aliquota || 100) / 100),
             icms_modalidade_base_calculo: item.icms_modalidade_base_calculo,
-            cest: item.cest,
+            cest: item.cest || undefined,
             codigo_beneficio_fiscal: item.codigo_beneficio_fiscal,
             icms_aliquota_st: item.icms_aliquota_st,
             icms_percentual_diferimento: item.icms_percentual_diferimento,
             icms_reducao_base_calculo: item.icms_reducao_base_calculo,
-            icms_valor_desonerado: item.icms_valor_desonerado
-        }))
+            icms_valor_desonerado: item.icms_valor_desonerado,
+        })),
     }
 
     console.log(new_data)
